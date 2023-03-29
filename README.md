@@ -1,6 +1,6 @@
 # Columbarium App (tfg-columbarium-management)
 
-computer application formanagement of the columbarium of the churchof San Nicolás de la Villa deCordova
+Computer application for management of the columbarium of the church of San Nicolás de la Villa de Cordova
 
 ## Install the dependencies
 ```bash
