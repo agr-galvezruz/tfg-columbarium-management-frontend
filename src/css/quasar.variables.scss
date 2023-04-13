@@ -13,15 +13,16 @@
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 :root {
   // Colors
-  --main-color: 255, 124, 31;
+  --main-color: 99, 105, 209;
   --body-color: #efefef;
   --background-color: #FCFCFC;
   --background-scroll-bar: #c6cacc;
-  --negative: #C92551;
+  --negative: #c10015;
 
   // Texts
   --main-text-color: #2c2f32;
   --secondary-text-color: #868b90;
+  --table-text-color: #343a40;
 
   // Shadows
   --main-shadow: 1px 1px 4px rgba(134, 139, 144, 0.3);
@@ -32,14 +33,14 @@
   --toolbar-height: 30px;
 }
 
-$primary   : #9C71FD;
-$secondary : #57ab5a;
+$primary   : #0FA3B1;
+$secondary : #6369D1;
 $accent    : #9C27B0;
 
 $dark      : #1D1D1D;
 $dark-page : #121212;
 
 $positive  : #57ab5a;
-$negative  : #C92551;
+$negative  : #c10015;
 $info      : #31CCEC;
 $warning   : #F2C037;
