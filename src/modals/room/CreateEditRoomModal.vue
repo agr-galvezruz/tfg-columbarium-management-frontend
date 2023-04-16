@@ -94,6 +94,7 @@ export default defineComponent({
     }
 
     const fillBuildingOptions = (data) => {
+      state.buildingOptions = []
       data.forEach(building => {
         state.buildingOptions.push({ label: `${building.internalCode} - ${building.name}`, value: building.id.toString(), internalCode: building.internalCode })
       })

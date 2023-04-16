@@ -23,6 +23,14 @@
       <template v-if="!inputValue" v-slot:prepend>
         <div class="select-value">{{ $t('components.form_components.no_selected') }}</div>
       </template>
+
+      <template v-slot:no-option>
+        <q-item>
+          <q-item-section>
+            {{ noOptions || $t('components.form_components.no_options') }}
+          </q-item-section>
+        </q-item>
+      </template>
     </q-select>
   </div>
   <div v-else>
@@ -103,6 +111,10 @@ export default defineComponent({
     options: {
       type: Array,
       default: () => []
+    },
+    noOptions: {
+      type: String,
+      default: null
     },
     disabled: {
       type: Boolean,
