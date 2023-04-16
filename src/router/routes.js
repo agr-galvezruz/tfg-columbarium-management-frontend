@@ -61,6 +61,13 @@ const routes = [
         meta: { icon: 'view_module', label: 'routes.rooms' },
         component: () => import('pages/room/RoomsListPage')
       },
+      {
+        path: 'rows',
+        name: 'rows',
+        beforeEnter: [checkToken],
+        meta: { icon: 'reorder', label: 'routes.rows' },
+        component: () => import('pages/row/RowsListPage')
+      },
     ]
   },
 

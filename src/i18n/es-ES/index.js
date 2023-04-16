@@ -6,7 +6,8 @@ export default {
     dashboard: 'Dashboard',
     crypt: 'Cripta',
     buildings: 'Edificios',
-    rooms: 'Salas'
+    rooms: 'Salas',
+    rows: 'Filas',
   },
   general_texts: {
     edit: 'Editar',
@@ -42,7 +43,8 @@ export default {
       check_form: 'Revisar los datos introducidos',
       timer_selector: 'Selector de hora',
       cant_zero: 'El importe debe de ser mayor que cero',
-      no_selected: 'Seleccione una opción'
+      no_selected: 'Seleccione una opción',
+      no_options: 'No hay opciones disponibles',
     },
     filter: {
       add_filter: 'Filtrar',
@@ -97,7 +99,6 @@ export default {
       location: 'Ubicación',
       location_placeholder: 'Ubicación de la sala',
       building_id: 'Edificio al que pertenece',
-      building_id_placeholder: 'Seleccione el edificio al que pertenece la sala',
       description: 'Descripción',
       description_placeholder: 'Descripción sobre la sala',
       no_data: 'No se han encontrado salas.',
@@ -111,6 +112,30 @@ export default {
       successfully_edited: 'La sala ha sido editada correctamente.',
       successfully_deleted: 'La sala ha sido eliminada correctamente.',
       delete_error: 'La sala no ha sido encontrada.'
+    },
+    row: {
+      entity: 'Fila',
+      list_title: 'Filas',
+      rows_room: 'Filas de la sala',
+      add_room: 'Añadir fila',
+      internal_code: 'Código interno',
+      internal_code_placeholder: 'Código de la fila',
+      building_id: 'Edificio al que pertenece',
+      room_id: 'Sala a la que pertenece',
+      room_no_options: 'Seleccione un edificio antes',
+      description: 'Descripción',
+      description_placeholder: 'Descripción sobre la fila',
+      no_data: 'No se han encontrado filas.',
+      modal_create_title: 'Añadir fila',
+      modal_edit_title: 'Editar fila',
+      modal_delete_title: 'Eliminar fila',
+      modal_delete_text1: '¿Está seguro que quiere eliminar la fila',
+      modal_delete_text2: 'Todos los datos que dependen de esta fila serán eliminados.',
+      unique_error_internal_code: 'El código interno introducido ya está en uso para esta sala.',
+      successfully_created: 'La fila ha sido creada correctamente.',
+      successfully_edited: 'La fila ha sido editada correctamente.',
+      successfully_deleted: 'La fila ha sido eliminada correctamente.',
+      delete_error: 'La fila no ha sido encontrada.'
     },
     person: {
       title: 'Personas',
