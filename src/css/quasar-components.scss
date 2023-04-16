@@ -9,6 +9,14 @@
   font-size: 12px;
 }
 
+.q-field--outlined.q-field--readonly .q-field__control > div {
+  opacity: 0.6 !important;
+}
+
+.q-field--outlined.q-field--readonly .q-field__control:before {
+  border-style: solid !important;
+}
+
 .q-table__card {
   color: var(--main-text-color);
   background-color: var(--background-color);

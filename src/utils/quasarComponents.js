@@ -4,7 +4,7 @@ import { i18n } from 'src/boot/i18n'
 export const showLoading = (message = i18n.global.t('general_texts.loading'), html = false) => {
   Loading.show({
     message: message,
-    spinnerColor: 'primary',
+    spinnerColor: 'secondary',
     spinner: QSpinnerBars,
     html: html
   })

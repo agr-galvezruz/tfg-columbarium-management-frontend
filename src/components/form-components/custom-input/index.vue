@@ -2,6 +2,26 @@
   <div v-if="stackLabel">
     <div class="stack-label">{{label}} {{required ? '*' : ''}}</div>
     <q-input
+      v-if="type === 'internalCode'"
+      :class="{'required-field': required}"
+      :filled="filled"
+      :placeholder="placeholder"
+      :outlined="outlined"
+      :clearable="clearable"
+      :dense="dense"
+      :readonly="readonly"
+      :rules="customRules"
+      :disable="disabled"
+      :type="type"
+      v-model="inputValue"
+      :maxlength="maxlength"
+      :bottom-slots="bottomSlots"
+    >
+      <template v-if="internalValue" v-slot:prepend>
+        <div class="internal-value">{{internalValue}}</div>
+      </template>
+    </q-input>
+    <q-input
       v-if="type === 'text'"
       :class="{'required-field': required}"
       :filled="filled"
@@ -163,7 +183,7 @@
       autogrow
       v-model="inputValue"
       :bottom-slots="bottomSlots">
-      <div style="height:20rem">
+      <div style="height:60px">
 
       </div>
     </q-input>
@@ -414,6 +434,10 @@ export default {
       type: String,
       default: null
     },
+    internalValue: {
+      type: String,
+      default: null
+    },
     bottomSlots: {
       type: Boolean,
       default: true
@@ -529,7 +553,7 @@ export default {
 
 <style lang="scss">
 .stack-label {
-  color: var(--secondary-text-color);
+  color: var(--main-text-color);
   font-weight: 500;
   margin-bottom: 5px;
 }
@@ -537,5 +561,10 @@ export default {
   .q-field__label::after {
     content: ' *';
   }
+}
+.internal-value {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
 }
 </style>

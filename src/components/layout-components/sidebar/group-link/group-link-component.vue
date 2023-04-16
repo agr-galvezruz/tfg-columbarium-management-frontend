@@ -1,16 +1,17 @@
 <template>
   <ul>
     <div class="group-section">
-      <span>{{ groupLabel }}</span>
+      <span>{{ $t(groupLabel) }}</span>
     </div>
 
-    <simple-link-component
-      v-for="child, index in children"
-      :key="index"
-      :icon="child.meta.icon"
-      :label="child.meta.label"
-      :parent-path="path"
-      :children-path="child.path" />
+    <template v-for="child, index in children" :key="index">
+      <simple-link-component
+        v-if="!child.hidden"
+        :icon="child.meta.icon"
+        :label="child.meta.label"
+        :parent-path="path"
+        :children-path="child.path" />
+    </template>
   </ul>
 </template>
 

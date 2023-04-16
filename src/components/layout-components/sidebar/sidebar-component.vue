@@ -13,14 +13,14 @@
         <ul v-if="!route?.hidden && route.children?.length === 1">
           <simple-link-component
             :icon="route.meta.icon"
-            :label="route.name"
+            :label="route.meta.label"
             :parent-path="route.path"
             :children-path="route.children[0].path" />
         </ul>
 
         <group-link-component
           v-if="!route?.hidden && route.children?.length > 1"
-          :group-label="route.name"
+          :group-label="route.meta.label"
           :path="route.path"
           :children="route.children" />
       </template>

@@ -26,6 +26,9 @@ axios.interceptors.response.use((data) => {
   else if (error.response.status === 500) {
     showNotification(i18n.global.t('database_messages.database_conection_error'))
   }
+  else if (error.response.status !== 422 && error.response?.data?.message) {
+    showNotification(error.response.data.message)
+  }
 
   // Do something with response error
   return Promise.reject(error)

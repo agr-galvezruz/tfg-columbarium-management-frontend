@@ -2,7 +2,8 @@
   <div class="filter-container">
     <custom-input
       v-model="generalFilter"
-      @keyup="(!generalFilter || generalFilter?.length >= 3) ? emitFilters() : null"
+      @keyup="(!generalFilter || generalFilter?.length >= 2) ? emitFilters() : null"
+      @update:model-value="!generalFilter ? emitFilters() : null"
       :stackLabel="false"
       :bottom-slots="false"
       label="Búsqueda general"
@@ -163,7 +164,7 @@ export default defineComponent({
     const emitFilters = () => {
       let filterString = ''
 
-      if (state.generalFilter?.length >= 3) {
+      if (state.generalFilter?.length >= 2) {
         filterString += `any=${encodeURIComponent(state.generalFilter)}`
         if (state.totalFilter.length > 0) {
           filterString += '&'

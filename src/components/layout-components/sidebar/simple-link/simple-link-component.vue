@@ -1,7 +1,7 @@
 <template>
   <li :class="{ 'active': isRouteSelected }" @click="goToRoute">
     <span class="icon-shape material-icons">{{ icon }}</span>
-    <span class="icon-label">{{ label }}</span>
+    <span class="icon-label">{{ $t(label) }}</span>
   </li>
 </template>
 

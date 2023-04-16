@@ -1,33 +1,53 @@
 <template>
-  <q-select
-    :class="{'required-field': required}"
-    :label="label"
-    :filled="filled"
-    :outlined="outlined"
-    :dense="dense"
-    :options-dense="optionsDense"
-    :clearable="clearable"
-    :loading="loading"
-    :rules="customRules"
-    :options="options"
-    :disable="disabled"
-    @input="$emit('input', value)"
-    :style="!required ? 'padding-bottom:20px;' : ''"
-    class="single-line-value-select"
-    popup-content-class="popup-max-height"
-    map-options
-    emit-value
+  <div v-if="stackLabel">
+    <div class="stack-label">{{label}} {{required ? '*' : ''}}</div>
+    <q-select
+      :class="{'required-field': required}"
+      :filled="filled"
+      :outlined="outlined"
+      :dense="dense"
+      :placeholder="placeholder"
+      :options-dense="optionsDense"
+      :clearable="clearable"
+      :loading="loading"
+      :rules="customRules"
+      :options="options"
+      :disable="disabled"
+      class="single-line-value-select"
+      popup-content-class="popup-max-height"
+      :bottom-slots="bottomSlots"
+      map-options
+      emit-value
+      v-model="inputValue"
     >
-
-   <!-- <template v-slot:no-option>
-      <q-item>
-        <q-item-section class="text-italic text-grey">
-          {{ $t('components.no_data') }}
-        </q-item-section>
-      </q-item>
-    </template>-->
-
-  </q-select>
+      <template v-if="!inputValue" v-slot:prepend>
+        <div class="select-value">{{ $t('components.form_components.no_selected') }}</div>
+      </template>
+    </q-select>
+  </div>
+  <div v-else>
+    <q-select
+      :class="{'required-field': required}"
+      :label="label"
+      :filled="filled"
+      :outlined="outlined"
+      :dense="dense"
+      :placeholder="placeholder"
+      :options-dense="optionsDense"
+      :clearable="clearable"
+      :loading="loading"
+      :rules="customRules"
+      :options="options"
+      :disable="disabled"
+      class="single-line-value-select"
+      popup-content-class="popup-max-height"
+      :bottom-slots="bottomSlots"
+      map-options
+      emit-value
+      v-model="inputValue"
+      >
+    </q-select>
+  </div>
 </template>
 
 <script>
@@ -36,11 +56,19 @@ import { defineComponent, computed, reactive } from 'vue';
 export default defineComponent({
   name: 'CustomSelect',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: null
     },
+    stackLabel: {
+      type: Boolean,
+      default: true
+    },
     label: {
+      type: String,
+      default: null
+    },
+    placeholder: {
       type: String,
       default: null
     },
@@ -50,11 +78,11 @@ export default defineComponent({
     },
     outlined: {
       type: Boolean,
-      default: false
+      default: true
     },
     dense: {
       type: Boolean,
-      default: false
+      default: true
     },
     optionsDense: {
       type: Boolean,
@@ -84,6 +112,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    bottomSlots: {
+      type: Boolean,
+      default: true
+    },
     customValidationMessage: {
       type: String,
       default: null
@@ -92,7 +124,14 @@ export default defineComponent({
   created() {
     this.errorMessages.data_required = this.$t('components.form_components.data_required');
   },
-  setup(props) {
+  setup(props, { emit }) {
+    const inputValue = computed({
+      get: () => props.modelValue,
+      set: (value) => {
+        emit('update:modelValue', value);
+      }
+    });
+
     const errorMessages = reactive({
       data_required: null
     });
@@ -105,7 +144,7 @@ export default defineComponent({
       }
       return rules;
     });
-    return { errorMessages, customRules };
+    return { errorMessages, customRules, inputValue };
   }
 });
 </script>
@@ -118,5 +157,20 @@ export default defineComponent({
 }
 .popup-max-height {
   max-height: 250px;
+}
+
+.single-line-value-select .q-field__native {
+  flex-wrap: nowrap;
+}
+.single-line-value-select .q-field__native > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.select-value {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
 }
 </style>
