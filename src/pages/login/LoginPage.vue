@@ -12,8 +12,8 @@
 
       <q-form @submit="onSubmit">
         <div class="input-form">
-          <custom-input v-model="email" :label="$t('pages.login.email')" placeholder="Introduzca su correo electrónico" />
-          <custom-input v-model="password" :label="$t('pages.login.password')" placeholder="Introduzca su contraseña" type="password" />
+          <custom-input v-model="email" :label="$t('pages.login.email')" :placeholder="$t('pages.login.email_placeholder')" />
+          <custom-input v-model="password" :label="$t('pages.login.password')" :placeholder="$t('pages.login.password_placeholder')" type="password" />
         </div>
         <custom-button class="full-width" :label="$t('pages.login.login')" color="secondary" type="submit" />
       </q-form>
