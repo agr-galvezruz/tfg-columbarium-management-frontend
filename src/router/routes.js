@@ -55,11 +55,11 @@ const routes = [
         component: () => import('pages/building/BuildingDetailsPage')
       },
       {
-        path: 'reubicacion',
-        name: 'deposito-reubicación',
+        path: 'rooms',
+        name: 'rooms',
         beforeEnter: [checkToken],
-        meta: { icon: 'recycling', label: 'Reubicación' },
-        component: () => import('pages/IndexPage')
+        meta: { icon: 'view_module', label: 'routes.rooms' },
+        component: () => import('pages/room/RoomsListPage')
       },
     ]
   },
