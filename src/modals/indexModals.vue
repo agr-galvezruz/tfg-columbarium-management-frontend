@@ -4,6 +4,7 @@
   <create-edit-room-modal />
   <delete-room-modal />
   <create-edit-row-modal />
+  <delete-row-modal />
 </template>
 
 <script>
@@ -12,6 +13,7 @@ import DeleteBuildingModal from 'src/modals/building/DeleteBuildingModal'
 import CreateEditRoomModal from 'src/modals/room/CreateEditRoomModal'
 import DeleteRoomModal from 'src/modals/room/DeleteRoomModal'
 import CreateEditRowModal from 'src/modals/row/CreateEditRowModal'
+import DeleteRowModal from 'src/modals/row/DeleteRowModal'
 
 export default {
   components: {
@@ -20,6 +22,7 @@ export default {
     CreateEditRoomModal,
     DeleteRoomModal,
     CreateEditRowModal,
+    DeleteRowModal
   }
 }
 </script>
