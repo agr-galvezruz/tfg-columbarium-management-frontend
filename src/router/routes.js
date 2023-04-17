@@ -74,6 +74,13 @@ const routes = [
         meta: { icon: 'reorder', label: 'routes.rows' },
         component: () => import('pages/row/RowsListPage')
       },
+      {
+        path: 'niches',
+        name: 'niches',
+        beforeEnter: [checkToken],
+        meta: { icon: 'inventory', label: 'routes.niches' },
+        component: () => import('pages/niche/NichesListPage')
+      },
     ]
   },
 
