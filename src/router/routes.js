@@ -75,6 +75,12 @@ const routes = [
         component: () => import('pages/row/RowsListPage')
       },
       {
+        path: 'row/:rowId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/row/RowDetailsPage')
+      },
+      {
         path: 'niches',
         name: 'niches',
         beforeEnter: [checkToken],

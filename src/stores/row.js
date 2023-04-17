@@ -9,8 +9,18 @@ export const useRowStore = defineStore('row', {
       return data
     },
 
+    async getRow(id) {
+      const { data } = await axios.get(`/rows/${id}`)
+      return data
+    },
+
     async getRowsFromRoom(filter) {
       const { data } = await axios.get(`/rows/getRowsFromRoom${filter}`)
+      return data
+    },
+
+    async getAllRowsFromRoomNoPagination(roomId) {
+      const { data } = await axios.get(`/rows/getAllRowsFromRoomNoPagination/${roomId}`)
       return data
     },
 
