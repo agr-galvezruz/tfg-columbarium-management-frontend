@@ -2,7 +2,7 @@
   <div class="full-container flex column no-wrap gap-20">
     <title-component :title="$t('pages.building.details_title')" showBackButton />
 
-    <item-details-component v-if="buildingData" :title="buildingTitle" :item-data="buildingDetails">
+    <item-details-component v-if="buildingData" :title="`${$t('pages.building.entity')}: ${buildingData.internalCode}`" :item-data="buildingDetails">
       <div class="flex no-wrap gap-5">
         <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditBuilding()" />
         <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteBuilding()" />
@@ -64,8 +64,7 @@ export default defineComponent({
       loading: false,
       buildingId: computed(() => route.params.buildingId || null),
       buildingData: null,
-      buildingDetails: [],
-      buildingTitle: ''
+      buildingDetails: []
     })
 
     const fetchData = async() => {
@@ -89,7 +88,6 @@ export default defineComponent({
     }
 
     const setBuildingDetails = () => {
-      state.buildingTitle = `${t('pages.building.entity')} - ${state.buildingData.internalCode}`
       state.buildingDetails = [
         { label: t('pages.building.internal_code'), icon: 'tag', value: state.buildingData.internalCode },
         { label: t('pages.building.name'), icon: 'church', value: state.buildingData.name },

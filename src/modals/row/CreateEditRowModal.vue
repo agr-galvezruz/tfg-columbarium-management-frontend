@@ -60,18 +60,20 @@ export default defineComponent({
         state.isDialogOpen = true
         getAllBuildingsNoPaginated()
       })
-      // bus.$on('openCreateRowInRoomModal', (data) => {
-      //   state.type = 'Create'
-      //   state.buildingOptions = [{ label: `${data.internalCode} - ${data.name}`, value: data.id.toString(), internalCode: data.internalCode }]
-      //   state.rowData.roomId = data.id.toString()
-      //   state.isDialogOpen = true
-      //   state.readonlySelect = true
-      // })
+      bus.$on('openCreateRowInRoomModal', (data) => {
+        state.type = 'Create'
+        state.buildingOptions = [{ label: `${data.building.internalCode} - ${data.building.name}`, value: data.building.id.toString(), internalCode: data.building.internalCode }]
+        state.roomOptions = [{ label: `${data.internalCode} - ${data.location}`, value: data.id.toString(), internalCode: data.internalCode }]
+        state.buildingId = data.building.id.toString()
+        state.rowData.roomId = data.id.toString()
+        state.isDialogOpen = true
+        state.readonlySelect = true
+      })
     })
 
     onBeforeUnmount(() => {
       bus.$off('openCreateEditRowModal')
-      // bus.$off('openCreateRowInRoomModal')
+      bus.$off('openCreateRowInRoomModal')
     })
 
     const { t } = useI18n({})

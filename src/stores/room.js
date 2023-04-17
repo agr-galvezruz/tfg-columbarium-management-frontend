@@ -9,6 +9,11 @@ export const useRoomStore = defineStore('room', {
       return data
     },
 
+    async getRoom(id) {
+      const { data } = await axios.get(`/rooms/${id}`)
+      return data
+    },
+
     async getRoomsFromBuilding(filter) {
       const { data } = await axios.get(`/rooms/getRoomsFromBuilding${filter}`)
       return data

@@ -42,8 +42,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .content-size {
-    // max-width: max-content;
-    // min-width: min-content;
+    min-width: max-content;
 
     .card-container {
       color: var(--main-text-color);

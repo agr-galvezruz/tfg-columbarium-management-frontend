@@ -62,6 +62,12 @@ const routes = [
         component: () => import('pages/room/RoomsListPage')
       },
       {
+        path: 'room/:roomId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/room/RoomDetailsPage')
+      },
+      {
         path: 'rows',
         name: 'rows',
         beforeEnter: [checkToken],

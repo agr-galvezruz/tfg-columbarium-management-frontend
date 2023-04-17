@@ -2,46 +2,47 @@
   <filter-component :filters="filters" @update-filters="sendFilters" />
 
   <q-table
-      class="full-width sticky-header"
-      flat
-      :loading="loading"
-      :loading-label="$t('general_texts.loading')"
-      :no-data-label="$t('pages.room.no_data')"
-      :rows="rows"
-      :columns="columns"
-      row-key="dni"
-      v-model:pagination="pagination"
-      :rows-per-page-options="[0]"
-      @request="onRequest"
-      :pagination-label="getPaginationLabel">
+    class="full-width sticky-header"
+    flat
+    :loading="loading"
+    :loading-label="$t('general_texts.loading')"
+    :no-data-label="$t('pages.room.no_data')"
+    :rows="rows"
+    :columns="columns"
+    row-key="dni"
+    v-model:pagination="pagination"
+    :rows-per-page-options="[0]"
+    @request="onRequest"
+    @row-click="goToRoomInfo"
+    :pagination-label="getPaginationLabel">
 
-      <template v-slot:header-cell="props">
-        <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
-      </template>
+    <template v-slot:header-cell="props">
+      <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
+    </template>
 
-      <template v-slot:body-cell-actions="props">
-        <q-td :props="props">
-          <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">
-            <q-menu anchor="top left" self="top right">
-              <q-item clickable @click="openCreateEditRoom(props.row)" v-close-popup>
-                <q-item-section>
-                  <div class="flex items-center gap-5">
-                    <q-icon color="blue" size="24px" name="drive_file_rename_outline"/>
-                    <span class="action-class">{{ $t('general_texts.edit') }}</span>
-                  </div>
-                </q-item-section>
-              </q-item>
-              <q-item clickable @click="openDeleteRoom(props.row)" v-close-popup>
+    <template v-slot:body-cell-actions="props">
+      <q-td :props="props" @click.stop="null">
+        <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">
+          <q-menu anchor="top left" self="top right">
+            <q-item clickable @click="openCreateEditRoom(props.row)" v-close-popup>
+              <q-item-section>
                 <div class="flex items-center gap-5">
-                  <q-icon color="negative" size="24px" name="delete"/>
-                  <span class="action-class">{{ $t('general_texts.delete') }}</span>
+                  <q-icon color="blue" size="24px" name="drive_file_rename_outline"/>
+                  <span class="action-class">{{ $t('general_texts.edit') }}</span>
                 </div>
-              </q-item>
-            </q-menu>
-          </custom-button>
-        </q-td>
-      </template>
-    </q-table>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="openDeleteRoom(props.row)" v-close-popup>
+              <div class="flex items-center gap-5">
+                <q-icon color="negative" size="24px" name="delete"/>
+                <span class="action-class">{{ $t('general_texts.delete') }}</span>
+              </div>
+            </q-item>
+          </q-menu>
+        </custom-button>
+      </q-td>
+    </template>
+  </q-table>
 </template>
 
 <script>
@@ -49,6 +50,7 @@ import FilterComponent from 'src/components/filter/filter-component'
 import { concatFilters } from 'src/helpers/concatFilters'
 import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import { useRoomStore } from 'stores/room'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
 
@@ -83,6 +85,7 @@ export default defineComponent({
     })
 
     const { t } = useI18n({})
+    const router = useRouter()
     const roomStore = useRoomStore()
 
     const state = reactive({
@@ -144,6 +147,10 @@ export default defineComponent({
       fetchRoomData()
     }
 
+    const goToRoomInfo = (evt, row) => {
+      router.push({ path: `/crypt/room/${row.id}` })
+    }
+
     const openCreateEditRoom = (data = null) => {
       bus.$emit('openCreateEditRoomModal', data)
     }
@@ -160,7 +167,8 @@ export default defineComponent({
       getPaginationLabel,
       sendFilters,
       openCreateEditRoom,
-      openDeleteRoom
+      openDeleteRoom,
+      goToRoomInfo
     }
   }
 })

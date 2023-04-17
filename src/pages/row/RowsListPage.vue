@@ -2,7 +2,7 @@
   <div class="full-container flex column no-wrap gap-10">
     <title-component :title="$t('pages.row.list_title')">
       <template v-slot:button>
-        <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.row.add_room')" color="secondary" @click="openCreateEditRow()" />
+        <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.row.add_row')" color="secondary" @click="openCreateEditRow()" />
       </template>
     </title-component>
 

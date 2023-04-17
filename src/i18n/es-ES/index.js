@@ -92,6 +92,7 @@ export default {
     room: {
       entity: 'Sala',
       list_title: 'Salas',
+      details_title: 'Detalles de la sala',
       rooms_building: 'Salas del edificio',
       add_room: 'Añadir sala',
       internal_code: 'Código interno',
@@ -117,7 +118,7 @@ export default {
       entity: 'Fila',
       list_title: 'Filas',
       rows_room: 'Filas de la sala',
-      add_room: 'Añadir fila',
+      add_row: 'Añadir fila',
       internal_code: 'Código interno',
       internal_code_placeholder: 'Código de la fila',
       building_id: 'Edificio al que pertenece',
