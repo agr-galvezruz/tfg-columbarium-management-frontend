@@ -9,6 +9,7 @@ export default {
     rooms: 'Salas',
     rows: 'Filas',
     niches: 'Nichos',
+    urns: 'Urnas',
   },
   general_texts: {
     edit: 'Editar',
@@ -54,6 +55,12 @@ export default {
       search: 'Buscar',
       cancel: 'Cancelar',
       back: 'Atrás'
+    },
+    status: {
+      available: 'Disponible',
+      reserved: 'Reservado',
+      occupied: 'Ocupado',
+      disabled: 'Inhabilitado'
     }
   },
   pages: {
@@ -143,6 +150,7 @@ export default {
     niche: {
       entity: 'Nicho',
       list_title: 'Nichos',
+      details_title: 'Detalles del nicho',
       niches_row: 'Nichos de la fila',
       add_niche: 'Añadir nicho',
       internal_code: 'Código interno',
@@ -167,6 +175,36 @@ export default {
       successfully_edited: 'El nicho ha sido editado correctamente.',
       successfully_deleted: 'El nicho ha sido eliminado correctamente.',
       delete_error: 'El nicho no ha sido encontrado.'
+    },
+    urn: {
+      entity: 'Urna',
+      list_title: 'Urnas',
+      urns_niche: 'Urnas del nicho',
+      add_urn: 'Añadir urna',
+      internal_code: 'Código interno',
+      internal_code_placeholder: 'Código de la urna',
+      building_id: 'Edificio al que pertenece',
+      room_id: 'Sala a la que pertenece',
+      room_no_options: 'Seleccione un edificio antes',
+      row_id: 'Fila a la que pertenece',
+      row_no_options: 'Seleccione una sala antes',
+      niche_id: 'Nicho al que pertenece',
+      niche_no_options: 'Seleccione una fila antes',
+      status: 'Estado',
+      status_placeholder: 'Estado de la urna',
+      description: 'Descripción',
+      description_placeholder: 'Descripción sobre la urna',
+      no_data: 'No se han encontrado urnas.',
+      modal_create_title: 'Añadir urna',
+      modal_edit_title: 'Editar urna',
+      modal_delete_title: 'Eliminar urna',
+      modal_delete_text1: '¿Está seguro que quiere eliminar la urna',
+      modal_delete_text2: 'Todos los datos que dependen de este urna serán eliminados.',
+      unique_error_internal_code: 'El código interno introducido ya está en uso para este nicho.',
+      successfully_created: 'La urna ha sido creado correctamente.',
+      successfully_edited: 'La urna ha sido editado correctamente.',
+      successfully_deleted: 'La urna ha sido eliminado correctamente.',
+      delete_error: 'La urna no ha sido encontrado.'
     },
     person: {
       title: 'Personas',
