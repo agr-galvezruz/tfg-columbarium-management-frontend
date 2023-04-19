@@ -216,6 +216,7 @@ export default defineComponent({
         }
         closeModal()
         bus.$emit('refreshNicheData')
+        bus.$emit('refreshUrnData')
         state.loading = hideLoading()
       }
       catch (error) {

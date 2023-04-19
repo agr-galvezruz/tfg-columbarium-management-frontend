@@ -122,6 +122,7 @@ export default defineComponent({
         }
         closeModal()
         bus.$emit('refreshRoomData')
+        bus.$emit('refreshRowData')
         state.loading = hideLoading()
       }
       catch (error) {

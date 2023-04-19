@@ -169,6 +169,7 @@ export default defineComponent({
         }
         closeModal()
         bus.$emit('refreshRowData')
+        bus.$emit('refreshNicheData')
         state.loading = hideLoading()
       }
       catch (error) {

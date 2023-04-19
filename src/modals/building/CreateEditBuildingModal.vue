@@ -80,6 +80,7 @@ export default defineComponent({
         }
         closeModal()
         bus.$emit('refreshBuildingData')
+        bus.$emit('refreshRoomData')
         state.loading = hideLoading()
       }
       catch (error) {
