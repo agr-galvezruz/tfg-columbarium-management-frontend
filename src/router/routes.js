@@ -93,6 +93,13 @@ const routes = [
         hidden: true,
         component: () => import('pages/niche/NicheDetailsPage')
       },
+      {
+        path: 'urns',
+        name: 'urns',
+        beforeEnter: [checkToken],
+        meta: { icon: 'grid_view', label: 'routes.urns' },
+        component: () => import('pages/urn/UrnsListPage')
+      },
     ]
   },
 
