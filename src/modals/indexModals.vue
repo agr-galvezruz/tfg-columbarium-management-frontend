@@ -7,6 +7,7 @@
   <delete-row-modal />
   <create-edit-niche-modal />
   <delete-niche-modal />
+  <create-edit-urn-modal />
 </template>
 
 <script>
@@ -18,6 +19,7 @@ import CreateEditRowModal from 'src/modals/row/CreateEditRowModal'
 import DeleteRowModal from 'src/modals/row/DeleteRowModal'
 import CreateEditNicheModal from 'src/modals/niche/CreateEditNicheModal'
 import DeleteNicheModal from 'src/modals/niche/DeleteNicheModal'
+import CreateEditUrnModal from 'src/modals/urn/CreateEditUrnModal'
 
 export default {
   components: {
@@ -28,7 +30,8 @@ export default {
     CreateEditRowModal,
     DeleteRowModal,
     CreateEditNicheModal,
-    DeleteNicheModal
+    DeleteNicheModal,
+    CreateEditUrnModal,
   }
 }
 </script>
