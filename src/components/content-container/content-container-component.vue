@@ -9,7 +9,7 @@
   .content-container {
     border-radius: 12px;
     background-color: var(--background-color);
-    padding: 20px;
+    padding: 15px;
     box-shadow: var(--main-shadow);
   }
 </style>

@@ -9,19 +9,19 @@
       </div>
     </item-details-component>
 
-    <content-container-component class="flex column no-wrap gap-10">
+    <content-container-component class="flex column no-wrap gap-10" v-if="buildingData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.room.rooms_building') }}</div>
         <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.room.add_room')" color="secondary" @click="openCreateRoomInBuilding()" />
       </div>
 
-      <room-table-component v-if="buildingData" :where-id="buildingId" />
+      <room-table-component :where-id="buildingId" />
     </content-container-component>
   </div>
 </template>
 
 <script>
-import ContentContainerComponent from 'src/components/content-container/content-container-component.vue'
+import ContentContainerComponent from 'src/components/content-container/content-container-component'
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import RoomTableComponent from 'src/components/tables/room/room-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'

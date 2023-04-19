@@ -46,7 +46,7 @@
         <q-item clickable v-for="option in filter.options" :key="option.key" v-close-popup @click="filter.value = option.key; emitFilters()" style="padding:0 8px">
           <q-item-section>
             <div class="flex items-center gap-10" style="min-width:150px">
-              <q-radio keep-color v-model="filter.value" :val="option.key" :label="option.label" color="secondary" v-close-popup />
+              <q-radio keep-color v-model="filter.value" :val="option.key" :label="option.label" color="secondary" v-close-popup @click="filter.value = option.key; emitFilters()" />
             </div>
           </q-item-section>
         </q-item>

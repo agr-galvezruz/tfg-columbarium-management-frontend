@@ -2,7 +2,7 @@
   <div class="full-container flex column no-wrap gap-20">
     <title-component :title="$t('pages.row.details_title')" showBackButton />
 
-    <div class="flex gap-20 details-flex-container">
+    <div class="flex gap-10 details-flex-container">
       <item-details-component v-if="buildingData" :title="`${$t('pages.building.entity')}: ${buildingData?.internalCode}`" :item-data="buildingDetails">
         <div class="flex no-wrap gap-5">
           <custom-button padding="none" round color="positive" flat no-caps icon="launch" @click="goToBuildingInfo()" />
@@ -23,19 +23,19 @@
       </item-details-component>
     </div>
 
-    <content-container-component class="flex column no-wrap gap-10">
+    <content-container-component class="flex column no-wrap gap-10" v-if="rowData">
       <div class="flex no-wrap justify-between items-center">
-        <div class="content-title">{{ $t('pages.row.rows_room') }}</div>
+        <div class="content-title">{{ $t('pages.niche.niches_row') }}</div>
         <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.niche.add_niche')" color="secondary" @click="openCreateNicheInRow()" />
       </div>
 
-      <niche-table-component v-if="rowData" :where-id="rowId" />
+      <niche-table-component :where-id="rowId" />
     </content-container-component>
   </div>
 </template>
 
 <script>
-import ContentContainerComponent from 'src/components/content-container/content-container-component.vue'
+import ContentContainerComponent from 'src/components/content-container/content-container-component'
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import NicheTableComponent from 'src/components/tables/niche/niche-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'

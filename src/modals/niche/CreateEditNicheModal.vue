@@ -20,7 +20,7 @@
             class="full-width"
             required
             :disabled="readonlySelect"
-            :no-options="!roomId ? $t('pages.niche.room_no_options') : null"
+            :no-options="!buildingId ? $t('pages.niche.room_no_options') : null"
             @update:model-value="nicheData.rowId = ''; getAllRowsFromRoomNoPagination()" />
         </div>
         <div class="input-form">
@@ -32,7 +32,7 @@
             class="full-width"
             required
             :disabled="readonlySelect"
-            :no-options="!buildingId ? $t('pages.niche.row_no_options') : null" />
+            :no-options="!roomId ? $t('pages.niche.row_no_options') : null" />
           <custom-input v-model="nicheData.internalCode" :readonly="!nicheData.rowId" :label="$t('pages.niche.internal_code')" class="full-width" :placeholder="$t('pages.niche.internal_code_placeholder')" required type="internalCode" :internal-value="selectedInternalCode" />
         </div>
         <div class="input-form">

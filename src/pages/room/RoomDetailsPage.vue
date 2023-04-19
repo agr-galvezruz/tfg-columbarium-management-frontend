@@ -2,7 +2,7 @@
   <div class="full-container flex column no-wrap gap-20">
     <title-component :title="$t('pages.room.details_title')" showBackButton />
 
-    <div class="flex gap-20 details-flex-container">
+    <div class="flex gap-10 details-flex-container">
       <item-details-component v-if="buildingData" :title="`${$t('pages.building.entity')}: ${buildingData?.internalCode}`" :item-data="buildingDetails">
         <div class="flex no-wrap gap-5">
           <custom-button padding="none" round color="positive" flat no-caps icon="launch" @click="goToBuildingInfo()" />
@@ -17,19 +17,19 @@
       </item-details-component>
     </div>
 
-    <content-container-component class="flex column no-wrap gap-10">
+    <content-container-component class="flex column no-wrap gap-10" v-if="roomData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.row.rows_room') }}</div>
         <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.row.add_row')" color="secondary" @click="openCreateRowInRoom()" />
       </div>
 
-      <row-table-component v-if="roomData" :where-id="roomId" />
+      <row-table-component :where-id="roomId" />
     </content-container-component>
   </div>
 </template>
 
 <script>
-import ContentContainerComponent from 'src/components/content-container/content-container-component.vue'
+import ContentContainerComponent from 'src/components/content-container/content-container-component'
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import RowTableComponent from 'src/components/tables/row/row-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
