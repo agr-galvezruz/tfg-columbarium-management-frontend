@@ -9,8 +9,18 @@ export const useNicheStore = defineStore('niche', {
       return data
     },
 
+    async getNiche(id) {
+      const { data } = await axios.get(`/niches/${id}`)
+      return data
+    },
+
     async getNichesFromRow(filter) {
       const { data } = await axios.get(`/niches/getNichesFromRow${filter}`)
+      return data
+    },
+
+    async getAllNichesFromRowNoPagination(rowId) {
+      const { data } = await axios.get(`/rows/getAllNichesFromRowNoPagination/${rowId}`)
       return data
     },
 

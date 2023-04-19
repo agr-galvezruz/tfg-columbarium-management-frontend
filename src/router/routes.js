@@ -87,6 +87,12 @@ const routes = [
         meta: { icon: 'inventory', label: 'routes.niches' },
         component: () => import('pages/niche/NichesListPage')
       },
+      {
+        path: 'niche/:nicheId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/niche/NicheDetailsPage')
+      },
     ]
   },
 
