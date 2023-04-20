@@ -54,6 +54,7 @@ export default defineComponent({
         await urnStore.deleteUrn(state.urnData.id)
         showNotification(t('pages.urn.successfully_deleted'), 'positive')
         bus.$emit('refreshUrnDataDeleted')
+        bus.$emit('refreshNicheData')
         closeModal()
         state.loading = hideLoading()
       } catch (error) {

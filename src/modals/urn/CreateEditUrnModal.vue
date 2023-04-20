@@ -261,6 +261,7 @@ export default defineComponent({
           showNotification(t('pages.urn.successfully_edited'), 'positive')
         }
         closeModal()
+        bus.$emit('refreshNicheData')
         bus.$emit('refreshUrnData')
         state.loading = hideLoading()
       }

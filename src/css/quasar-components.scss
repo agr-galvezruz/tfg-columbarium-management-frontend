@@ -59,7 +59,7 @@
 
 .sticky-header {
   /* height or max-height is important */
-  max-height: calc(100vh - calc(var(--toolbar-height) + 175px));
+  max-height: calc(100vh - calc(var(--toolbar-height) + 220px));
 
   .q-table__top, thead tr:first-child th {
     /* bg color is important for th; just specify one */
