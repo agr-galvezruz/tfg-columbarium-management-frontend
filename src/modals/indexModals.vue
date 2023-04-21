@@ -9,6 +9,8 @@
   <delete-niche-modal />
   <create-edit-urn-modal />
   <delete-urn-modal />
+  <create-edit-person-modal />
+  <delete-person-modal />
 </template>
 
 <script>
@@ -22,6 +24,8 @@ import CreateEditNicheModal from 'src/modals/niche/CreateEditNicheModal'
 import DeleteNicheModal from 'src/modals/niche/DeleteNicheModal'
 import CreateEditUrnModal from 'src/modals/urn/CreateEditUrnModal'
 import DeleteUrnModal from 'src/modals/urn/DeleteUrnModal'
+import CreateEditPersonModal from 'src/modals/person/CreateEditPersonModal'
+import DeletePersonModal from 'src/modals/person/DeletePersonModal'
 
 export default {
   components: {
@@ -34,7 +38,9 @@ export default {
     CreateEditNicheModal,
     DeleteNicheModal,
     CreateEditUrnModal,
-    DeleteUrnModal
+    DeleteUrnModal,
+    CreateEditPersonModal,
+    DeletePersonModal
   }
 }
 </script>
