@@ -103,6 +103,30 @@ const routes = [
     ]
   },
 
+  {
+    path: '/record',
+    component: Layout,
+    name: 'record',
+    meta: { label: 'routes.record' },
+    children: [
+      {
+        path: 'people',
+        name: 'people',
+        beforeEnter: [checkToken],
+        meta: { icon: 'people', label: 'routes.people' },
+        component: () => import('pages/person/PeopleListPage')
+      },
+      {
+        path: 'people2',
+        name: 'people2',
+        beforeEnter: [checkToken],
+        hidden: true,
+        meta: { icon: 'people', label: 'routes.people' },
+        component: () => import('pages/building/BuildingsListPage')
+      },
+    ]
+  },
+
   // {
   //   path: '/reservas',
   //   component: Layout,
