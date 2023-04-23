@@ -138,11 +138,12 @@ export default defineComponent({
         }
         closeModal()
         bus.$emit('refreshPersonData')
+        bus.$emit('refreshCasketData')
         state.loading = hideLoading()
       }
       catch (error) {
         if (error?.response?.status === 422) {
-          if (error.response.data?.errors?.internalCode) {
+          if (error.response.data?.errors?.dni) {
             showNotification(t('pages.person.unique_error_dni'))
           }
         }

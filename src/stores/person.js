@@ -9,6 +9,26 @@ export const usePersonStore = defineStore('person', {
       return data
     },
 
+    async getAllPeopleNoInCasket() {
+      const { data } = await axios.get('/people/getAllPeopleNoInCasket')
+      return data
+    },
+
+    async getAllPeopleInCasket(casketId) {
+      const { data } = await axios.get(`/people/getAllPeopleInCasket/${casketId}`)
+      return data
+    },
+
+    async getPerson(personId) {
+      const { data } = await axios.get(`/people/${personId}`)
+      return data
+    },
+
+    async checkExistDni(dni) {
+      const { data } = await axios.get(`/people/checkExistDni/${dni}`)
+      return data
+    },
+
     async createPerson(formData) {
       const { data } = await axios.post('/people', formData)
       return data

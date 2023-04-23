@@ -23,7 +23,9 @@ export default {
     pagination_of: 'de',
     cancel: 'Cancelar',
     delete: 'Eliminar',
-    save: 'Guardar'
+    save: 'Guardar',
+    continue: 'Continuar',
+    back: 'Atrás'
   },
   database_messages: {
     incorrect_login_data: 'Correo electrónico o contraseña incorrectos',
@@ -273,5 +275,33 @@ export default {
       successfully_deleted: 'La persona ha sido eliminada correctamente.',
       delete_error: 'La persona no ha sido encontrada.'
     },
+    casket: {
+      entity: 'Cofre',
+      list_title: 'Cofres',
+      details_title: 'Detalles del cofre',
+      add_casket: 'Añadir cofre',
+      people_in_casket: 'Persona/s contenida/s en el cofre',
+      people: 'Persona/s',
+      description: 'Descripción del cofre',
+      description_placeholder: 'Descripción sobre el cofre',
+      people_in_casket_number: 'Número de personas contenidas en el cofre',
+      no_data: 'No se han encontrado cofres.',
+      modal_create_title: 'Añadir cofre',
+      modal_edit_title: 'Editar cofre',
+      modal_delete_title: 'Eliminar cofre',
+      modal_delete_text1: '¿Está seguro que quiere eliminar el cofre',
+      modal_delete_text2: 'Todos los datos que dependen de este cofre serán eliminados a excepción de las personas que pasarán a estar sin cofre.',
+      unique_error_internal_code: 'El código interno introducido ya está en uso.',
+      unique_error_name: 'El nombre del cofre introducido ya está en uso.',
+      successfully_created: 'El cofre ha sido creado correctamente.',
+      successfully_edited: 'El cofre ha sido editado correctamente.',
+      successfully_deleted: 'El cofre ha sido eliminado correctamente.',
+      delete_error: 'El cofre no ha sido encontrado.'
+    },
+    common: {
+      select_person: 'Seleccionar una persona del sistema',
+      add_person: 'Añadir una persona al sistema',
+      person_in_casket: 'Persona contenida en el cofre'
+    }
   }
 }

@@ -13,6 +13,7 @@
       :rules="customRules"
       :options="options"
       :disable="disabled"
+      :multiple="multiple"
       class="single-line-value-select"
       popup-content-class="popup-max-height"
       :bottom-slots="bottomSlots"
@@ -47,6 +48,7 @@
       :rules="customRules"
       :options="options"
       :disable="disabled"
+      :multiple="multiple"
       class="single-line-value-select"
       popup-content-class="popup-max-height"
       :bottom-slots="bottomSlots"
@@ -101,6 +103,10 @@ export default defineComponent({
       default: false
     },
     loading: {
+      type: Boolean,
+      default: false
+    },
+    multiple: {
       type: Boolean,
       default: false
     },

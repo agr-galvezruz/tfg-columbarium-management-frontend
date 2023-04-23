@@ -20,6 +20,12 @@
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
     </template>
 
+    <template v-slot:body-cell-casketId="props">
+      <q-td :props="props">
+        <q-icon v-if="props.row.casketId" color="green" size="21px" name="check_circle"/>
+      </q-td>
+    </template>
+
     <template v-slot:body-cell-actions="props">
       <q-td :props="props" @click.stop="null">
         <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">
@@ -50,7 +56,7 @@ import FilterComponent from 'src/components/filter/filter-component'
 import { concatFilters } from 'src/helpers/concatFilters'
 import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import { usePersonStore } from 'stores/person'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
 
@@ -79,7 +85,7 @@ export default defineComponent({
     })
 
     const { t } = useI18n({})
-    // const router = useRouter()
+    const router = useRouter()
     const personStore = usePersonStore()
 
     const state = reactive({
@@ -152,7 +158,7 @@ export default defineComponent({
     }
 
     const goToPersonInfo = (evt, row) => {
-      // router.push({ path: `/crypt/person/${row.id}` })
+      router.push({ path: `/record/person/${row.id}` })
     }
 
     const openCreateEditPerson = (data = null) => {

@@ -110,6 +110,19 @@ const routes = [
     meta: { label: 'routes.record' },
     children: [
       {
+        path: 'caskets',
+        name: 'caskets',
+        beforeEnter: [checkToken],
+        meta: { icon: 'takeout_dining', label: 'routes.caskets' },
+        component: () => import('pages/casket/CasketsListPage')
+      },
+      {
+        path: 'casket/:casketId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/casket/CasketDetailsPage')
+      },
+      {
         path: 'people',
         name: 'people',
         beforeEnter: [checkToken],
@@ -117,12 +130,10 @@ const routes = [
         component: () => import('pages/person/PeopleListPage')
       },
       {
-        path: 'people2',
-        name: 'people2',
+        path: 'person/:personId',
         beforeEnter: [checkToken],
         hidden: true,
-        meta: { icon: 'people', label: 'routes.people' },
-        component: () => import('pages/building/BuildingsListPage')
+        component: () => import('pages/person/PersonDetailsPage')
       },
     ]
   },

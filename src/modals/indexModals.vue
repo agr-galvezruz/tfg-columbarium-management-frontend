@@ -11,6 +11,8 @@
   <delete-urn-modal />
   <create-edit-person-modal />
   <delete-person-modal />
+  <create-edit-casket-modal />
+  <delete-casket-modal />
 </template>
 
 <script>
@@ -26,6 +28,8 @@ import CreateEditUrnModal from 'src/modals/urn/CreateEditUrnModal'
 import DeleteUrnModal from 'src/modals/urn/DeleteUrnModal'
 import CreateEditPersonModal from 'src/modals/person/CreateEditPersonModal'
 import DeletePersonModal from 'src/modals/person/DeletePersonModal'
+import CreateEditCasketModal from 'src/modals/casket/CreateEditCasketModal'
+import DeleteCasketModal from 'src/modals/casket/DeleteCasketModal'
 
 export default {
   components: {
@@ -40,7 +44,9 @@ export default {
     CreateEditUrnModal,
     DeleteUrnModal,
     CreateEditPersonModal,
-    DeletePersonModal
+    DeletePersonModal,
+    CreateEditCasketModal,
+    DeleteCasketModal
   }
 }
 </script>
