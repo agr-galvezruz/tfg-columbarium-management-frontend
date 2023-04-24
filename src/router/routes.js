@@ -138,6 +138,28 @@ const routes = [
     ]
   },
 
+  {
+    path: '/configuration',
+    component: Layout,
+    name: 'configuration',
+    meta: { label: 'routes.configuration' },
+    children: [
+      {
+        path: 'users',
+        name: 'users',
+        beforeEnter: [checkToken],
+        meta: { icon: 'manage_accounts', label: 'routes.users' },
+        component: () => import('pages/user/UsersListPage')
+      },
+      {
+        path: 'casket/:casketId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/casket/CasketDetailsPage')
+      },
+    ]
+  },
+
   // {
   //   path: '/reservas',
   //   component: Layout,

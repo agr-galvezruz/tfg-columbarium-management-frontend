@@ -1,12 +1,12 @@
 <template>
   <section class="header-layout">
     <div class="welcome-message">
-      <span>Bienvenido: </span>
-      <span>Antonio Gálvez Ruz</span>
+      <span>{{ $t('general_texts.welcome') }}: </span>
+      <span>{{ username }}</span>
     </div>
 
     <div class="log-out" @click="logout">
-      <span>Cerrar sesión </span>
+      <span>{{ $t('general_texts.logout') }}&nbsp;</span>
       <span class="logout material-icons">power_settings_new</span>
     </div>
   </section>
@@ -23,6 +23,7 @@ export default defineComponent({
     const authenticationStore = useAuthenticationStore()
     const router = useRouter()
 
+    const username = authenticationStore.getUsername
     const logout = async () => {
       try {
         await authenticationStore.logout()
@@ -34,7 +35,8 @@ export default defineComponent({
     }
 
     return{
-      logout
+      logout,
+      username
     }
   }
 })

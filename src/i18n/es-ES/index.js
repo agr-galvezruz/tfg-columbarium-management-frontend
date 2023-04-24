@@ -12,9 +12,13 @@ export default {
     urns: 'Urnas',
     record: 'Registro',
     people: 'Personas',
-    caskets: 'Cofres'
+    caskets: 'Cofres',
+    configuration: 'Configuración',
+    users: 'Usuarios'
   },
   general_texts: {
+    welcome: 'Bienvenido',
+    logout: 'Cerrar sesión',
     edit: 'Editar',
     delete: 'Eliminar',
     loading: 'Cargando...',
@@ -28,7 +32,7 @@ export default {
     back: 'Atrás'
   },
   database_messages: {
-    incorrect_login_data: 'Correo electrónico o contraseña incorrectos',
+    incorrect_login_data: 'Identificación o contraseña incorrecta.',
     network_error: 'Problema con la conexión al servidor.',
     database_conection_unauthorized: 'No autorizado, vuelva a iniciar sesión',
     database_conection_error: 'Problema con la conexión a la base de datos. Por favor, compruebe el estado de la misma.'
@@ -79,12 +83,16 @@ export default {
       reserved: 'Reservado',
       occupied: 'Ocupado',
       disabled: 'Inhabilitado'
+    },
+    rol: {
+      admin: 'Administrador',
+      consultant: 'Consultor'
     }
   },
   pages: {
     login: {
-      email: 'Correo electrónico',
-      email_placeholder: 'Introduzca su correo electrónico',
+      id: 'Identificador',
+      id_placeholder: 'Introduzca su identificador',
       password: 'Contraseña',
       password_placeholder: 'Introduzca su contraseña',
       login: 'Iniciar sesión'
@@ -302,6 +310,31 @@ export default {
       select_person: 'Seleccionar una persona del sistema',
       add_person: 'Añadir una persona al sistema',
       person_in_casket: 'Persona contenida en el cofre'
-    }
+    },
+    user: {
+      entity: 'Usuario',
+      list_title: 'Usuarios',
+      details_title: 'Detalles del usuario',
+      add_user: 'Añadir usuario',
+      id: 'Identificador',
+      name: 'Nombre',
+      rol: 'Rol',
+      person_id: 'Persona',
+      password: 'Contraseña',
+      password_placeholder: 'Contraseña del usuario',
+      new_password: 'Nueva contraseña',
+      new_password_placeholder: 'Nueva contraseña del usuario',
+      no_data: 'No se han encontrado usuarios.',
+      modal_create_title: 'Añadir usuario',
+      modal_edit_title: 'Editar usuario',
+      modal_delete_title: 'Eliminar usuario',
+      modal_delete_text1: '¿Está seguro que quiere este el usuario',
+      unique_error_internal_code: 'El código interno introducido ya está en uso.',
+      unique_error_name: 'El nombre del usuario introducido ya está en uso.',
+      successfully_created: 'El usuario ha sido creado correctamente.',
+      successfully_edited: 'El usuario ha sido editado correctamente.',
+      successfully_deleted: 'El usuario ha sido eliminado correctamente.',
+      delete_error: 'El usuario no ha sido encontrado.'
+    },
   }
 }

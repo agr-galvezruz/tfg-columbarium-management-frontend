@@ -14,6 +14,11 @@ export const usePersonStore = defineStore('person', {
       return data
     },
 
+    async getAllPeopleNoInCasketNoUsers() {
+      const { data } = await axios.get('/people/getAllPeopleNoInCasketNoUsers')
+      return data
+    },
+
     async getAllPeopleInCasket(casketId) {
       const { data } = await axios.get(`/people/getAllPeopleInCasket/${casketId}`)
       return data

@@ -13,6 +13,8 @@
   <delete-person-modal />
   <create-edit-casket-modal />
   <delete-casket-modal />
+  <create-edit-user-modal />
+  <delete-user-modal />
 </template>
 
 <script>
@@ -30,6 +32,8 @@ import CreateEditPersonModal from 'src/modals/person/CreateEditPersonModal'
 import DeletePersonModal from 'src/modals/person/DeletePersonModal'
 import CreateEditCasketModal from 'src/modals/casket/CreateEditCasketModal'
 import DeleteCasketModal from 'src/modals/casket/DeleteCasketModal'
+import CreateEditUserModal from 'src/modals/user/CreateEditUserModal'
+import DeleteUserModal from 'src/modals/user/DeleteUserModal'
 
 export default {
   components: {
@@ -46,7 +50,9 @@ export default {
     CreateEditPersonModal,
     DeletePersonModal,
     CreateEditCasketModal,
-    DeleteCasketModal
+    DeleteCasketModal,
+    CreateEditUserModal,
+    DeleteUserModal
   }
 }
 </script>

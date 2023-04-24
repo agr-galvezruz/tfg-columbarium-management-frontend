@@ -95,9 +95,13 @@ export default defineComponent({
         { label: t('pages.person.full_name'), icon: 'account_circle', value: `${state.personData.lastName1} ${state.personData.lastName2} ${state.personData.firstName}` },
         { label: t('pages.person.address'), icon: 'place', value: `${state.personData.address}, ${state.personData.postalCode}, ${state.personData.state}, ${state.personData.city}`},
         { label: t('pages.person.phone'), icon: 'phone', value: state.personData.phone },
-        { label: t('pages.person.email'), icon: 'email', value: state.personData.email },
-        { label: t('pages.person.deathdate'), icon: 'event_busy', value: formatDbToEsDate(state.personData.deathdate) },
       ]
+      if (state.personData.email) {
+        state.personDetails.push({ label: t('pages.person.email'), icon: 'email', value: state.personData.email })
+      }
+      if (state.personData.deathdate) {
+        state.personDetails.push({ label: t('pages.person.deathdate'), icon: 'event_busy', value: formatDbToEsDate(state.personData.deathdate) })
+      }
     }
 
     const openCreateEditPerson = () => {

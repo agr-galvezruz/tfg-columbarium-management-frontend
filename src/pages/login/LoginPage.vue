@@ -12,7 +12,7 @@
 
       <q-form @submit="onSubmit">
         <div class="input-form">
-          <custom-input v-model="email" :label="$t('pages.login.email')" :placeholder="$t('pages.login.email_placeholder')" />
+          <custom-input v-model="id" :label="$t('pages.login.id')" :placeholder="$t('pages.login.id_placeholder')" type="number" />
           <custom-input v-model="password" :label="$t('pages.login.password')" :placeholder="$t('pages.login.password_placeholder')" type="password" />
         </div>
         <custom-button class="full-width" :label="$t('pages.login.login')" color="secondary" type="submit" />
@@ -40,14 +40,14 @@ export default defineComponent({
 
     const state = reactive({
       loading: false,
-      email: 'i52garua@uco.es',
+      id: '1',
       password: 'password'
     })
 
     const onSubmit = async () => {
       try {
         state.loading = showLoading()
-        await authenticationStore.login({email: state.email, password: state.password})
+        await authenticationStore.login({ id: state.id, password: state.password })
         router.push({ path: '/dashboard' })
         state.loading = hideLoading()
       } catch (error) {
