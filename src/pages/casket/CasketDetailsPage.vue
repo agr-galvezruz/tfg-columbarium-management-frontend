@@ -2,7 +2,7 @@
   <div class="full-container flex column no-wrap gap-20">
     <title-component :title="$t('pages.casket.details_title')" showBackButton />
 
-    <item-details-component v-if="casketData" :title="`${$t('pages.casket.entity')}: ${casketData.id}`" :item-data="casketDetails">
+    <item-details-component v-if="casketData" :title="$t('pages.casket.entity')" :item-data="casketDetails">
       <div class="flex no-wrap gap-5">
         <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditCasket()" />
         <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteCasket()" />
@@ -12,7 +12,6 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="casketData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.casket.people_in_casket') }}</div>
-        <!-- <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.person.add_person')" color="secondary" @click="openCreateRoomInCasket()" /> -->
       </div>
 
       <person-casket-table-component :where-id="casketId" />

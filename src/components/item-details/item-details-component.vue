@@ -9,9 +9,10 @@
       <div class="attr-container flex column gap-5">
         <div class="flex no-wrap items-center gap-5" v-for="item in itemData" :key="item">
           <q-icon color="secondary" size="24px" :name="item.icon"/>
-          <div>
+          <div class="flex items-center">
             <span class="attr-text">{{ item.label }}:&nbsp;</span>
-            <span>{{ item.value }}</span>
+            <span v-if="item.label !== $t('pages.urn.status')">{{ item.value }}</span>
+            <status-chip-component v-else :status="item.value" />
           </div>
         </div>
       </div>
@@ -22,10 +23,12 @@
 <script>
 import { defineComponent } from 'vue'
 import ContentContainerComponent from 'src/components/content-container/content-container-component'
+import StatusChipComponent from '../status-chip/status-chip-component'
 
 export default defineComponent({
   components: {
-    ContentContainerComponent
+    ContentContainerComponent,
+    StatusChipComponent
   },
   props: {
     title: {

@@ -13,6 +13,7 @@
     v-model:pagination="pagination"
     :rows-per-page-options="[0]"
     @request="onRequest"
+    @row-click="goToUrnInfo"
     :pagination-label="getPaginationLabel">
 
     <template v-slot:header-cell="props">
@@ -26,7 +27,7 @@
     </template>
 
     <template v-slot:body-cell-actions="props">
-      <q-td :props="props">
+      <q-td :props="props" @click.stop="null">
         <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">
           <q-menu anchor="top left" self="top right">
             <q-item clickable @click="openCreateEditUrn(props.row)" v-close-popup>
@@ -55,6 +56,7 @@ import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'v
 import StatusChipComponent from 'src/components/status-chip/status-chip-component'
 import FilterComponent from 'src/components/filter/filter-component'
 import { concatFilters } from 'src/helpers/concatFilters'
+import { useRouter } from 'vue-router'
 import { useUrnStore } from 'stores/urn'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
@@ -91,6 +93,7 @@ export default defineComponent({
     })
 
     const { t } = useI18n({})
+    const router = useRouter()
     const urnStore = useUrnStore()
 
     const state = reactive({
@@ -157,6 +160,10 @@ export default defineComponent({
       fetchUrnData()
     }
 
+    const goToUrnInfo = (evt, row) => {
+      router.push({ path: `/crypt/urn/${row.id}` })
+    }
+
     const openCreateEditUrn = (data = null) => {
       bus.$emit('openCreateEditUrnModal', data)
     }
@@ -173,7 +180,8 @@ export default defineComponent({
       getPaginationLabel,
       sendFilters,
       openCreateEditUrn,
-      openDeleteUrn
+      openDeleteUrn,
+      goToUrnInfo
     }
   }
 })

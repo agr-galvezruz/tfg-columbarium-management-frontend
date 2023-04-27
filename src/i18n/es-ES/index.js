@@ -14,7 +14,9 @@ export default {
     people: 'Personas',
     caskets: 'Cofres',
     configuration: 'Configuración',
-    users: 'Usuarios'
+    users: 'Usuarios',
+    management: 'Gestión',
+    reservations: 'Reservas'
   },
   general_texts: {
     welcome: 'Bienvenido',
@@ -205,7 +207,9 @@ export default {
     urn: {
       entity: 'Urna',
       list_title: 'Urnas',
+      details_title: 'Detalles de la urna',
       urns_niche: 'Urnas del nicho',
+      urn_reservation: 'Reservas de la urna',
       add_urn: 'Añadir urna',
       internal_code: 'Código interno',
       internal_code_placeholder: 'Código de la urna',
@@ -216,6 +220,8 @@ export default {
       row_no_options: 'Seleccione una sala antes',
       niche_id: 'Nicho al que pertenece',
       niche_no_options: 'Seleccione una fila antes',
+      urn_id: 'Urna a la que pertenece',
+      urn_no_options: 'Seleccione un nicho antes',
       status: 'Estado',
       status_placeholder: 'Estado de la urna',
       description: 'Descripción',
@@ -281,7 +287,8 @@ export default {
       successfully_created: 'La persona ha sido creada correctamente.',
       successfully_edited: 'La persona ha sido editada correctamente.',
       successfully_deleted: 'La persona ha sido eliminada correctamente.',
-      delete_error: 'La persona no ha sido encontrada.'
+      delete_error: 'La persona no ha sido encontrada.',
+      person_reservation: 'Reservas de la persona'
     },
     casket: {
       entity: 'Cofre',
@@ -335,6 +342,40 @@ export default {
       successfully_edited: 'El usuario ha sido editado correctamente.',
       successfully_deleted: 'El usuario ha sido eliminado correctamente.',
       delete_error: 'El usuario no ha sido encontrado.'
+    },
+    reservation: {
+      entity: 'Reserva',
+      list_title: 'Reservas',
+      add_reservation: 'Añadir reserva',
+      start_date: 'Fecha de inicio',
+      end_date: 'Fecha de fin',
+      start_date_placeholder: 'Fecha inicial de la reserva',
+      reservation_time: 'Número de años de reserva',
+      reservation_time_placeholder: 'Número de años de reserva',
+      more_reservation_time: 'Número de años de ampliación de reserva',
+      more_reservation_time_placeholder: 'Número de años de ampliación de reserva',
+      date_info_text_1: 'La reserva será realizada desde',
+      date_info_text_2: 'hasta',
+      reservation_time_validation: 'Introduzca un número mayor que 0',
+      description: 'Descripción',
+      description_placeholder: 'Descripción sobre la reserva',
+      urn: 'Urna',
+      person: 'Persona',
+      resume_reservation_title: 'Resumen de la reserva',
+      resume_period_time: 'Periodo de reserva',
+      resume_years: 'años',
+      resume_niche_selected: 'Urna seleccionada',
+      resume_person_selected: 'Persona que solicita la reserva',
+      no_data: 'No se han encontrado reservas.',
+      modal_create_title: 'Añadir reserva',
+      modal_edit_title: 'Editar reserva',
+      modal_delete_title: 'Eliminar reserva',
+      modal_delete_text1: '¿Está seguro que quiere eliminar la reserva',
+      modal_delete_text2: 'Todos los datos que dependen de esta reserva serán eliminados.',
+      successfully_created: 'La reserva ha sido creada correctamente.',
+      successfully_edited: 'La reserva ha sido editada correctamente.',
+      successfully_deleted: 'La reserva ha sido eliminada correctamente.',
+      delete_error: 'La reserva no ha sido encontrada.'
     },
   }
 }

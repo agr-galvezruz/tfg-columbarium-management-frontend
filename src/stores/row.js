@@ -24,6 +24,11 @@ export const useRowStore = defineStore('row', {
       return data
     },
 
+    async getAllRowsByIdAndRoom(formData) {
+      const { data } = await axios.post('/rows/getAllRowsByIdAndRoom', formData)
+      return data
+    },
+
     async createRow(formData) {
       const { data } = await axios.post('/rows', formData)
       return data
