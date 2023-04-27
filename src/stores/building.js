@@ -19,6 +19,11 @@ export const useBuildingStore = defineStore('building', {
       return data
     },
 
+    async getAllBuildingsById(formData) {
+      const { data } = await axios.post('/buildings/getAllBuildingsById', formData)
+      return data
+    },
+
     async createBuilding(formData) {
       const { data } = await axios.post('/buildings', formData)
       return data

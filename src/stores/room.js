@@ -24,6 +24,11 @@ export const useRoomStore = defineStore('room', {
       return data
     },
 
+    async getAllRoomsByIdAndBuilding(formData) {
+      const { data } = await axios.post('/rooms/getAllRoomsByIdAndBuilding', formData)
+      return data
+    },
+
     async createRoom(formData) {
       const { data } = await axios.post('/rooms', formData)
       return data
