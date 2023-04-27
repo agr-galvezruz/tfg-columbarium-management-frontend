@@ -100,6 +100,12 @@ const routes = [
         meta: { icon: 'grid_view', label: 'routes.urns' },
         component: () => import('pages/urn/UrnsListPage')
       },
+      {
+        path: 'urn/:urnId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/urn/UrnDetailsPage')
+      },
     ]
   },
 
@@ -134,6 +140,28 @@ const routes = [
         beforeEnter: [checkToken],
         hidden: true,
         component: () => import('pages/person/PersonDetailsPage')
+      },
+    ]
+  },
+
+  {
+    path: '/management',
+    component: Layout,
+    name: 'management',
+    meta: { label: 'routes.management' },
+    children: [
+      {
+        path: 'reservations',
+        name: 'reservations',
+        beforeEnter: [checkToken],
+        meta: { icon: 'auto_stories', label: 'routes.reservations' },
+        component: () => import('pages/reservation/ReservationsListPage')
+      },
+      {
+        path: 'casket/:casketId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/casket/CasketDetailsPage')
       },
     ]
   },

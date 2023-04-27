@@ -25,10 +25,11 @@
       </q-item>
       <q-separator/>
 
-      <template v-if="filter.type === 'input'">
+      <template v-if="filter.type === 'input' || filter.type === 'date'">
         <q-item>
           <q-item-section>
-            <custom-input v-model="filter.newModifiableValue" :stackLabel="false" :bottom-slots="false" :label="$t('components.filter.search')" icon="search" clearable class="full-width" style="max-width:230px" />
+            <custom-input v-if="filter.type === 'input'" v-model="filter.newModifiableValue" :stackLabel="false" :bottom-slots="false" :label="$t('components.filter.search')" icon="search" clearable class="full-width" style="max-width:230px" />
+            <custom-date-picker v-else v-model="filter.newModifiableValue" :stackLabel="false" :bottom-slots="false" :label="$t('components.filter.search')" icon="search" clearable class="full-width" style="max-width:230px" />
           </q-item-section>
         </q-item>
         <q-separator/>
@@ -94,7 +95,7 @@ export default defineComponent({
     }
 
     const getFilterValue = (filter) => {
-      if (filter.type === 'input') {
+      if (filter.type === 'input' || filter.type === 'date') {
         return filter.value
       }
 

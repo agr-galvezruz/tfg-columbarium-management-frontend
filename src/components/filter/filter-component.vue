@@ -56,7 +56,8 @@
             <q-separator/>
             <q-item>
               <q-item-section>
-                <custom-input v-model="filterResult" :stackLabel="false" :bottom-slots="false" :label="$t('components.filter.search')" icon="search" clearable class="full-width" style="max-width:230px" />
+                <custom-input v-if="filterSelected.type === 'input'" v-model="filterResult" :stackLabel="false" :bottom-slots="false" :label="$t('components.filter.search')" icon="search" clearable class="full-width" style="max-width:230px" />
+                <custom-date-picker v-if="filterSelected.type === 'date'" v-model="filterResult" :stackLabel="false" :bottom-slots="false" :label="$t('components.filter.search')" icon="search" clearable class="full-width" style="max-width:230px" />
               </q-item-section>
             </q-item>
             <q-separator/>
@@ -99,6 +100,7 @@
 <script>
 import { computed, defineComponent, reactive, toRefs } from 'vue'
 import ChipComponent from 'src/components/chip/chip-component'
+import { formatEsToDbDate } from 'src/helpers/formatDate'
 
 export default defineComponent({
   components: {
@@ -121,7 +123,7 @@ export default defineComponent({
       generalFilter: '',
       totalFilter: [],
       filterInputFilters: computed(() => props.filters.filter((val) => {
-        return val.type === 'input' && val.label.toLowerCase().includes(state.searchFilter.toLowerCase().trim())
+        return (val.type === 'input' || val.type === 'date') && val.label.toLowerCase().includes(state.searchFilter.toLowerCase().trim())
       })),
       filterSelectFilters: computed(() => props.filters.filter((val) => val.type === 'select'))
     })
@@ -172,7 +174,8 @@ export default defineComponent({
       }
 
       state.totalFilter.forEach((el, index) => {
-        filterString += `${el.key}[${el.operator}]=${encodeURIComponent(el.value)}`
+        if (el.type === 'date') filterString += `${el.key}[${el.operator}]=${encodeURIComponent(formatEsToDbDate(el.value))}`
+        else filterString += `${el.key}[${el.operator}]=${encodeURIComponent(el.value)}`
         if ((state.totalFilter.length - 1) !==  index) {
           filterString += '&'
         }

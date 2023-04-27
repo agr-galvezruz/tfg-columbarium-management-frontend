@@ -40,7 +40,7 @@ export default defineComponent({
 
     const state = reactive({
       loading: false,
-      id: '1',
+      id: '0',
       password: 'password'
     })
 
