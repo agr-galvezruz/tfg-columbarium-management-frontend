@@ -15,6 +15,8 @@
   <delete-casket-modal />
   <create-edit-user-modal />
   <delete-user-modal />
+  <create-edit-reservation-modal />
+  <delete-reservation-modal />
 </template>
 
 <script>
@@ -34,6 +36,8 @@ import CreateEditCasketModal from 'src/modals/casket/CreateEditCasketModal'
 import DeleteCasketModal from 'src/modals/casket/DeleteCasketModal'
 import CreateEditUserModal from 'src/modals/user/CreateEditUserModal'
 import DeleteUserModal from 'src/modals/user/DeleteUserModal'
+import CreateEditReservationModal from 'src/modals/reservation/CreateEditReservationModal'
+import DeleteReservationModal from 'src/modals/reservation/DeleteReservationModal'
 
 export default {
   components: {
@@ -52,7 +56,9 @@ export default {
     CreateEditCasketModal,
     DeleteCasketModal,
     CreateEditUserModal,
-    DeleteUserModal
+    DeleteUserModal,
+    CreateEditReservationModal,
+    DeleteReservationModal
   }
 }
 </script>
