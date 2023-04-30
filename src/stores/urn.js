@@ -14,6 +14,11 @@ export const useUrnStore = defineStore('urn', {
       return data
     },
 
+    async getUrnById(id) {
+      const { data } = await axios.get(`/urns/getUrnById/${id}`)
+      return data
+    },
+
     async getUrnsFromNiche(filter) {
       const { data } = await axios.get(`/urns/getUrnsFromNiche${filter}`)
       return data

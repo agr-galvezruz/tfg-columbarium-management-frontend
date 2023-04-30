@@ -17,6 +17,8 @@
   <delete-user-modal />
   <create-edit-reservation-modal />
   <delete-reservation-modal />
+  <create-edit-deposit-modal />
+  <delete-deposit-modal />
 </template>
 
 <script>
@@ -38,6 +40,8 @@ import CreateEditUserModal from 'src/modals/user/CreateEditUserModal'
 import DeleteUserModal from 'src/modals/user/DeleteUserModal'
 import CreateEditReservationModal from 'src/modals/reservation/CreateEditReservationModal'
 import DeleteReservationModal from 'src/modals/reservation/DeleteReservationModal'
+import CreateEditDepositModal from 'src/modals/deposit/CreateEditDepositModal'
+import DeleteDepositModal from 'src/modals/deposit/DeleteDepositModal'
 
 export default {
   components: {
@@ -58,7 +62,9 @@ export default {
     CreateEditUserModal,
     DeleteUserModal,
     CreateEditReservationModal,
-    DeleteReservationModal
+    DeleteReservationModal,
+    CreateEditDepositModal,
+    DeleteDepositModal
   }
 }
 </script>

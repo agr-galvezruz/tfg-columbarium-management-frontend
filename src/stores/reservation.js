@@ -14,6 +14,11 @@ export const useReservationStore = defineStore('reservation', {
       return data
     },
 
+    async getAllReservationsWithNoDeposit() {
+      const { data } = await axios.get('/reservations/getAllReservationsWithNoDeposit')
+      return data
+    },
+
     async getAllReservationsFromPerson(filter) {
       const { data } = await axios.get(`/reservations/getAllReservationsFromPerson${filter}`)
       return data
@@ -21,6 +26,16 @@ export const useReservationStore = defineStore('reservation', {
 
     async getAllReservationsFromUrn(filter) {
       const { data } = await axios.get(`/reservations/getAllReservationsFromUrn${filter}`)
+      return data
+    },
+
+    async getReservation(id) {
+      const { data } = await axios.get(`/reservations/${id}`)
+      return data
+    },
+
+    async getReservationById(id) {
+      const { data } = await axios.get(`/reservations/getReservationById/${id}`)
       return data
     },
 

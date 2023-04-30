@@ -1,5 +1,5 @@
 <template>
-  <filter-component v-if="!personId" :filters="filters" @update-filters="sendFilters" />
+  <filter-component v-if="!personId && !reservationId" :filters="filters" @update-filters="sendFilters" />
 
   <q-table
     class="full-width sticky-header"
@@ -14,7 +14,8 @@
     :rows-per-page-options="[0]"
     @request="onRequest"
     @row-click="goToReservationInfo"
-    :pagination-label="getPaginationLabel">
+    :pagination-label="getPaginationLabel"
+    :hide-pagination="!!reservationId">
 
     <template v-slot:header-cell="props">
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
@@ -60,6 +61,10 @@ export default defineComponent({
     FilterComponent
   },
   props: {
+    reservationId: {
+      type: String,
+      default: null
+    },
     personId: {
       type: String,
       default: null
@@ -121,7 +126,7 @@ export default defineComponent({
       { key: 'startDate', label: t('pages.reservation.start_date'), icon: 'event', type: 'date', operator: 'like'},
       { key: 'endDate', label: t('pages.reservation.end_date'), icon: 'event', type: 'date', operator: 'like'},
       { key: 'urn', label: t('pages.reservation.urn'), icon: 'grid_view', type: 'input', operator: 'like'},
-      { key: 'person', label: t('pages.reservation.person'), icon: 'people', type: 'input', operator: 'like'},
+      { key: 'person', label: t('pages.reservation.person'), icon: 'person', type: 'input', operator: 'like'},
       { key: 'description', label: t('pages.reservation.description'), icon: 'description', type: 'input', operator: 'like'}
     ]
 
@@ -133,7 +138,9 @@ export default defineComponent({
       try {
         state.loading = true
         let data = null
-        if (props.personId) {
+        if (props.reservationId) {
+          data = await reservationStore.getReservationById(`${props.reservationId}?includePerson=true&includeUrn=true`)
+        } else if (props.personId) {
           data = await reservationStore.getAllReservationsFromPerson(`${concatFilters(state.urlFilters, page)}&personId=${props.personId}`)
         } else if (props.urnId) {
           data = await reservationStore.getAllReservationsFromUrn(`${concatFilters(state.urlFilters, page)}&urnId=${props.urnId}&includePerson=true`)
@@ -163,7 +170,7 @@ export default defineComponent({
     }
 
     const goToReservationInfo = (evt, row) => {
-      // router.push({ path: `/crypt/reservation/${row.id}` })
+      router.push({ path: `/management/reservation/${row.id}` })
     }
 
     const openCreateEditReservation = (data = null) => {

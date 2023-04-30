@@ -29,6 +29,11 @@ export const usePersonStore = defineStore('person', {
       return data
     },
 
+    async getPersonById(personId) {
+      const { data } = await axios.get(`/people/getPersonById/${personId}`)
+      return data
+    },
+
     async checkExistDni(dni) {
       const { data } = await axios.get(`/people/checkExistDni/${dni}`)
       return data

@@ -87,12 +87,11 @@
       <q-carousel-slide name="person-selection">
         <q-form @submit="goToResume">
           <div class="form-container">
-            <div class="input-form">
-              <person-select-create-component v-model="personForm" />
-            </div>
+            <div class="header-title-component">{{ $t('pages.reservation.reservation_person') }}</div>
+            <person-select-create-component v-model="personForm" />
           </div>
 
-          <div class="flex justify-between">
+          <div class="flex justify-between" :style="!personForm.tabSelected ? 'margin-top:15px' : null">
             <custom-button outline :label="$t('general_texts.cancel')" color="secondary" @click="closeModal" />
             <div class="flex gap-5">
               <custom-button outline icon="arrow_back" :label="$t('general_texts.back')" color="secondary" @click="goBackToStep2" />
@@ -628,6 +627,15 @@ export default defineComponent({
       flex: 1;
       min-width: 275px;
     }
+  }
+
+  .header-title-component {
+    position: relative;
+    color: var(--main-text-color);
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 15px;
+    text-align: center;
   }
 
   .resume-container {

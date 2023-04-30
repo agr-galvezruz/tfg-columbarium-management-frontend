@@ -148,6 +148,7 @@ export default defineComponent({
         { value: 'AVAILABLE' ,label: t('components.status.available') },
         { value: 'RESERVED' ,label: t('components.status.reserved') },
         { value: 'OCCUPIED' ,label: t('components.status.occupied') },
+        { value: 'EXPIRED' ,label: t('components.status.expired') },
         { value: 'DISABLED' ,label: t('components.status.disabled') }
       ],
       urnData: {

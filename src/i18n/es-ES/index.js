@@ -3,7 +3,7 @@
 
 export default {
   routes: {
-    dashboard: 'Dashboard',
+    dashboard: 'Inicio',
     crypt: 'Cripta',
     buildings: 'Edificios',
     rooms: 'Salas',
@@ -16,7 +16,8 @@ export default {
     configuration: 'Configuración',
     users: 'Usuarios',
     management: 'Gestión',
-    reservations: 'Reservas'
+    reservations: 'Reservas',
+    deposits: 'Depósitos'
   },
   general_texts: {
     welcome: 'Bienvenido',
@@ -84,6 +85,7 @@ export default {
       available: 'Disponible',
       reserved: 'Reservado',
       occupied: 'Ocupado',
+      expired: 'Caducado',
       disabled: 'Inhabilitado'
     },
     rol: {
@@ -269,8 +271,10 @@ export default {
       birthdate_placeholder: 'Fecha de nacimiento',
       deathdate: 'Fecha de fallecimiento',
       deathdate_placeholder: 'Fecha de fallecimiento',
+      in_casket_detail: 'Cofre al que pertenece',
       in_casket: 'En cofre',
       full_name: 'Nombre completo',
+      deposit: 'Depósitos realizados',
       single: 'Soltero/a',
       married: 'Casado/a',
       union: 'Unión libre o de hecho',
@@ -296,10 +300,12 @@ export default {
       details_title: 'Detalles del cofre',
       add_casket: 'Añadir cofre',
       people_in_casket: 'Persona/s contenida/s en el cofre',
+      person_in_casket: 'Persona contenida en el cofre',
       people: 'Persona/s',
       description: 'Descripción del cofre',
       description_placeholder: 'Descripción sobre el cofre',
       people_in_casket_number: 'Número de personas contenidas en el cofre',
+      deposit: 'Depósitos realizados del cofre',
       no_data: 'No se han encontrado cofres.',
       modal_create_title: 'Añadir cofre',
       modal_edit_title: 'Editar cofre',
@@ -346,6 +352,7 @@ export default {
     reservation: {
       entity: 'Reserva',
       list_title: 'Reservas',
+      details_title: 'Detalles de la reserva',
       add_reservation: 'Añadir reserva',
       start_date: 'Fecha de inicio',
       end_date: 'Fecha de fin',
@@ -360,7 +367,10 @@ export default {
       description: 'Descripción',
       description_placeholder: 'Descripción sobre la reserva',
       urn: 'Urna',
-      person: 'Persona',
+      deposit: 'Depósito realizado',
+      reservation_urn: 'Urna asociada a la reserva',
+      person: 'Solicitante',
+      reservation_person: 'Persona que solcita la reserva',
       resume_reservation_title: 'Resumen de la reserva',
       resume_period_time: 'Periodo de reserva',
       resume_years: 'años',
@@ -376,6 +386,41 @@ export default {
       successfully_edited: 'La reserva ha sido editada correctamente.',
       successfully_deleted: 'La reserva ha sido eliminada correctamente.',
       delete_error: 'La reserva no ha sido encontrada.'
+    },
+    deposit: {
+      entity: 'Depósito',
+      list_title: 'Depósitos',
+      details_title: 'Detalles del depósito',
+      add_deposit: 'Añadir depósito',
+      start_date: 'Fecha de inicio',
+      end_date: 'Fecha de fin',
+      start_date_placeholder: 'Fecha inicial de el depósito',
+      date_info_text_1: 'El depósito será realizada desde',
+      date_info_text_2: 'hasta',
+      description: 'Descripción',
+      description_placeholder: 'Descripción sobre el depósito',
+      deceased_relationship: 'Relación con el difunto',
+      deceased_relationship_placeholder: 'Relación del depositante con el difunto',
+      reservation_id: 'Reserva para realizar depósito',
+      casket_id: 'Cofre a depositar',
+      deposit_person: 'Persona depositante',
+      casket: 'Cofre',
+      casket_deposited: 'Cofre depositado',
+      reservation: 'Reserva',
+      reservation_associated: 'Reserva asociada',
+      resume_date: 'Fecha del depósito',
+      resume_end_date: 'Fecha de retirada',
+      resume_deposit_title: 'Resumen del depósito',
+      no_data: 'No se han encontrado depósitos.',
+      modal_create_title: 'Añadir depósito',
+      modal_edit_title: 'Editar depósito',
+      modal_delete_title: 'Eliminar depósito',
+      modal_delete_text1: '¿Está seguro que quiere eliminar el depósito',
+      modal_delete_text2: 'La reserva asociada a este depósito no se verá afectada.',
+      successfully_created: 'El depósito ha sido creada correctamente.',
+      successfully_edited: 'El depósito ha sido editada correctamente.',
+      successfully_deleted: 'El depósito ha sido eliminada correctamente.',
+      delete_error: 'El depósito no ha sido encontrada.'
     },
   }
 }

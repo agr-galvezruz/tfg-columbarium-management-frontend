@@ -9,6 +9,11 @@ export const useCasketStore = defineStore('casket', {
       return data
     },
 
+    async getAllCasketsWithNoDeposit() {
+      const { data } = await axios.get('/caskets/getAllCasketsWithNoDeposit')
+      return data
+    },
+
     async createCasketWithPeople(formData) {
       const { data } = await axios.post('/caskets/createCasketWithPeople', formData)
       return data
@@ -16,6 +21,11 @@ export const useCasketStore = defineStore('casket', {
 
     async updateCasketWithPeople(formData) {
       const { data } = await axios.post('/caskets/updateCasketWithPeople', formData)
+      return data
+    },
+
+    async getCasketById(casketId) {
+      const { data } = await axios.get(`/caskets/getCasketById/${casketId}`)
       return data
     },
 

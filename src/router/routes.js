@@ -158,10 +158,23 @@ const routes = [
         component: () => import('pages/reservation/ReservationsListPage')
       },
       {
-        path: 'casket/:casketId',
+        path: 'reservation/:reservationId',
         beforeEnter: [checkToken],
         hidden: true,
-        component: () => import('pages/casket/CasketDetailsPage')
+        component: () => import('pages/reservation/ReservationDetailsPage')
+      },
+      {
+        path: 'deposits',
+        name: 'deposits',
+        beforeEnter: [checkToken],
+        meta: { icon: 'archive', label: 'routes.deposits' },
+        component: () => import('pages/deposit/DepositsListPage')
+      },
+      {
+        path: 'deposit/:depositId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/deposit/DepositDetailsPage')
       },
     ]
   },

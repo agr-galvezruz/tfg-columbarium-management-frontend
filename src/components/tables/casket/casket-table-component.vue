@@ -1,5 +1,5 @@
 <template>
-  <filter-component :filters="filters" @update-filters="sendFilters" />
+  <filter-component v-if="!casketId" :filters="filters" @update-filters="sendFilters" />
 
   <q-table
     class="full-width sticky-header"
@@ -14,7 +14,8 @@
     :rows-per-page-options="[0]"
     @request="onRequest"
     @row-click="goToCasketInfo"
-    :pagination-label="getPaginationLabel">
+    :pagination-label="getPaginationLabel"
+    :hide-pagination="!!casketId" >
 
     <template v-slot:header-cell="props">
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
@@ -68,7 +69,13 @@ export default defineComponent({
   components: {
     FilterComponent
   },
-  setup() {
+  props: {
+    casketId: {
+      type: String,
+      default: null
+    }
+  },
+  setup(props) {
     onMounted(() => {
       bus.$on('refreshCasketData', () => {
         fetchCasketData(state.pagination.page)
@@ -121,7 +128,12 @@ export default defineComponent({
     const fetchCasketData = async (page = 1) => {
       try {
         state.loading = true
-        const data = await casketStore.getAllCaskets(`${concatFilters(state.urlFilters, page)}&includePeople=true`)
+        let data = null
+        if (props.casketId) {
+          data = await casketStore.getCasketById(`${props.casketId}?includePeople=true`)
+        } else {
+          data = await casketStore.getAllCaskets(`${concatFilters(state.urlFilters, page)}&includePeople=true`)
+        }
         state.rows = data?.data
         state.pagination = {
           page: data.meta.current_page,

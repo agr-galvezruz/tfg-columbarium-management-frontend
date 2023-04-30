@@ -5,6 +5,7 @@
       <q-carousel-slide name="select-add-person">
         <q-form @submit="goToResume">
           <div class="form-container">
+            <div class="header-title-component">{{ $t('pages.casket.person_in_casket') }}</div>
             <person-select-create-component v-model="personForm" required-deathdate />
           </div>
 
@@ -315,6 +316,14 @@ export default defineComponent({
       gap: 10px;
       margin-bottom: 5px;
     }
+  }
+  .header-title-component {
+    position: relative;
+    color: var(--main-text-color);
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 15px;
+    text-align: center;
   }
 
   .person-resume {

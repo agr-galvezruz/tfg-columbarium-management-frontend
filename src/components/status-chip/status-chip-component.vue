@@ -22,6 +22,7 @@ export default defineComponent({
       if (props.status === 'AVAILABLE') return t('components.status.available')
       if (props.status === 'RESERVED') return t('components.status.reserved')
       if (props.status === 'OCCUPIED') return t('components.status.occupied')
+      if (props.status === 'EXPIRED') return t('components.status.expired')
       return t('components.status.disabled')
     })
 
@@ -29,6 +30,7 @@ export default defineComponent({
       if (props.status === 'AVAILABLE') return 'green-chip'
       if (props.status === 'RESERVED') return 'yellow-chip'
       if (props.status === 'OCCUPIED') return 'red-chip'
+      if (props.status === 'EXPIRED') return 'purple-chip'
       return 'black-chip'
     })
 
@@ -57,6 +59,9 @@ export default defineComponent({
   }
   .red-chip {
     background-color: #fba6a1;
+  }
+  .purple-chip {
+    background-color: #e6a1fb;
   }
   .black-chip {
     background-color: #575e68;

@@ -1,5 +1,5 @@
 <template>
-  <filter-component :filters="filters" @update-filters="sendFilters" />
+  <filter-component v-if="!personId" :filters="filters" @update-filters="sendFilters" />
 
   <q-table
     class="full-width sticky-header"
@@ -14,7 +14,8 @@
     :rows-per-page-options="[0]"
     @request="onRequest"
     @row-click="goToPersonInfo"
-    :pagination-label="getPaginationLabel">
+    :pagination-label="getPaginationLabel"
+    :hide-pagination="!!personId">
 
     <template v-slot:header-cell="props">
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
@@ -64,7 +65,13 @@ export default defineComponent({
   components: {
     FilterComponent
   },
-  setup() {
+  props: {
+    personId: {
+      type: String,
+      default: null
+    }
+  },
+  setup(props) {
     onMounted(() => {
       bus.$on('refreshPersonData', () => {
         fetchPersonData(state.pagination.page)
@@ -111,6 +118,10 @@ export default defineComponent({
       { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
 
+    if (props.personId) {
+      delete columns[7]
+    }
+
     const filters = [
       { key: 'dni', label: t('pages.person.dni'), icon: 'badge', type: 'input', operator: 'like'},
       { key: 'firstName', label: t('pages.person.first_name'), icon: 'account_circle', type: 'input', operator: 'like'},
@@ -134,7 +145,12 @@ export default defineComponent({
     const fetchPersonData = async (page = 1) => {
       try {
         state.loading = true
-        const data = await personStore.getAllPeople(concatFilters(state.urlFilters, page))
+        let data = null
+        if (props.personId) {
+          data = await personStore.getPersonById(props.personId)
+        } else {
+          data = await personStore.getAllPeople(concatFilters(state.urlFilters, page))
+        }
         state.rows = data?.data
         state.pagination = {
           page: data.meta.current_page,

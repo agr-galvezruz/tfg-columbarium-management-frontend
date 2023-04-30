@@ -1,5 +1,5 @@
 <template>
-  <filter-component :filters="filters" @update-filters="sendFilters" />
+  <filter-component v-if="!urnId" :filters="filters" @update-filters="sendFilters" />
 
   <q-table
     class="full-width sticky-header"
@@ -14,7 +14,8 @@
     :rows-per-page-options="[0]"
     @request="onRequest"
     @row-click="goToUrnInfo"
-    :pagination-label="getPaginationLabel">
+    :pagination-label="getPaginationLabel"
+    :hide-pagination="!!urnId">
 
     <template v-slot:header-cell="props">
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
@@ -70,7 +71,11 @@ export default defineComponent({
     whereId: {
       type: String,
       default: null
-    }
+    },
+    urnId: {
+      type: String,
+      default: null
+    },
   },
   setup(props) {
     onMounted(() => {
@@ -118,10 +123,11 @@ export default defineComponent({
       { key: 'internalCode', label: t('pages.urn.internal_code'), icon: 'tag', type: 'input', operator: 'like'},
       { key: 'description', label: t('pages.urn.description'), icon: 'description', type: 'input', operator: 'like'},
       { key: 'status', label: t('pages.urn.status'), icon: 'assignment', type: 'select', operator: 'eq', options: [
-        { key: 'AVAILABLE', label: 'Disponible', icon: 'check_circle_outline' },
-        { key: 'RESERVED', label: 'Reservado', icon: 'error_outline' },
-        { key: 'OCCUPIED', label: 'Ocupado', icon: 'remove_circle_outline' },
-        { key: 'DISABLED', label: 'Inhabilitado', icon: 'hide_source' },
+        { key: 'AVAILABLE', label: t('components.status.available'), icon: 'check_circle_outline' },
+        { key: 'RESERVED', label: t('components.status.reserved'), icon: 'error_outline' },
+        { key: 'OCCUPIED', label: t('components.status.occupied'), icon: 'remove_circle_outline' },
+        { key: 'EXPIRED', label: t('components.status.expired'), icon: 'adjust' },
+        { key: 'DISABLED', label: t('components.status.disabled'), icon: 'hide_source' },
       ]}
     ]
 
@@ -135,6 +141,8 @@ export default defineComponent({
         let data = null
         if (props.whereId) {
           data = await urnStore.getUrnsFromNiche(`${concatFilters(state.urlFilters, page)}&includeNiche=true&includeRow=true&includeRoom=true&nicheId=${props.whereId}`)
+        } else if (props.urnId) {
+          data = await urnStore.getUrnById(`${props.urnId}?includeNiche=true&includeRow=true&includeRoom=true`)
         } else {
           data = await urnStore.getAllUrns(`${concatFilters(state.urlFilters, page)}&includeNiche=true&includeRow=true&includeRoom=true`)
         }

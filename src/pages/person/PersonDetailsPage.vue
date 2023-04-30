@@ -11,7 +11,7 @@
 
     <content-container-component class="flex column no-wrap gap-10" v-if="personData && personData.casketId">
       <div class="flex no-wrap justify-between items-center">
-        <div class="content-title">{{ $t('pages.person.in_casket') }}</div>
+        <div class="content-title">{{ $t('pages.person.in_casket_detail') }}</div>
       </div>
       <casket-person-table-component :where-id="personData.casketId" />
     </content-container-component>
@@ -24,7 +24,13 @@
       <reservation-table-component :person-id="personId"  />
     </content-container-component>
 
-
+    <content-container-component class="flex column no-wrap gap-10" v-if="personData">
+      <div class="flex no-wrap justify-between items-center">
+        <div class="content-title">{{ $t('pages.person.deposit') }}</div>
+        <custom-button v-if="!personData.casketId" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInPerson()" />
+      </div>
+      <deposit-table-component :person-id="personId" />
+    </content-container-component>
   </div>
 </template>
 
@@ -32,6 +38,7 @@
 import ContentContainerComponent from 'src/components/content-container/content-container-component'
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import CasketPersonTableComponent from 'src/components/tables/casket-person/casket-person-table-component'
+import DepositTableComponent from 'src/components/tables/deposit/deposit-table-component'
 import ReservationTableComponent from 'src/components/tables/reservation/reservation-table-component'
 import { formatDbToEsDate } from 'src/helpers/formatDate'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
@@ -48,7 +55,8 @@ export default defineComponent({
     CasketPersonTableComponent,
     ItemDetailsComponent,
     ContentContainerComponent,
-    ReservationTableComponent
+    ReservationTableComponent,
+    DepositTableComponent
   },
   setup() {
     onMounted(() => {
@@ -133,11 +141,17 @@ export default defineComponent({
       bus.$emit('openCreateReservationInPersonModal', data)
     }
 
+    const openCreateEditDepositInPerson = () => {
+      const data = JSON.parse(JSON.stringify(state.personData))
+      bus.$emit('openCreateEditDepositInPersonModal', data)
+    }
+
     return {
       ...toRefs(state),
       openCreateEditPerson,
       openDeletePerson,
-      openCreateReservationInPerson
+      openCreateReservationInPerson,
+      openCreateEditDepositInPerson
     }
   }
 })
