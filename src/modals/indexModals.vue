@@ -19,6 +19,7 @@
   <delete-reservation-modal />
   <create-edit-deposit-modal />
   <delete-deposit-modal />
+  <map-info-modal />
 </template>
 
 <script>
@@ -42,6 +43,7 @@ import CreateEditReservationModal from 'src/modals/reservation/CreateEditReserva
 import DeleteReservationModal from 'src/modals/reservation/DeleteReservationModal'
 import CreateEditDepositModal from 'src/modals/deposit/CreateEditDepositModal'
 import DeleteDepositModal from 'src/modals/deposit/DeleteDepositModal'
+import MapInfoModal from 'src/modals/map/MapInfoModal'
 
 export default {
   components: {
@@ -64,7 +66,8 @@ export default {
     CreateEditReservationModal,
     DeleteReservationModal,
     CreateEditDepositModal,
-    DeleteDepositModal
+    DeleteDepositModal,
+    MapInfoModal
   }
 }
 </script>

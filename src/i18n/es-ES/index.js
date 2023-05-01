@@ -10,14 +10,18 @@ export default {
     rows: 'Filas',
     niches: 'Nichos',
     urns: 'Urnas',
+    map: 'Mapa',
     record: 'Registro',
     people: 'Personas',
     caskets: 'Cofres',
-    configuration: 'Configuración',
+    configuration: 'Administración',
     users: 'Usuarios',
     management: 'Gestión',
     reservations: 'Reservas',
-    deposits: 'Depósitos'
+    deposits: 'Depósitos',
+    relocations: 'Reubicaciones',
+    help: 'Ayuda',
+    guide: 'Guía de usuario'
   },
   general_texts: {
     welcome: 'Bienvenido',
@@ -32,7 +36,8 @@ export default {
     delete: 'Eliminar',
     save: 'Guardar',
     continue: 'Continuar',
-    back: 'Atrás'
+    back: 'Atrás',
+    close: 'Cerrar'
   },
   database_messages: {
     incorrect_login_data: 'Identificación o contraseña incorrecta.',
@@ -367,7 +372,7 @@ export default {
       description: 'Descripción',
       description_placeholder: 'Descripción sobre la reserva',
       urn: 'Urna',
-      deposit: 'Depósito realizado',
+      deposit: 'Depósito de la reserva',
       reservation_urn: 'Urna asociada a la reserva',
       person: 'Solicitante',
       reservation_person: 'Persona que solcita la reserva',
@@ -422,5 +427,46 @@ export default {
       successfully_deleted: 'El depósito ha sido eliminada correctamente.',
       delete_error: 'El depósito no ha sido encontrada.'
     },
+    relocation: {
+      entity: 'Reubicación',
+      list_title: 'Reubicaciones',
+      details_title: 'Detalles del depósito',
+      add_deposit: 'Añadir depósito',
+      start_date: 'Fecha de inicio',
+      end_date: 'Fecha de fin',
+      start_date_placeholder: 'Fecha inicial de el depósito',
+      date_info_text_1: 'El depósito será realizada desde',
+      date_info_text_2: 'hasta',
+      description: 'Descripción',
+      description_placeholder: 'Descripción sobre el depósito',
+      deceased_relationship: 'Relación con el difunto',
+      deceased_relationship_placeholder: 'Relación del depositante con el difunto',
+      reservation_id: 'Reserva para realizar depósito',
+      casket_id: 'Cofre a depositar',
+      deposit_person: 'Persona depositante',
+      casket: 'Cofre',
+      casket_deposited: 'Cofre depositado',
+      reservation: 'Reserva',
+      reservation_associated: 'Reserva asociada',
+      resume_date: 'Fecha del depósito',
+      resume_end_date: 'Fecha de retirada',
+      resume_deposit_title: 'Resumen del depósito',
+      no_data: 'No se han encontrado depósitos.',
+      modal_create_title: 'Añadir depósito',
+      modal_edit_title: 'Editar depósito',
+      modal_delete_title: 'Eliminar depósito',
+      modal_delete_text1: '¿Está seguro que quiere eliminar el depósito',
+      modal_delete_text2: 'La reserva asociada a este depósito no se verá afectada.',
+      successfully_created: 'El depósito ha sido creada correctamente.',
+      successfully_edited: 'El depósito ha sido editada correctamente.',
+      successfully_deleted: 'El depósito ha sido eliminada correctamente.',
+      delete_error: 'El depósito no ha sido encontrada.'
+    },
+    map: {
+      title: 'Mapa de la cripta'
+    },
+    guide: {
+      title: 'Guía de usuario'
+    }
   }
 }

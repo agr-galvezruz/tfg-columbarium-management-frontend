@@ -18,6 +18,10 @@
         <custom-button class="full-width" :label="$t('pages.login.login')" color="secondary" type="submit" />
       </q-form>
     </div>
+
+    <div class="author-container">
+      <div class="author-name">&#169; 2023 Antonio Gálvez Ruz, UCO.</div>
+    </div>
   </div>
 </template>
 
@@ -69,6 +73,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .login-layout {
+    position: relative;
     min-height: calc(100vh - var(--toolbar-height));
     width: 100%;
     background-color: var(--body-color);
@@ -109,6 +114,24 @@ export default defineComponent({
 
       .input-form {
         margin-bottom: 5px;
+      }
+    }
+
+    .author-container {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border: 2px solid $primary;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 50px 0 0 0;
+      background-color: var(--background-color);
+      padding: 5px 10px 5px 20px;
+      box-shadow: var(--main-shadow);
+      .author-name {
+        font-weight: 500;
+        color: var(--main-text-color);
+        font-size: 16px;
       }
     }
   }

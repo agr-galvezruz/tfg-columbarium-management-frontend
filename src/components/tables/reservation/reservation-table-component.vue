@@ -123,7 +123,7 @@ export default defineComponent({
     }
 
     const filters = [
-      { key: 'startDate', label: t('pages.reservation.start_date'), icon: 'event', type: 'date', operator: 'like'},
+      { key: 'startDate', label: t('pages.reservation.start_date'), icon: 'today', type: 'date', operator: 'like'},
       { key: 'endDate', label: t('pages.reservation.end_date'), icon: 'event', type: 'date', operator: 'like'},
       { key: 'urn', label: t('pages.reservation.urn'), icon: 'grid_view', type: 'input', operator: 'like'},
       { key: 'person', label: t('pages.reservation.person'), icon: 'person', type: 'input', operator: 'like'},

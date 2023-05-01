@@ -110,7 +110,7 @@ export default defineComponent({
 
     const setReservationDetails = () => {
       state.reservationDetails = [
-        { label: t('pages.reservation.start_date'), icon: 'event', value: formatDbToEsDate(state.reservationData.startDate) },
+        { label: t('pages.reservation.start_date'), icon: 'today', value: formatDbToEsDate(state.reservationData.startDate) },
         { label: t('pages.reservation.end_date'), icon: 'event', value: formatDbToEsDate(state.reservationData.endDate) },
         // { label: t('pages.reservation.urn'), icon: 'grid_view', value: state.reservationData.urn.internalCode },
         // { label: t('pages.reservation.person'), icon: 'person', value: `${state.reservationData.person.lastName1} ${state.reservationData.person.lastName2} ${state.reservationData.person.firstName}` },

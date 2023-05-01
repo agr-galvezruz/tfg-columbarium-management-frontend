@@ -106,6 +106,13 @@ const routes = [
         hidden: true,
         component: () => import('pages/urn/UrnDetailsPage')
       },
+      {
+        path: 'map',
+        name: 'map',
+        beforeEnter: [checkToken],
+        meta: { icon: 'map', label: 'routes.map' },
+        component: () => import('pages/map/MapPage')
+      },
     ]
   },
 
@@ -176,6 +183,13 @@ const routes = [
         hidden: true,
         component: () => import('pages/deposit/DepositDetailsPage')
       },
+      {
+        path: 'relocations',
+        name: 'relocations',
+        beforeEnter: [checkToken],
+        meta: { icon: 'swap_horiz', label: 'routes.relocations' },
+        component: () => import('pages/relocation/RelocationsListPage')
+      },
     ]
   },
 
@@ -193,10 +207,28 @@ const routes = [
         component: () => import('pages/user/UsersListPage')
       },
       {
-        path: 'casket/:casketId',
-        beforeEnter: [checkToken],
+        path: 'user_',
         hidden: true,
-        component: () => import('pages/casket/CasketDetailsPage')
+      },
+    ]
+  },
+
+  {
+    path: '/help',
+    component: Layout,
+    name: 'help',
+    meta: { label: 'routes.help' },
+    children: [
+      {
+        path: 'guide',
+        name: 'guide',
+        beforeEnter: [checkToken],
+        meta: { icon: 'help', label: 'routes.guide' },
+        component: () => import('pages/guide/GuidePage')
+      },
+      {
+        path: 'guide_',
+        hidden: true,
       },
     ]
   },
