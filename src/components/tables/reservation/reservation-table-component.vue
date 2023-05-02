@@ -21,6 +21,12 @@
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
     </template>
 
+    <template v-slot:body-cell-description="props">
+      <q-td :props="props">
+        <div v-html="props.row.description"></div>
+      </q-td>
+    </template>
+
     <template v-slot:body-cell-actions="props">
       <q-td :props="props" @click.stop="null">
         <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">

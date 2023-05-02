@@ -187,6 +187,17 @@
 
       </div>
     </q-input>
+
+    <q-editor
+      v-if="type === 'editor'"
+      v-model="inputValue"
+      min-height="60px"
+      :toolbar="[
+        ['bold', 'italic', 'underline', 'strike'],
+        ['undo', 'redo'],
+      ]"
+      style="margin-bottom:20px;" />
+
   </div>
   <div v-else>
     <q-input

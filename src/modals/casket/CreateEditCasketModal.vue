@@ -6,7 +6,7 @@
         <q-form @submit="goToResume">
           <div class="form-container">
             <div class="header-title-component">{{ $t('pages.casket.person_in_casket') }}</div>
-            <person-select-create-component v-model="personForm" required-deathdate />
+            <person-select-create-component v-model="personForm" required-deathdate :person-text="$t('pages.casket.person_in_casket')" />
           </div>
 
           <div class="flex justify-between" :style="!personForm.tabSelected ? 'margin-top:15px' : null">

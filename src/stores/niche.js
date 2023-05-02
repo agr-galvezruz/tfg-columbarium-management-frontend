@@ -24,6 +24,16 @@ export const useNicheStore = defineStore('niche', {
       return data
     },
 
+    async getNichesStatus() {
+      const { data } = await axios.get('/niches/getNichesStatus')
+      return data
+    },
+
+    async getNicheWithUrns(id) {
+      const { data } = await axios.get(`/niches/getNicheWithUrns/${id}`)
+      return data
+    },
+
     async getAllNichesByIdAndRow(formData) {
       const { data } = await axios.post('/niches/getAllNichesByIdAndRow', formData)
       return data

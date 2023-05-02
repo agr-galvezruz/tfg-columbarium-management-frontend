@@ -3,7 +3,7 @@
     <template v-slot:select>
       <div class="input-form">
         <div class="full-width">
-          <div class="stack-label">{{ $t('pages.common.person_in_casket') }} *</div>
+          <div class="stack-label">{{ personText }} *</div>
           <q-select
             dense
             outlined
@@ -86,6 +86,10 @@ export default defineComponent({
     requiredDeathdate: {
       type: Boolean,
       default: false
+    },
+    personText: {
+      type: String,
+      default: null
     }
   },
   emits: ['update:modelValue'],

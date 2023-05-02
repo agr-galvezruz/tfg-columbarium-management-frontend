@@ -93,7 +93,7 @@
         <q-form @submit="goToResume">
           <div class="form-container">
             <div class="header-title-component">{{ $t('pages.deposit.deposit_person') }}</div>
-            <person-select-create-component v-model="personForm" />
+            <person-select-create-component v-model="personForm" :person-text="$t('pages.deposit.deposit_person')" />
             <div class="input-form" v-if="personForm.tabSelected">
               <custom-input v-model="depositData.deceasedRelationship" :label="$t('pages.deposit.deceased_relationship')" class="full-width" :placeholder="$t('pages.deposit.deceased_relationship_placeholder')" required />
             </div>

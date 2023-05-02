@@ -37,6 +37,7 @@
         </div>
         <div class="input-form">
           <custom-input v-model="nicheData.storageQuantity" :label="$t('pages.niche.storage_quantity')" class="full-width" :placeholder="$t('pages.niche.storage_quantity_placeholder')" type="number" />
+          <custom-input v-model="nicheData.storageRows" :label="$t('pages.niche.storage_rows')" class="full-width" :placeholder="$t('pages.niche.storage_rows_placeholder')" type="number" />
         </div>
         <div class="input-form">
           <custom-input v-model="nicheData.description" :label="$t('pages.niche.description')" class="full-width" :placeholder="$t('pages.niche.description_placeholder')" type="textarea" />
@@ -128,6 +129,7 @@ export default defineComponent({
         id: '',
         internalCode: '',
         storageQuantity: '',
+        storageRows: '',
         description: '',
         rowId: ''
       }
@@ -245,6 +247,7 @@ export default defineComponent({
       state.nicheData.id = ''
       state.nicheData.internalCode = ''
       state.nicheData.storageQuantity = ''
+      state.nicheData.storageRows = ''
       state.nicheData.description = ''
       state.nicheData.rowId = ''
     }

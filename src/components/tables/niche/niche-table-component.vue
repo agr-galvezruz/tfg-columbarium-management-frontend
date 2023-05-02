@@ -102,6 +102,7 @@ export default defineComponent({
     const columns = [
       { name: 'internalCode', label: t('pages.niche.internal_code'), field: 'internalCode', align: 'left' },
       { name: 'storageQuantity', label: t('pages.niche.storage_quantity'), field: 'storageQuantity', align: 'left' },
+      { name: 'storageRows', label: t('pages.niche.storage_rows'), field: 'storageRows', align: 'left' },
       { name: 'description', label: t('pages.niche.description'), field: 'description', align: 'left',},
       { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
@@ -109,6 +110,7 @@ export default defineComponent({
     const filters = [
       { key: 'internalCode', label: t('pages.niche.internal_code'), icon: 'tag', type: 'input', operator: 'like'},
       { key: 'storageQuantity', label: t('pages.niche.storage_quantity'), icon: 'storage', type: 'input', operator: 'eq'},
+      { key: 'storageRows', label: t('pages.niche.storage_rows'), icon: 'align_vertical_top', type: 'input', operator: 'eq'},
       { key: 'description', label: t('pages.niche.description'), icon: 'description', type: 'input', operator: 'like'}
     ]
 

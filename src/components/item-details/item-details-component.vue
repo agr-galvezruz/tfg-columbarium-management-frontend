@@ -7,11 +7,11 @@
       </div>
 
       <div class="attr-container flex column gap-5">
-        <div class="flex no-wrap items-center gap-5" v-for="item in itemData" :key="item">
+        <div class="flex no-wrap gap-5" :class="item.label !== 'Descripción' ? 'items-center' : null" v-for="item in itemData" :key="item">
           <q-icon color="secondary" size="24px" :name="item.icon"/>
-          <div class="flex items-center">
+          <div class="flex items-baseline">
             <span class="attr-text">{{ item.label }}:&nbsp;</span>
-            <span v-if="item.label !== $t('pages.urn.status')">{{ item.value }}</span>
+            <span v-if="item.label !== $t('pages.urn.status')" v-html="item.value"></span>
             <status-chip-component v-else :status="item.value" />
           </div>
         </div>

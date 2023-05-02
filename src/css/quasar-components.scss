@@ -17,6 +17,12 @@
   border-style: solid !important;
 }
 
+.q-editor {
+  border: 1px solid rgba(0, 0, 0, 0.24);
+  border-radius: 8px !important;
+  background-color: var(--body-color);
+}
+
 .q-table__card {
   color: var(--main-text-color);
   background-color: var(--background-color);
