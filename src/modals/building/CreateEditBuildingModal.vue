@@ -10,7 +10,7 @@
           <custom-input v-model="buildingData.address" :label="$t('pages.building.address')" class="full-width" :placeholder="$t('pages.building.address_placeholder')" required />
         </div>
         <div class="input-form">
-          <custom-input v-model="buildingData.description" :label="$t('pages.building.description')" class="full-width" :placeholder="$t('pages.building.description_placeholder')" type="textarea" />
+          <custom-input v-model="buildingData.description" :label="$t('pages.building.description')" class="full-width" :placeholder="$t('pages.building.description_placeholder')" type="editor" />
         </div>
       </div>
 

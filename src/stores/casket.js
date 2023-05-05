@@ -9,8 +9,8 @@ export const useCasketStore = defineStore('casket', {
       return data
     },
 
-    async getAllCasketsWithNoDeposit() {
-      const { data } = await axios.get('/caskets/getAllCasketsWithNoDeposit')
+    async getAllCasketsWithNoDeposit(filter) {
+      const { data } = await axios.get(`/caskets/getAllCasketsWithNoDeposit${filter}`)
       return data
     },
 

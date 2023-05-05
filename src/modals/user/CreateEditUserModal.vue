@@ -41,6 +41,7 @@
         </div>
         <div class="input-form">
           <custom-input v-model="userData.password" :label="type === 'Create' ? $t('pages.user.password') : $t('pages.user.new_password')" class="full-width" :placeholder="type === 'Create' ? $t('pages.user.password_placeholder') : $t('pages.user.new_password_placeholder')" type="password" :required="type === 'Create'" />
+          <custom-input v-if="type === 'Create' || (type === 'Edit' && userData.password)" v-model="passwordRepeat" :label="$t('pages.user.password_repeat')" class="full-width" :placeholder="$t('pages.user.password_repeat_placeholder')" type="password" required :rules="[val => val === userData.password || $t('pages.user.error_password')]"/>
         </div>
       </div>
 
@@ -90,6 +91,7 @@ export default defineComponent({
       loading: false,
       type: 'Create',
       loadingPeopleSelect: false,
+      passwordRepeat: '',
       peopleOptions: [],
       filterOptions: [],
       rolOptions: [
@@ -174,6 +176,7 @@ export default defineComponent({
       state.isDialogOpen = false
       state.loading = false
       state.type = 'Create'
+      state.passwordRepeat = ''
       state.userData.id = ''
       state.userData.internalCode = ''
       state.userData.name = ''

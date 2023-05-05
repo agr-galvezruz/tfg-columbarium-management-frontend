@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="input-form">
-            <custom-input v-model="casketData.description" :label="$t('pages.casket.description')" class="full-width" :placeholder="$t('pages.casket.description_placeholder')" type="textarea" />
+            <custom-input v-model="casketData.description" :label="$t('pages.casket.description')" class="full-width" :placeholder="$t('pages.casket.description_placeholder')" type="editor" />
           </div>
 
           <div class="flex justify-between">

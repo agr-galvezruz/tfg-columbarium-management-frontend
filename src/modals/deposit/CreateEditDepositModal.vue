@@ -1,6 +1,45 @@
 <template>
   <dialog-component v-model="isDialogOpen" :dialog-title="type === 'Create' ? $t('pages.deposit.modal_create_title') : $t('pages.deposit.modal_edit_title')" :width="dialogWidth" >
     <q-carousel v-model="step" transition-prev="slide-right" transition-next="slide-left" :swipeable="false" :navigation="false" animated>
+      <!-- Step 0 -->
+      <q-carousel-slide name="date-selection">
+        <q-form @submit="zeroStep">
+          <div class="form-container">
+            <div class="input-form column" style="margin-bottom:10px">
+              <q-list>
+                <q-item tag="label" v-ripple style="border-radius:12px">
+                  <q-item-section avatar>
+                    <q-radio v-model="dateOption" val="automatic_date" color="primary" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label style="font-size:15px">Fecha del depósito a día de hoy</q-item-label>
+                    <q-item-label style="font-size:14px" caption>Establecerá la fecha del depósito a la fecha de hoy.</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item tag="label" v-ripple style="border-radius:12px">
+                  <q-item-section avatar top>
+                    <q-radio v-model="dateOption" val="manual_date" color="primary" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label style="font-size:15px">Fecha del depósito manual</q-item-label>
+                    <q-item-label style="font-size:14px" caption>Podrá seleccionar la fecha en la que se realizó el depósito.</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="input-form" v-if="dateOption === 'manual_date'">
+              <custom-date-picker v-model="depositData.startDate" :label="$t('pages.deposit.start_date')" class="full-width" :placeholder="$t('pages.deposit.start_date_placeholder')" required />
+            </div>
+          </div>
+
+          <div class="flex justify-between">
+            <custom-button outline :label="$t('general_texts.cancel')" color="secondary" @click="closeModal" />
+            <custom-button icon="arrow_forward" :label="$t('general_texts.continue')" color="secondary" type="submit" :disabled="!dateOption" />
+          </div>
+        </q-form>
+      </q-carousel-slide>
+
       <!-- Step 1 -->
       <q-carousel-slide name="reservation-casket-selection">
         <q-form @submit="firstStep">
@@ -83,7 +122,10 @@
 
           <div class="flex justify-between">
             <custom-button outline :label="$t('general_texts.cancel')" color="secondary" @click="closeModal" />
-            <custom-button icon="arrow_forward" :label="$t('general_texts.continue')" color="secondary" type="submit" />
+            <div class="flex gap-5">
+              <custom-button outline icon="arrow_back" :label="$t('general_texts.back')" color="secondary" @click="goBackToStep0" />
+              <custom-button icon="arrow_forward" :label="$t('general_texts.continue')" color="secondary" type="submit" />
+            </div>
           </div>
         </q-form>
       </q-carousel-slide>
@@ -114,70 +156,66 @@
         <q-form @submit="onSubmit">
           <div class="resume-container">
             <div class="title">{{ $t('pages.deposit.resume_deposit_title') }}</div>
-            <div class="input-form">
+            <div class="input-form flex items-center gap-5">
               <div class="info-text">
                 <span>{{ $t('pages.deposit.resume_date') }}:&nbsp;</span>
                 <span class="text-secondary" style="font-weight:600">{{ depositData.startDate }}</span>
                 <span>.</span>
               </div>
+              <custom-button v-if="type === 'Edit'" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editDate" />
             </div>
-            <div class="input-form">
+            <div class="input-form flex items-center gap-5">
               <div class="info-text">
                 <span>{{ $t('pages.deposit.deposit_person') }}:&nbsp;</span>
                 <span class="text-secondary" style="font-weight:600">{{ deposited_person_selected }}</span>
                 <span>.</span>
               </div>
+              <custom-button v-if="type === 'Edit'" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editPerson" />
             </div>
-            <div class="input-form">
+            <div class="input-form flex items-center gap-5">
               <div class="info-text">
                 <span>{{ $t('pages.deposit.deceased_relationship') }}:&nbsp;</span>
                 <span class="text-secondary" style="font-weight:600">{{ depositData.deceasedRelationship }}</span>
                 <span>.</span>
               </div>
+              <custom-button v-if="type === 'Edit'" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editPerson" />
             </div>
-            <div class="input-form">
+            <div class="input-form flex items-center gap-5">
               <div class="info-text flex">
                 <span>{{ $t('pages.deposit.casket') }}:&nbsp;</span>
                 <span class="text-secondary" style="font-weight:600" v-html="casket_selected"></span>
               </div>
+              <custom-button v-if="type === 'Edit'" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editReservationCasket" />
             </div>
-            <div class="input-form">
+            <div class="input-form flex items-center gap-5">
               <div class="info-text flex">
                 <span>{{ $t('pages.deposit.reservation') }}:&nbsp;</span>
                 <span class="text-secondary" style="font-weight:600">{{ reservation_selected }}</span>
               </div>
+              <custom-button v-if="type === 'Edit'" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editReservationCasket" />
             </div>
           </div>
 
-          <!-- <div class="input-form column" v-if="type === 'Edit'" style="margin-bottom:10px">
+          <div class="input-form column" v-if="type === 'Edit'" style="margin-bottom:10px">
             <q-list>
               <q-item tag="label" v-ripple style="border-radius:12px">
-                <q-item-section avatar>
-                  <q-radio v-model="radioOption" val="add_years" color="primary" />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label style="font-size:15px">Ampliar reserva</q-item-label>
-                  <q-item-label style="font-size:14px" caption>Añadirá al periodo de reserva los años introducidos. El estado de la urna no se modificará.</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item tag="label" v-ripple style="border-radius:12px" v-if="!checkIfIsToday">
                 <q-item-section avatar top>
-                  <q-radio v-model="radioOption" val="cancel_reservation" color="orange" />
+                  <q-checkbox v-model="transferDeposit" color="orange" @update:model-value="clearEndDate" />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label style="font-size:15px">Cancelar reserva</q-item-label>
-                  <q-item-label style="font-size:14px" caption>Esto establecerá la fecha de fin de reserva a dia de hoy y liberará la urna reservada/ocupada.</q-item-label>
+                  <q-item-label style="font-size:15px">Traslado externo</q-item-label>
+                  <q-item-label style="font-size:14px" caption>Cambio de sitio por traslado externo.</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
           </div>
-          <div class="input-form" v-if="type === 'Edit' && radioOption === 'add_years'">
-            <custom-input v-model="more_reservation_time" :label="$t('pages.deposit.more_reservation_time')" class="full-width" :placeholder="$t('pages.deposit.more_reservation_time_placeholder')" required type="number" :rules="[(val => val && parseInt(val) > 0 || $t('pages.deposit.reservation_time_validation'))]" />
-          </div> -->
+
+          <div class="input-form" v-if="type === 'Edit' && transferDeposit">
+            <custom-date-picker v-model="depositData.endDate" :label="$t('pages.deposit.end_date')" class="full-width" :placeholder="$t('pages.deposit.end_date_placeholder')" required />
+          </div>
 
           <div class="input-form">
-            <custom-input v-model="depositData.description" :label="$t('pages.deposit.description')" class="full-width" :placeholder="$t('pages.deposit.description_placeholder')" type="textarea" />
+            <custom-input v-model="depositData.description" :label="$t('pages.deposit.description')" class="full-width" :placeholder="$t('pages.deposit.description_placeholder')" type="editor" />
           </div>
 
           <div class="flex justify-between">
@@ -217,7 +255,7 @@ export default defineComponent({
         closeModal()
         state.type = data ? 'Edit' : 'Create'
         if (state.type === 'Create') {
-          formData.depositData.startDate = moment().format('DD/MM/YYYY')
+          // formData.depositData.startDate = moment().format('DD/MM/YYYY')
           fetchData()
         }
         if (data) setDepositData(data)
@@ -227,7 +265,7 @@ export default defineComponent({
         closeModal()
         state.type = 'Create'
         state.disableReservationSelect = true
-        formData.depositData.startDate = moment().format('DD/MM/YYYY')
+        // formData.depositData.startDate = moment().format('DD/MM/YYYY')
         formData.depositData.reservationId = data.id?.toString()
         formData.resourceData.reservationOptions = [{ label: `${data.urn.internalCode} / ${data.person.lastName1} ${data.person.lastName2} ${data.person.firstName} (${formatDbToEsDate(data.startDate)} - ${formatDbToEsDate(data.endDate)})`, value: data.id?.toString() }]
         getAllCasketsWithNoDeposit()
@@ -236,7 +274,7 @@ export default defineComponent({
       bus.$on('openCreateEditDepositInPersonModal', (data) => {
         closeModal()
         state.type = 'Create'
-        formData.depositData.startDate = moment().format('DD/MM/YYYY')
+        // formData.depositData.startDate = moment().format('DD/MM/YYYY')
         state.disablePersonSelect = true
         formData.depositData.personId = data.id.toString()
         formData.personForm.tabSelected = 'select'
@@ -248,7 +286,7 @@ export default defineComponent({
       bus.$on('openCreateEditDepositInCasketModal', (data) => {
         closeModal()
         state.type = 'Create'
-        formData.depositData.startDate = moment().format('DD/MM/YYYY')
+        // formData.depositData.startDate = moment().format('DD/MM/YYYY')
         state.disableCasketSelect = true
         formData.depositData.casketId = data.id?.toString()
 
@@ -278,7 +316,9 @@ export default defineComponent({
       isDialogOpen: false,
       loading: false,
       type: 'Create',
-      step: 'reservation-casket-selection',
+      step: 'date-selection',
+      dateOption: 'automatic_date',
+      transferDeposit: false,
       disableReservationSelect: false,
       disablePersonSelect: false,
       disableCasketSelect: false,
@@ -349,24 +389,29 @@ export default defineComponent({
       const dataParsed = JSON.parse(JSON.stringify(data))
       state.step = 'resume'
 
+      if (dataParsed.endDate) {
+        state.transferDeposit = true
+      }
+
       formData.depositData.id = dataParsed.id
       formData.depositData.startDate = formatDbToEsDate(dataParsed.startDate)
       formData.depositData.endDate = formatDbToEsDate(dataParsed.endDate)
       formData.depositData.description = dataParsed.description
-      formData.depositData.reservationId = dataParsed.reservationId
-      formData.depositData.personId = dataParsed.personId
-      formData.depositData.casketId = dataParsed.casketId
+      formData.depositData.reservationId = dataParsed.reservationId?.toString()
+      formData.depositData.personId = dataParsed.personId?.toString()
+      formData.depositData.casketId = dataParsed.casketId?.toString()
       formData.depositData.deceasedRelationship = dataParsed.deceasedRelationship
+
       formData.personForm.tabSelected = 'select'
-      formData.personForm.personSelected.id = dataParsed.personId
+      formData.personForm.personSelected.id = dataParsed.personId?.toString()
       formData.personForm.personSelected.label = `${dataParsed.person.dni} - ${dataParsed.person.lastName1} ${dataParsed.person.lastName2} ${dataParsed.person.firstName}`
 
       let names = ''
       dataParsed.casket.people.forEach(person => {
         names += `<div>${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}</div>`
       })
-      formData.resourceData.casketOptions = [{ label: `<div><div>${names}</div></div>`, value: dataParsed.casketId }]
-      formData.resourceData.reservationOptions = [{ label: `${dataParsed.reservation.urn.internalCode} / ${dataParsed.reservation.person.lastName1} ${dataParsed.reservation.person.lastName2} ${dataParsed.reservation.person.firstName} (${formatDbToEsDate(dataParsed.reservation.startDate)} - ${formatDbToEsDate(dataParsed.reservation.endDate)})`, value: dataParsed.reservationId }]
+      formData.resourceData.casketOptions = [{ label: `<div><div>${names}</div></div>`, value: dataParsed.casketId?.toString() }]
+      formData.resourceData.reservationOptions = [{ label: `${dataParsed.reservation.urn.internalCode} / ${dataParsed.reservation.person.lastName1} ${dataParsed.reservation.person.lastName2} ${dataParsed.reservation.person.firstName} (${formatDbToEsDate(dataParsed.reservation.startDate)} - ${formatDbToEsDate(dataParsed.reservation.endDate)})`, value: dataParsed.reservationId?.toString() }]
     }
 
     const fetchData = () => {
@@ -377,7 +422,11 @@ export default defineComponent({
     const getAllReservationsWithNoDeposit = async () => {
       try {
         formData.resourceData.loadingReservationSelect = true
-        const data = await reservationStore.getAllReservationsWithNoDeposit()
+        let filter = ''
+        if (state.type === 'Edit') {
+          filter = `?includeReservationId=${formData.depositData.reservationId}`
+        }
+        const data = await reservationStore.getAllReservationsWithNoDeposit(filter)
         fillReservationOptions(data?.data)
         formData.resourceData.loadingReservationSelect = false
       } catch (error) {
@@ -388,7 +437,11 @@ export default defineComponent({
     const getAllCasketsWithNoDeposit = async () => {
       try {
         formData.resourceData.loadingCasketSelect = true
-        const data = await casketStore.getAllCasketsWithNoDeposit()
+        let filter = ''
+        if (state.type === 'Edit') {
+          filter = `?includeCasketId=${formData.depositData.casketId}`
+        }
+        const data = await casketStore.getAllCasketsWithNoDeposit(filter)
         fillCasketOptions(data?.data)
         formData.resourceData.loadingCasketSelect = false
       } catch (error) {
@@ -406,6 +459,7 @@ export default defineComponent({
 
     const fillCasketOptions = (data) => {
       formData.resourceData.casketOptions = []
+
       data.forEach(casket => {
         let names = ''
         casket.people.forEach(person => {
@@ -444,11 +498,41 @@ export default defineComponent({
       })
     }
 
+    const editReservationCasket = () => {
+      fetchData()
+      state.step = 'reservation-casket-selection'
+    }
+
+    const editPerson = () => {
+      state.step = 'person-selection'
+    }
+
+    const editDate = () => {
+      state.step = 'date-selection'
+      state.dateOption = 'manual_date'
+    }
+
+    const goBackToStep0 = () => {
+      if (state.type === 'Edit') {
+        goToResume()
+        return
+      }
+      state.step = 'date-selection'
+    }
+
     const goBackToStep1 = () => {
+      if (state.type === 'Edit') {
+        goToResume()
+        return
+      }
       state.step = 'reservation-casket-selection'
     }
 
     const goBackToStep2 = () => {
+      if (state.type === 'Edit') {
+        goToResume()
+        return
+      }
       if (state.disablePersonSelect) {
         state.step = 'reservation-casket-selection'
         return
@@ -456,7 +540,22 @@ export default defineComponent({
       state.step = 'person-selection'
     }
 
+    const zeroStep = () => {
+      if (state.dateOption === 'automatic_date') {
+        formData.depositData.startDate = moment().format('DD/MM/YYYY')
+      }
+      if (state.type === 'Edit') {
+        goToResume()
+        return
+      }
+      state.step = 'reservation-casket-selection'
+    }
+
     const firstStep = () => {
+      if (state.type === 'Edit') {
+        goToResume()
+        return
+      }
       if (state.disablePersonSelect) {
         state.step = 'resume'
         return
@@ -481,6 +580,7 @@ export default defineComponent({
           showNotification(t('pages.deposit.successfully_created'), 'positive')
         }
         else if (state.type === 'Edit') {
+          form.transferDeposit = state.transferDeposit
           await depositStore.updateDeposit(form)
           showNotification(t('pages.deposit.successfully_edited'), 'positive')
         }
@@ -497,14 +597,22 @@ export default defineComponent({
       }
     }
 
+    const clearEndDate = () => {
+      if (!state.transferDeposit) {
+        formData.depositData.endDate = ''
+      }
+    }
+
     const closeModal = () => {
       state.isDialogOpen = false
       state.loading = false
       state.type = 'Create'
-      state.step = 'reservation-casket-selection'
+      state.step = 'date-selection'
+      state.dateOption = 'automatic_date'
       state.disableReservationSelect = false
       state.disablePersonSelect = false
       state.disableCasketSelect = false
+      state.transferDeposit = false
 
       formData.depositData.id = ''
       formData.depositData.startDate = ''
@@ -549,10 +657,16 @@ export default defineComponent({
       closeModal,
       filterFn1,
       filterFn2,
+      zeroStep,
       firstStep,
+      goBackToStep0,
       goBackToStep1,
       goToResume,
-      goBackToStep2
+      goBackToStep2,
+      editDate,
+      editPerson,
+      editReservationCasket,
+      clearEndDate
     };
   }
 })

@@ -49,7 +49,7 @@
           <custom-select v-model="urnData.status" :options="statusOptions" :label="$t('pages.urn.status')" class="full-width" required />
         </div>
         <div class="input-form">
-          <custom-input v-model="urnData.description" :label="$t('pages.urn.description')" class="full-width" :placeholder="$t('pages.urn.description_placeholder')" type="textarea" />
+          <custom-input v-model="urnData.description" :label="$t('pages.urn.description')" class="full-width" :placeholder="$t('pages.urn.description_placeholder')" type="editor" />
         </div>
       </div>
 

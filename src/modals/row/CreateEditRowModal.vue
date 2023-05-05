@@ -26,7 +26,7 @@
           <custom-input v-model="rowData.internalCode" :readonly="!rowData.roomId" :label="$t('pages.row.internal_code')" class="full-width" :placeholder="$t('pages.row.internal_code_placeholder')" required type="internalCode" :internal-value="selectedInternalCode" />
         </div>
         <div class="input-form">
-          <custom-input v-model="rowData.description" :label="$t('pages.row.description')" class="full-width" :placeholder="$t('pages.row.description_placeholder')" type="textarea" />
+          <custom-input v-model="rowData.description" :label="$t('pages.row.description')" class="full-width" :placeholder="$t('pages.row.description_placeholder')" type="editor" />
         </div>
       </div>
 

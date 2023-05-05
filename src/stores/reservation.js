@@ -14,8 +14,8 @@ export const useReservationStore = defineStore('reservation', {
       return data
     },
 
-    async getAllReservationsWithNoDeposit() {
-      const { data } = await axios.get('/reservations/getAllReservationsWithNoDeposit')
+    async getAllReservationsWithNoDeposit(filter) {
+      const { data } = await axios.get(`/reservations/getAllReservationsWithNoDeposit${filter}`)
       return data
     },
 

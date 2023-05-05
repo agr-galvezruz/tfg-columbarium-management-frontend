@@ -5,10 +5,33 @@
       <q-carousel-slide name="date-selection">
         <q-form @submit="firstStep">
           <div class="form-container">
-            <div class="input-form">
+            <div class="input-form column" style="margin-bottom:10px">
+              <q-list>
+                <q-item tag="label" v-ripple style="border-radius:12px">
+                  <q-item-section avatar>
+                    <q-radio v-model="dateOption" val="automatic_date" color="primary" @update:model-value="dateChanged" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label style="font-size:15px">Fecha de reserva automática</q-item-label>
+                    <q-item-label style="font-size:14px" caption>{{ type === 'Edit' ? 'Mantendrá la fecha inicial de reserva' : 'Establecerá la fecha inicial a día de hoy'}}&nbsp;y la fecha de fin será calculada respecto los años introducidos.</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item tag="label" v-ripple style="border-radius:12px">
+                  <q-item-section avatar top>
+                    <q-radio v-model="dateOption" val="manual_date" color="primary" @update:model-value="dateChanged" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label style="font-size:15px">Fecha de reserva manual</q-item-label>
+                    <q-item-label style="font-size:14px" caption>Podrá seleccionar la fecha inicial y final de la reserva.</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="input-form" v-if="dateOption === 'automatic_date'">
               <custom-input v-model="reservation_time" @update:model-value="updateEndDate" :label="$t('pages.reservation.reservation_time')" class="full-width" :placeholder="$t('pages.reservation.reservation_time_placeholder')" required type="number" :rules="[(val => val && parseInt(val) > 0 || $t('pages.reservation.reservation_time_validation'))]" />
             </div>
-            <div class="input-form" v-if="type === 'Edit'">
+            <div class="input-form" v-if="dateOption === 'manual_date'">
               <custom-date-picker v-model="reservationData.startDate" :label="$t('pages.reservation.start_date')" class="full-width" :placeholder="$t('pages.reservation.start_date_placeholder')" required />
               <custom-date-picker v-model="reservationData.endDate" :label="$t('pages.reservation.end_date')" class="full-width" :placeholder="$t('pages.reservation.end_date_placeholder')" required />
             </div>
@@ -16,7 +39,7 @@
 
           <div class="flex justify-between">
             <custom-button outline :label="$t('general_texts.cancel')" color="secondary" @click="closeModal" />
-            <custom-button icon="arrow_forward" :label="$t('general_texts.continue')" color="secondary" type="submit" />
+            <custom-button icon="arrow_forward" :label="$t('general_texts.continue')" color="secondary" type="submit" :disabled="!dateOption" />
           </div>
         </q-form>
       </q-carousel-slide>
@@ -113,10 +136,9 @@
               <div class="info-text">
                 <span>{{ $t('pages.reservation.resume_period_time') }}:&nbsp;</span>
                 <span class="text-secondary" style="font-weight:600">{{ reservation_time }}</span>
-                <span v-if="type === 'Edit' && more_reservation_time > 0" class="text-secondary" style="font-weight:600">&nbsp;+ {{ more_reservation_time }} = {{ sum(reservation_time, more_reservation_time) }} </span>
                 <span>&nbsp;{{ $t('pages.reservation.resume_years') }}.</span>
               </div>
-              <custom-button v-if="type === 'Edit' && !thisReservationHasDeposit" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editYearsSelected" />
+              <custom-button v-if="type === 'Edit' && !thisReservationHasDeposit" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editYearsSelected('automatic_date')" />
             </div>
             <div class="input-form flex items-center gap-5">
               <div class="info-text">
@@ -126,7 +148,7 @@
                 <span class="text-secondary" style="font-weight:600">{{ reservationData.endDate }}</span>
                 <span>.</span>
               </div>
-              <custom-button v-if="type === 'Edit' && !thisReservationHasDeposit" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editYearsSelected" />
+              <custom-button v-if="type === 'Edit' && !thisReservationHasDeposit" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editYearsSelected('manual_date')" />
             </div>
             <div class="input-form flex items-center gap-5">
               <div class="info-text">
@@ -142,35 +164,22 @@
                 <span class="text-secondary" style="font-weight:600">{{ person_selected }}</span>
                 <span>.</span>
               </div>
-              <custom-button v-if="type === 'Edit' && !thisReservationHasDeposit" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editPersonSelected" />
+              <custom-button v-if="type === 'Edit'" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="editPersonSelected" />
             </div>
           </div>
 
-          <div class="input-form column" v-if="type === 'Edit'" style="margin-bottom:10px">
+          <div class="input-form column" v-if="type === 'Edit' && !thisReservationHasDeposit" style="margin-bottom:10px">
             <q-list>
               <q-item tag="label" v-ripple style="border-radius:12px">
-                <q-item-section avatar>
-                  <q-radio v-model="radioOption" val="add_years" color="primary" @update:model-value="radioChanged" />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label style="font-size:15px">Ampliar reserva</q-item-label>
-                  <q-item-label style="font-size:14px" caption>Añadirá al periodo de reserva los años introducidos. El estado de la urna no se modificará.</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item tag="label" v-ripple style="border-radius:12px" v-if="!checkIfIsToday">
                 <q-item-section avatar top>
-                  <q-radio v-model="radioOption" val="cancel_reservation" color="orange" @update:model-value="radioChanged" />
+                  <q-checkbox v-model="cancelReservation" color="orange" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label style="font-size:15px">Cancelar reserva</q-item-label>
-                  <q-item-label style="font-size:14px" caption>Esto establecerá la fecha de fin de reserva a dia de hoy y liberará la urna reservada/ocupada.</q-item-label>
+                  <q-item-label style="font-size:14px" caption>Esto establecerá la fecha de fin de reserva a dia de hoy y liberará la urna reservada.</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
-          </div>
-          <div class="input-form" v-if="type === 'Edit' && radioOption === 'add_years'">
-            <custom-input v-model="more_reservation_time" @update:model-value="updateEndDate" :label="$t('pages.reservation.more_reservation_time')" class="full-width" :placeholder="$t('pages.reservation.more_reservation_time_placeholder')" required type="number" :rules="[(val => val && parseInt(val) > 0 || $t('pages.reservation.reservation_time_validation'))]" />
           </div>
           <div class="input-form">
             <custom-input v-model="reservationData.description" :label="$t('pages.reservation.description')" class="full-width" :placeholder="$t('pages.reservation.description_placeholder')" type="editor" />
@@ -216,16 +225,12 @@ export default defineComponent({
       bus.$on('openCreateEditReservationModal', (data) => {
         closeModal()
         state.type = data ? 'Edit' : 'Create'
-        if (state.type === 'Create') {
-          formData.reservationData.startDate = moment().format('DD/MM/YYYY')
-        }
         if (data) setReservationData(data)
         state.isDialogOpen = true
       })
       bus.$on('openCreateReservationInPersonModal', (data) => {
         closeModal()
         state.type = 'Create'
-        formData.reservationData.startDate = moment().format('DD/MM/YYYY')
         formData.personForm.tabSelected = 'select'
         formData.personForm.personSelected.id = data.id
         formData.personForm.personSelected.label = `${data.dni} - ${data.lastName1} ${data.lastName2} ${data.firstName}`
@@ -235,7 +240,6 @@ export default defineComponent({
       bus.$on('openCreateReservationInUrnModal', (data) => {
         closeModal()
         state.type = 'Create'
-        formData.reservationData.startDate = moment().format('DD/MM/YYYY')
         formData.reservationData.urnId = data.id
         formData.resourceData.urnOptions = [{ label: data.internalCode, value: data.id }]
         state.skip = 'urn-selection'
@@ -264,17 +268,12 @@ export default defineComponent({
       type: 'Create',
       step: 'date-selection',
       reservation_time: '',
-      more_reservation_time: '',
-      radioOption: '',
+      cancelReservation: false,
+      dateOption: '',
       skip: '',
       thisReservationHasDeposit: false,
       niche_selected: computed(() => formData.resourceData.urnOptions.find(val => val.value === formData.reservationData.urnId)?.label),
-      reservationEndDate: computed(() => {
-        if (state.type === 'Edit' && state.more_reservation_time > 0) {
-          return addYearsEs(formData.reservationData.startDate, sum(state.reservation_time, state.more_reservation_time)) || ''
-        }
-        return addYearsEs(formData.reservationData.startDate, state.reservation_time) || ''
-      }),
+      reservationEndDate: computed(() => addYearsEs(formData.reservationData.startDate, state.reservation_time) || ''),
       dialogWidth: computed(() => {
         if (state.step === 'person-selection') return '820'
         return '650'
@@ -284,12 +283,6 @@ export default defineComponent({
           return `${formData.personForm.newPersonData.dni} - ${formData.personForm.newPersonData.lastName1} ${formData.personForm.newPersonData.lastName2} ${formData.personForm.newPersonData.firstName}`
         }
         return formData.personForm.personSelected.label
-      }),
-      checkIfIsToday: computed(() => {
-        if (moment().format('DD/MM/YYYY') === state.reservationEndDate) {
-          return true
-        }
-        return false
       })
     })
 
@@ -360,8 +353,8 @@ export default defineComponent({
       formData.personForm.personSelected.id = dataParsed.personId?.toString()
       formData.personForm.personSelected.label = `${dataParsed.person.dni} - ${dataParsed.person.lastName1} ${dataParsed.person.lastName2} ${dataParsed.person.firstName}`
 
-      const firstDate = moment(formData.reservationData.startDate, 'DD-MM-YYYY')
-      const secondDate = moment(formData.reservationData.endDate, 'DD-MM-YYYY')
+      const firstDate = moment(formData.reservationData.startDate, 'DD/MM/YYYY')
+      const secondDate = moment(formData.reservationData.endDate, 'DD/MM/YYYY')
       const duration = moment.duration(secondDate.diff(firstDate))
       state.reservation_time = Math.round(duration.asYears()).toString()
 
@@ -378,8 +371,9 @@ export default defineComponent({
       }
     }
 
-    const editYearsSelected = () => {
+    const editYearsSelected = (dateOption) => {
       state.step = 'date-selection'
+      state.dateOption = dateOption
       state.reservation_time = state.reservation_time?.toString()
     }
 
@@ -399,7 +393,6 @@ export default defineComponent({
 
     const goBackToStep1 = () => {
       if (state.type === 'Edit') {
-        state.more_reservation_time = state.more_reservation_time?.toString()
         goToResume()
         return
       }
@@ -409,7 +402,6 @@ export default defineComponent({
 
     const goBackToStep2 = () => {
       if (state.type === 'Edit') {
-        state.more_reservation_time = state.more_reservation_time?.toString()
         goToResume()
         return
       }
@@ -422,7 +414,6 @@ export default defineComponent({
 
     const goBackToStep3 = () => {
       if (state.type === 'Edit') {
-        state.more_reservation_time = state.more_reservation_time?.toString()
         goToResume()
         return
       }
@@ -434,8 +425,13 @@ export default defineComponent({
     }
 
     const firstStep = () => {
+      if (state.dateOption === 'manual_date') {
+        const firstDate = moment(formData.reservationData.startDate, 'DD/MM/YYYY')
+        const secondDate = moment(formData.reservationData.endDate, 'DD/MM/YYYY')
+        const duration = moment.duration(secondDate.diff(firstDate))
+        state.reservation_time = Math.round(duration.asYears()).toString()
+      }
       if (state.type === 'Edit') {
-        state.more_reservation_time = state.more_reservation_time?.toString()
         goToResume()
         return
       }
@@ -449,7 +445,6 @@ export default defineComponent({
 
     const secondStep = () => {
       if (state.type === 'Edit') {
-        state.more_reservation_time = state.more_reservation_time?.toString()
         goToResume()
         return
       }
@@ -469,6 +464,15 @@ export default defineComponent({
         formData.resourceData.loadingBuildingSelect = true
         const data = await reservationStore.getAllAvailableResources()
         formData.resourceIds = data
+
+        if (state.type === 'Edit') {
+          if (!formData.resourceIds?.buildingIds.includes(parseInt(formData.resourceData.buildingId))) formData.resourceIds?.buildingIds.push(parseInt(formData.resourceData.buildingId))
+          if (!formData.resourceIds?.roomIds.includes(parseInt(formData.resourceData.roomId))) formData.resourceIds?.roomIds.push(parseInt(formData.resourceData.roomId))
+          if (!formData.resourceIds?.rowIds.includes(parseInt(formData.resourceData.rowId))) formData.resourceIds?.rowIds.push(parseInt(formData.resourceData.rowId))
+          if (!formData.resourceIds?.nicheIds.includes(parseInt(formData.resourceData.nicheId))) formData.resourceIds?.nicheIds.push(parseInt(formData.resourceData.nicheId))
+          if (!formData.resourceIds?.urnIds.includes(parseInt(formData.reservationData.urnId))) formData.resourceIds?.urnIds.push(parseInt(formData.reservationData.urnId))
+        }
+
         await getAllBuildingsById()
         formData.resourceData.loadingBuildingSelect = false
       } catch (error) {
@@ -582,7 +586,7 @@ export default defineComponent({
           showNotification(t('pages.reservation.successfully_created'), 'positive')
         }
         else if (state.type === 'Edit') {
-          form.cancelReservation = state.radioOption === 'cancel_reservation'
+          form.cancelReservation = state.cancelReservation
           await reservationStore.updateReservation(form)
           showNotification(t('pages.reservation.successfully_edited'), 'positive')
         }
@@ -596,9 +600,10 @@ export default defineComponent({
       }
     }
 
-    const radioChanged = () => {
-      if (state.radioOption === 'cancel_reservation') {
-        state.more_reservation_time = '0'
+    const dateChanged = () => {
+      if (state.type === 'Create') {
+        formData.reservationData.startDate = moment().format('DD/MM/YYYY')
+        formData.reservationData.endDate = ''
       }
     }
 
@@ -608,8 +613,8 @@ export default defineComponent({
       state.type = 'Create'
       state.step = 'date-selection'
       state.reservation_time = ''
-      state.more_reservation_time = ''
-      state.radioOption = ''
+      state.cancelReservation = false
+      state.dateOption = ''
       state.skip = ''
 
       formData.reservationData.id = ''
@@ -678,7 +683,7 @@ export default defineComponent({
       getAllRowsByIdAndRoom,
       getAllNichesByIdAndRow,
       getAllUrnsByIdAndNiche,
-      radioChanged,
+      dateChanged,
       editUrnSelected,
       editPersonSelected,
       editYearsSelected,
