@@ -41,6 +41,14 @@
       </div>
       <reservation-table-component :urn-id="urnId" />
     </content-container-component>
+
+    <content-container-component class="flex column no-wrap gap-10" v-if="urnData && urnData.relocations?.length > 0">
+      <div class="flex no-wrap justify-between items-center">
+        <div class="content-title">{{ $t('pages.casket.relocation') }}</div>
+        <custom-button v-if="urnData.status === 'AVAILABLE'" :unelevated="false" icon="add_circle_outline" :label="$t('pages.relocation.add_relocation')" color="secondary" @click="openCreateRelocationInUrn()" />
+      </div>
+      <relocation-table-component :urn-id="urnId" />
+    </content-container-component>
   </div>
 </template>
 
@@ -48,6 +56,7 @@
 import ContentContainerComponent from 'src/components/content-container/content-container-component'
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import ReservationTableComponent from 'src/components/tables/reservation/reservation-table-component'
+import RelocationTableComponent from 'src/components/tables/relocation/relocation-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
@@ -61,7 +70,8 @@ export default defineComponent({
     TitleComponent,
     ItemDetailsComponent,
     ContentContainerComponent,
-    ReservationTableComponent
+    ReservationTableComponent,
+    RelocationTableComponent
   },
   setup() {
     onMounted(() => {
@@ -111,7 +121,7 @@ export default defineComponent({
 
     const fetchUrnData = async () => {
       try {
-        const data = await urnStore.getUrn(`${state.urnId}?includeNiche=true&includeRow=true&includeRoom=true&includeBuilding=true`)
+        const data = await urnStore.getUrn(`${state.urnId}?includeNiche=true&includeRow=true&includeRoom=true&includeBuilding=true&includeRelocations=true`)
         state.buildingData = data?.data?.niche?.row?.room?.building
         state.roomData = data?.data?.niche?.row?.room
         state.rowData = data?.data?.niche?.row
@@ -183,11 +193,17 @@ export default defineComponent({
       bus.$emit('openCreateReservationInUrnModal', data)
     }
 
+    const openCreateRelocationInUrn = () => {
+      const data = JSON.parse(JSON.stringify(state.urnData))
+      bus.$emit('openCreateRelocationInUrnModal', data)
+    }
+
     return {
       ...toRefs(state),
       openCreateEditUrn,
       openDeleteUrn,
       openCreateReservationInUrn,
+      openCreateRelocationInUrn,
       goToBuildingInfo,
       goToRoomInfo,
       goToRowInfo,

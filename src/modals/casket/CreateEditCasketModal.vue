@@ -251,6 +251,7 @@ export default defineComponent({
         closeModal()
         bus.$emit('refreshCasketData')
         bus.$emit('refreshPersonData')
+        bus.$emit('refreshRelocationData')
         state.loading = hideLoading()
       }
       catch (error) {

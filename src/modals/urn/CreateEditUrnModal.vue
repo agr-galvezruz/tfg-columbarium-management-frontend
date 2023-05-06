@@ -265,6 +265,8 @@ export default defineComponent({
         bus.$emit('refreshNicheData')
         bus.$emit('refreshUrnData')
         bus.$emit('refreshReservationData')
+        bus.$emit('refreshDepositData')
+        bus.$emit('refreshRelocationData')
         state.loading = hideLoading()
       }
       catch (error) {

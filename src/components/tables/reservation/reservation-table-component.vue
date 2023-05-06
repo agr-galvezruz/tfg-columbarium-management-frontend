@@ -1,5 +1,5 @@
 <template>
-  <filter-component v-if="!personId && !reservationId" :filters="filters" @update-filters="sendFilters" />
+  <filter-component v-if="!personId && !reservationId && !fromMap" :filters="filters" @update-filters="sendFilters" />
 
   <q-table
     class="full-width sticky-header"
@@ -78,6 +78,10 @@ export default defineComponent({
     urnId: {
       type: String,
       default: null
+    },
+    fromMap: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -123,6 +127,11 @@ export default defineComponent({
       { name: 'description', label: t('pages.reservation.description'), field: 'description', align: 'left',},
       { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (props.fromMap) {
+      delete columns[2]
+      delete columns[5]
+    }
 
     if (props.personId) {
       delete columns[3]

@@ -593,6 +593,8 @@ export default defineComponent({
         closeModal()
         bus.$emit('refreshReservationData')
         bus.$emit('refreshUrnData')
+        bus.$emit('refreshDepositData')
+        bus.$emit('refreshPersonData')
         state.loading = hideLoading()
       }
       catch (error) {

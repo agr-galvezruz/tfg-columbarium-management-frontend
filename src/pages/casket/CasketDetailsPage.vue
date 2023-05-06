@@ -23,6 +23,13 @@
       </div>
       <deposit-table-component :casket-id="casketId" />
     </content-container-component>
+
+    <content-container-component class="flex column no-wrap gap-10" v-if="casketData && casketData.relocations.length > 0">
+      <div class="flex no-wrap justify-between items-center">
+        <div class="content-title">{{ $t('pages.casket.relocation') }}</div>
+      </div>
+      <relocation-table-component :casket-id="casketId" />
+    </content-container-component>
   </div>
 </template>
 
@@ -31,6 +38,7 @@ import ContentContainerComponent from 'src/components/content-container/content-
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import PersonCasketTableComponent from 'src/components/tables/person-casket/person-casket-table-component'
 import DepositTableComponent from 'src/components/tables/deposit/deposit-table-component'
+import RelocationTableComponent from 'src/components/tables/relocation/relocation-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
@@ -45,7 +53,8 @@ export default defineComponent({
     PersonCasketTableComponent,
     ItemDetailsComponent,
     ContentContainerComponent,
-    DepositTableComponent
+    DepositTableComponent,
+    RelocationTableComponent
   },
   setup() {
     onMounted(() => {
@@ -88,7 +97,7 @@ export default defineComponent({
 
     const fetchCasketData = async () => {
       try {
-        const data = await casketStore.getCasket(`${state.casketId}?includePeople=true&includeDeposits=true`)
+        const data = await casketStore.getCasket(`${state.casketId}?includePeople=true&includeDeposits=true&includeRelocations=true`)
         state.casketData = data?.data
         setCasketDetails()
       } catch (error) {

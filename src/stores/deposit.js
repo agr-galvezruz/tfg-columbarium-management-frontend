@@ -14,6 +14,11 @@ export const useDepositStore = defineStore('deposit', {
       return data
     },
 
+    async getDepositByUrnId(id) {
+      const { data } = await axios.get(`/deposits/getDepositByUrnId/${id}`)
+      return data
+    },
+
     async getDepositByCasketId(id) {
       const { data } = await axios.get(`/deposits/getDepositByCasketId/${id}`)
       return data

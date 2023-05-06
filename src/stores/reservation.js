@@ -19,6 +19,11 @@ export const useReservationStore = defineStore('reservation', {
       return data
     },
 
+    async getAllReservationsWithDepositInDate(filter) {
+      const { data } = await axios.get(`/reservations/getAllReservationsWithDepositInDate${filter}`)
+      return data
+    },
+
     async getAllReservationsFromPerson(filter) {
       const { data } = await axios.get(`/reservations/getAllReservationsFromPerson${filter}`)
       return data

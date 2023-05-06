@@ -1,28 +1,65 @@
 <template>
-  <dialog-component v-model="isDialogOpen" :dialog-title="nicheData?.internalCode" :width="calcWidth">
-    <div class="niche-container">
-      <div class="flex column gap-5 justify-center" v-for="row in urnMatrix" :key="row">
-        <div :class="getUrnStatusColor(urn)" v-for="urn in row" :key="urn">
-          {{urn}}
+  <dialog-component v-model="isDialogOpen" :dialog-title="urnSelected ? urnSelected.internalCode : nicheData?.internalCode" :width="calcWidth">
+    <q-carousel v-model="step" transition-prev="slide-right" transition-next="slide-left" :swipeable="false" :navigation="false" animated>
+      <q-carousel-slide name="niche-map">
+        <div class="niche-container">
+          <div class="flex column gap-5 justify-center" v-for="row in urnMatrix" :key="row">
+            <div :class="getUrnStatusColor(urn)" v-for="urn in row" :key="urn" @click="urnDetails(urn)">
+              {{urn}}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="flex justify-center">
-      <custom-button :label="$t('general_texts.close')" color="secondary" @click="closeModal" />
-    </div>
+        <div class="flex justify-center">
+          <custom-button :label="$t('general_texts.close')" color="secondary" @click="closeModal" />
+        </div>
+      </q-carousel-slide>
+
+      <q-carousel-slide name="urn-details">
+        <div class="flex column gap-20">
+          <div class="full-width overflow-auto" style="padding:3px">
+            <div class="content-title">{{ $t('pages.reservation.list_title') }}</div>
+            <reservation-table-component :urn-id="urnSelected.id" from-map />
+          </div>
+
+          <div class="full-width overflow-auto" style="padding:3px">
+            <div class="content-title">{{ $t('pages.deposit.list_title') }}</div>
+            <deposit-table-component :urn-id="urnSelected.id"  />
+          </div>
+
+          <div class="full-width overflow-auto" style="padding:3px" v-if="urnSelected?.relocations?.length > 0">
+            <div class="content-title">{{ $t('pages.relocation.list_title') }}</div>
+            <relocation-table-component :urn-id="urnSelected.id" from-map />
+          </div>
+
+          <div class="flex justify-between">
+            <custom-button outline icon="arrow_back" :label="$t('general_texts.back')" color="secondary" @click="goToNicheMap" />
+            <div class="flex gap-5">
+              <custom-button :label="$t('general_texts.close')" color="secondary" @click="closeModal" />
+            </div>
+          </div>
+        </div>
+      </q-carousel-slide>
+
+    </q-carousel>
   </dialog-component>
 </template>
 
 <script>
 import { defineComponent, reactive, toRefs, onMounted, onBeforeUnmount, computed } from 'vue'
+import ReservationTableComponent from 'src/components/tables/reservation/reservation-table-component'
+import DepositTableComponent from 'src/components/tables/deposit/deposit-table-component'
+import RelocationTableComponent from 'src/components/tables/relocation/relocation-table-component'
 import DialogComponent from 'src/modals/component/DialogComponent'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
 
 export default defineComponent({
   components: {
-    DialogComponent
+    DialogComponent,
+    ReservationTableComponent,
+    DepositTableComponent,
+    RelocationTableComponent
   },
   setup() {
     onMounted(() => {
@@ -45,16 +82,21 @@ export default defineComponent({
     const state = reactive({
       isDialogOpen: false,
       loading: false,
+      step: 'niche-map',
       nicheData: null,
       urnMatrix: [],
       nicheLength: 0,
       lines: 0,
+      urnSelected: null,
       calcWidth: computed(() => {
-        const widthNeeded = state.urnMatrix?.length * 50
-        if (widthNeeded > 350) {
-          return widthNeeded?.toString()
+        if (state.step === 'niche-map') {
+          const widthNeeded = state.urnMatrix?.length * 50
+          if (widthNeeded > 350) {
+            return widthNeeded?.toString()
+          }
+          return '350'
         }
-        return '350'
+        return '1300'
       })
     })
 
@@ -83,25 +125,6 @@ export default defineComponent({
       state.urnMatrix.forEach(element => {
         element.reverse()
       })
-
-
-      // Alternate numbers
-      // for (let i = 0; i < state.nicheLength; i = i + state.lines) {
-      //   for (let j = 0; j < state.lines; j++) {
-      //     const number = i+j
-      //     if (number < state.nicheLength) {
-      //       state.urnMatrix[j].push(number + 1)
-      //     } else {
-      //       state.urnMatrix[j].push(null)
-      //     }
-      //   }
-      // }
-      // for (let i = 0; i < state.lines; i++) {
-      //   state.urnMatrix[i].reverse()
-      // }
-      // state.urnMatrix.reverse()
-
-      // console.table(state.urnMatrix)
     }
 
 
@@ -118,6 +141,17 @@ export default defineComponent({
       return 'void-urn'
     }
 
+    const urnDetails = (urn) => {
+      state.urnSelected = state.nicheData?.urns?.[urn-1]
+      state.urnSelected.id = state.urnSelected.id?.toString()
+      state.step = 'urn-details'
+    }
+
+    const goToNicheMap = () => {
+      state.step = 'niche-map'
+      state.urnSelected = null
+    }
+
     const closeModal = () => {
       state.isDialogOpen = false
       state.loading = false
@@ -125,12 +159,16 @@ export default defineComponent({
       state.nicheData = null
       state.nicheLength = 0
       state.lines = 0
+      state.urnSelected = null
+      state.step = 'niche-map'
     }
 
     return {
       ...toRefs(state),
       getUrnStatusColor,
-      closeModal
+      closeModal,
+      urnDetails,
+      goToNicheMap
     };
   }
 })
@@ -181,5 +219,10 @@ export default defineComponent({
       width: 40px;
       height: 40px;
     }
+  }
+  .content-title {
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 10px;
   }
 </style>

@@ -19,6 +19,8 @@
   <delete-reservation-modal />
   <create-edit-deposit-modal />
   <delete-deposit-modal />
+  <create-edit-relocation-modal />
+  <delete-relocation-modal />
   <map-info-modal />
 </template>
 
@@ -43,6 +45,8 @@ import CreateEditReservationModal from 'src/modals/reservation/CreateEditReserva
 import DeleteReservationModal from 'src/modals/reservation/DeleteReservationModal'
 import CreateEditDepositModal from 'src/modals/deposit/CreateEditDepositModal'
 import DeleteDepositModal from 'src/modals/deposit/DeleteDepositModal'
+import CreateEditRelocationModal from 'src/modals/relocation/CreateEditRelocationModal'
+import DeleteRelocationModal from 'src/modals/relocation/DeleteRelocationModal'
 import MapInfoModal from 'src/modals/map/MapInfoModal'
 
 export default {
@@ -67,6 +71,8 @@ export default {
     DeleteReservationModal,
     CreateEditDepositModal,
     DeleteDepositModal,
+    CreateEditRelocationModal,
+    DeleteRelocationModal,
     MapInfoModal
   }
 }

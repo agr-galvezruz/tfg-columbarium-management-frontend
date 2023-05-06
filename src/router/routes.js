@@ -190,6 +190,12 @@ const routes = [
         meta: { icon: 'swap_horiz', label: 'routes.relocations' },
         component: () => import('pages/relocation/RelocationsListPage')
       },
+      {
+        path: 'relocation/:relocationId',
+        beforeEnter: [checkToken],
+        hidden: true,
+        component: () => import('pages/relocation/RelocationDetailsPage')
+      },
     ]
   },
 

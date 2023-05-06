@@ -26,7 +26,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="reservationData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.reservation.deposit') }}</div>
-        <custom-button v-if="!reservationData.deposit" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInReservation()" />
+        <custom-button v-if="!reservationData.deposit && reservationData.endDate < today" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInReservation()" />
       </div>
       <deposit-table-component :reservation-id="reservationData.id" />
     </content-container-component>
@@ -47,6 +47,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
 import { formatDbToEsDate } from 'src/helpers/formatDate'
+import moment from 'moment'
 
 export default defineComponent({
   components: {
@@ -82,7 +83,8 @@ export default defineComponent({
       loading: false,
       reservationId: computed(() => route.params.reservationId || null),
       reservationData: null,
-      reservationDetails: []
+      reservationDetails: [],
+      today: moment().format('YYYY-MM-DD')
     })
 
     const fetchData = async() => {

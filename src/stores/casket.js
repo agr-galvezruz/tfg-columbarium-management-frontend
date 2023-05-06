@@ -24,6 +24,11 @@ export const useCasketStore = defineStore('casket', {
       return data
     },
 
+    async getAllCasketsWithExpiredReservation(filter) {
+      const { data } = await axios.get(`/caskets/getAllCasketsWithExpiredReservation/${filter}`)
+      return data
+    },
+
     async getCasketById(casketId) {
       const { data } = await axios.get(`/caskets/getCasketById/${casketId}`)
       return data
