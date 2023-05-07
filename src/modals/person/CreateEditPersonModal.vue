@@ -3,7 +3,7 @@
     <q-form @submit="onSubmit">
       <div class="form-container">
         <div class="input-form">
-          <custom-input v-model="personData.dni" :label="$t('pages.person.dni')" class="full-width" :placeholder="$t('pages.person.dni_placeholder')" required />
+          <custom-input v-model="personData.dni" :label="$t('pages.person.dni')" class="full-width" :placeholder="$t('pages.person.dni_placeholder')" />
           <custom-date-picker v-model="personData.birthdate" :label="$t('pages.person.birthdate')" class="full-width" :placeholder="$t('pages.person.birthdate_placeholder')" />
           <custom-date-picker v-model="personData.deathdate" :label="$t('pages.person.deathdate')" class="full-width" :placeholder="$t('pages.person.deathdate_placeholder')" />
         </div>
@@ -22,7 +22,7 @@
           <custom-select v-model="personData.maritalStatus" :label="$t('pages.person.marital_status')" class="full-width" :options="maritalStatusOptions" />
         </div>
         <div class="input-form">
-          <custom-input v-model="personData.phone" :label="$t('pages.person.phone')" class="full-width" :placeholder="$t('pages.person.phone_placeholder')" required />
+          <custom-input v-model="personData.phone" :label="$t('pages.person.phone')" class="full-width" :placeholder="$t('pages.person.phone_placeholder')" />
           <custom-input v-model="personData.email" :label="$t('pages.person.email')" class="full-width" :placeholder="$t('pages.person.email_placeholder')" type="email" />
         </div>
       </div>

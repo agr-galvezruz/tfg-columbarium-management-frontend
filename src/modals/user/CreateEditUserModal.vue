@@ -139,7 +139,7 @@ export default defineComponent({
     const fillPeopleOptions = (data) => {
       state.peopleOptions = []
       data.forEach(person => {
-        state.peopleOptions.push({ label: `${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}`, value: person.id.toString(), deathdate: person.deathdate })
+        state.peopleOptions.push({ label: `${person.dni} - ${person.firstName} ${person.lastName1} ${person.lastName2}`, value: person.id.toString(), deathdate: person.deathdate })
       })
       state.filterOptions = state.peopleOptions
     }
