@@ -204,6 +204,7 @@ const routes = [
     component: Layout,
     name: 'configuration',
     meta: { label: 'routes.configuration' },
+    permission: 'ADMIN',
     children: [
       {
         path: 'users',
