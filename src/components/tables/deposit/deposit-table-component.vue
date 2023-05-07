@@ -25,7 +25,7 @@
       <q-td :props="props">
         <div class="flex no-wrap column gap-5">
           <div v-for="person in props.row.casket.people" :key="person">
-            {{ `${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}` }}
+            {{ `${person.firstName} ${person.lastName1} ${person.lastName2}` }}
           </div>
         </div>
       </q-td>
@@ -63,14 +63,15 @@
 </template>
 
 <script>
+import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import FilterComponent from 'src/components/filter/filter-component'
 import { concatFilters } from 'src/helpers/concatFilters'
-import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { formatDbToEsDate } from 'src/helpers/formatDate'
+import { useAuthenticationStore } from 'stores/authentication'
 import { useDepositStore } from 'stores/deposit'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
-import { formatDbToEsDate } from 'src/helpers/formatDate'
 
 export default defineComponent({
   components: {
@@ -117,6 +118,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const depositStore = useDepositStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -133,16 +135,18 @@ export default defineComponent({
       { name: 'startDate', label: t('pages.deposit.resume_date'), field: row => formatDbToEsDate(row.startDate), align: 'left' },
       { name: 'endDate', label: t('pages.deposit.resume_end_date'), field: row => formatDbToEsDate(row.endDate) || '-', align: 'left' },
       { name: 'urn', label: t('pages.reservation.urn'), field: row => row.reservation.urn.internalCode, align: 'left' },
-      { name: 'depositPerson', label: t('pages.deposit.deposit_person'), field: row => `${row.person.lastName1} ${row.person.lastName2} ${row.person.firstName}`, align: 'left' },
+      { name: 'depositPerson', label: t('pages.deposit.deposit_person'), field: row => `${row.person.firstName} ${row.person.lastName1} ${row.person.lastName2}`, align: 'left' },
       { name: 'deceasedRelationship', label: t('pages.deposit.deceased_relationship'), field: 'deceasedRelationship', align: 'left',},
       { name: 'casket', label: t('pages.deposit.casket'), align: 'left',},
       { name: 'description', label: t('pages.deposit.description'), field: 'description', align: 'left',},
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin && !props.urnId) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     if (props.urnId) {
       delete columns[2]
-      delete columns[7]
     }
 
     if (props.casketId) {

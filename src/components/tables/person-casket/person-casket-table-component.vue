@@ -37,8 +37,9 @@
 
 <script>
 import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
-import { usePersonStore } from 'stores/person'
+import { useAuthenticationStore } from 'stores/authentication'
 import { formatDbToEsDate } from 'src/helpers/formatDate'
+import { usePersonStore } from 'stores/person'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import bus from 'boot/bus'
@@ -65,6 +66,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const personStore = usePersonStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -74,11 +76,14 @@ export default defineComponent({
     const columns = [
       { name: 'dni', label: t('pages.person.dni'), field: 'dni', align: 'left' },
       { name: 'deathdate', label: t('pages.person.deathdate'), field: row => formatDbToEsDate(row.deathdate), align: 'left',},
-      { name: 'fullName', label: t('pages.person.full_name'), field: row => `${row.lastName1} ${row.lastName2} ${row.firstName}`, align: 'left' },
+      { name: 'fullName', label: t('pages.person.full_name'), field: row => `${row.firstName} ${row.lastName1} ${row.lastName2}`, align: 'left' },
       { name: 'state', label: t('pages.person.state'), field: 'state', align: 'left',},
       { name: 'city', label: t('pages.person.city'), field: 'city', align: 'left',},
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     const fetchPersonData = async () => {
       try {

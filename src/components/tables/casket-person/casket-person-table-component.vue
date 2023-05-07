@@ -20,9 +20,15 @@
       <q-td :props="props">
         <div class="flex no-wrap column gap-5">
           <div v-for="person in props.row.people" :key="person.dni">
-            {{ `${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}` }}
+            {{ `${person.firstName} ${person.lastName1} ${person.lastName2}` }}
           </div>
         </div>
+      </q-td>
+    </template>
+
+    <template v-slot:body-cell-description="props">
+      <q-td :props="props">
+        <div v-html="props.row.description"></div>
       </q-td>
     </template>
 
@@ -53,6 +59,7 @@
 
 <script>
 import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { useCasketStore } from 'stores/casket'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -80,6 +87,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const casketStore = useCasketStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -89,8 +97,11 @@ export default defineComponent({
     const columns = [
       { name: 'people', label: t('pages.casket.people_in_casket'), align: 'left' },
       { name: 'description', label: t('pages.casket.description'), field: 'description', align: 'left' },
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     const fetchCasketData = async (page = 1) => {
       try {

@@ -57,6 +57,7 @@ import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'v
 import FilterComponent from 'src/components/filter/filter-component'
 import { formatDbToEsDate } from 'src/helpers/formatDate'
 import { concatFilters } from 'src/helpers/concatFilters'
+import { useAuthenticationStore } from 'stores/authentication'
 import { useReservationStore } from 'stores/reservation'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -107,6 +108,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const reservationStore = useReservationStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -123,14 +125,16 @@ export default defineComponent({
       { name: 'startDate', label: t('pages.reservation.start_date'), field: row => formatDbToEsDate(row.startDate), align: 'left' },
       { name: 'endDate', label: t('pages.reservation.end_date'), field: row => formatDbToEsDate(row.endDate), align: 'left',},
       { name: 'urn', label: t('pages.reservation.urn'), field:  row => `${row.urn.internalCode}`, align: 'left',},
-      { name: 'person', label: t('pages.reservation.person'), field:  row => `${row.person.lastName1} ${row.person.lastName2} ${row.person.firstName}`, align: 'left',},
+      { name: 'person', label: t('pages.reservation.person'), field:  row => `${row.person.firstName} ${row.person.lastName1} ${row.person.lastName2}`, align: 'left',},
       { name: 'description', label: t('pages.reservation.description'), field: 'description', align: 'left',},
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin && !props.fromMap) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     if (props.fromMap) {
       delete columns[2]
-      delete columns[5]
     }
 
     if (props.personId) {

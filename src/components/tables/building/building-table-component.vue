@@ -20,6 +20,12 @@
       <q-th :props="props" class="q-table-header-text">{{ props.col.label }}</q-th>
     </template>
 
+    <template v-slot:body-cell-description="props">
+      <q-td :props="props">
+        <div v-html="props.row.description"></div>
+      </q-td>
+    </template>
+
     <template v-slot:body-cell-actions="props">
       <q-td :props="props" @click.stop="null">
         <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">
@@ -46,9 +52,10 @@
 </template>
 
 <script>
+import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import FilterComponent from 'src/components/filter/filter-component'
 import { concatFilters } from 'src/helpers/concatFilters'
-import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { useBuildingStore } from 'stores/building'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -81,6 +88,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const buildingStore = useBuildingStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -98,8 +106,11 @@ export default defineComponent({
       { name: 'name', label: t('pages.building.name'), field: 'name', align: 'left',},
       { name: 'address', label: t('pages.building.address'), field: 'address', align: 'left',},
       { name: 'description', label: t('pages.building.description'), field: 'description', align: 'left',},
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     const filters = [
       { key: 'internalCode', label: t('pages.building.internal_code'), icon: 'tag', type: 'input', operator: 'like'},
