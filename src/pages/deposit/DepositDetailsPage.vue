@@ -4,8 +4,8 @@
 
     <item-details-component v-if="depositData" :title="$t('pages.deposit.entity')" :item-data="depositDetails">
       <div class="flex no-wrap gap-5">
-        <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditDeposit()" />
-        <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteDeposit()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditDeposit()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteDeposit()" />
       </div>
     </item-details-component>
 
@@ -39,6 +39,7 @@ import PersonTableComponent from 'src/components/tables/person/person-table-comp
 import ReservationTableComponent from 'src/components/tables/reservation/reservation-table-component'
 import CasketTableComponent from 'src/components/tables/casket/casket-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useDepositStore } from 'stores/deposit'
@@ -76,8 +77,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const depositStore = useDepositStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       depositId: computed(() => route.params.depositId || null),
       depositData: null,

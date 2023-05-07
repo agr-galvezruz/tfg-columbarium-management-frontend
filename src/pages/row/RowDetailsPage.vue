@@ -17,8 +17,8 @@
 
       <item-details-component v-if="rowData" :title="`${$t('pages.row.entity')}: ${rowData?.internalCode}`" :item-data="rowDetails">
         <div class="flex no-wrap gap-5">
-          <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditRow()" />
-          <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteRow()" />
+          <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditRow()" />
+          <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteRow()" />
         </div>
       </item-details-component>
     </div>
@@ -26,7 +26,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="rowData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.niche.niches_row') }}</div>
-        <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.niche.add_niche')" color="secondary" @click="openCreateNicheInRow()" />
+        <custom-button v-if="isAdminUser" :unelevated="false" icon="add_circle_outline" :label="$t('pages.niche.add_niche')" color="secondary" @click="openCreateNicheInRow()" />
       </div>
 
       <niche-table-component :where-id="rowId" />
@@ -39,6 +39,7 @@ import ContentContainerComponent from 'src/components/content-container/content-
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import NicheTableComponent from 'src/components/tables/niche/niche-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useRowStore } from 'stores/row'
@@ -73,8 +74,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const rowStore = useRowStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       rowId: computed(() => route.params.rowId || null),
       buildingData: null,

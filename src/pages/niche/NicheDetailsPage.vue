@@ -23,8 +23,8 @@
 
       <item-details-component v-if="nicheData" :title="`${$t('pages.niche.entity')}: ${nicheData?.internalCode}`" :item-data="nicheDetails">
         <div class="flex no-wrap gap-5">
-          <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditNiche()" />
-          <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteNiche()" />
+          <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditNiche()" />
+          <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteNiche()" />
         </div>
       </item-details-component>
     </div>
@@ -32,7 +32,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="nicheData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.urn.urns_niche') }}</div>
-        <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.urn.add_urn')" color="secondary" @click="openCreateUrnInNiche()" />
+        <custom-button v-if="isAdminUser" :unelevated="false" icon="add_circle_outline" :label="$t('pages.urn.add_urn')" color="secondary" @click="openCreateUrnInNiche()" />
       </div>
 
       <urn-table-component :where-id="nicheId" />
@@ -45,6 +45,7 @@ import ContentContainerComponent from 'src/components/content-container/content-
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import UrnTableComponent from 'src/components/tables/urn/urn-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useNicheStore } from 'stores/niche'
@@ -79,8 +80,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const nicheStore = useNicheStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       nicheId: computed(() => route.params.nicheId || null),
       buildingData: null,

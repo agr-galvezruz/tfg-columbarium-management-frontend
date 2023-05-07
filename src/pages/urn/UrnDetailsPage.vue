@@ -28,8 +28,8 @@
       </item-details-component>
       <item-details-component v-if="urnData" :title="`${$t('pages.urn.entity')}: ${urnData?.internalCode}`" :item-data="urnDetails">
         <div class="flex no-wrap gap-5">
-          <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditUrn()" />
-          <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteUrn()" />
+          <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditUrn()" />
+          <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteUrn()" />
         </div>
       </item-details-component>
     </div>
@@ -37,7 +37,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="urnData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.urn.urn_reservation') }}</div>
-        <custom-button v-if="urnData.status === 'AVAILABLE'" :unelevated="false" icon="add_circle_outline" :label="$t('pages.reservation.add_reservation')" color="secondary" @click="openCreateReservationInUrn()" />
+        <custom-button v-if="isAdminUser && urnData.status === 'AVAILABLE'" :unelevated="false" icon="add_circle_outline" :label="$t('pages.reservation.add_reservation')" color="secondary" @click="openCreateReservationInUrn()" />
       </div>
       <reservation-table-component :urn-id="urnId" />
     </content-container-component>
@@ -45,7 +45,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="urnData && urnData.relocations?.length > 0">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.casket.relocation') }}</div>
-        <custom-button v-if="urnData.status === 'AVAILABLE'" :unelevated="false" icon="add_circle_outline" :label="$t('pages.relocation.add_relocation')" color="secondary" @click="openCreateRelocationInUrn()" />
+        <custom-button v-if="isAdminUser && urnData.status === 'AVAILABLE'" :unelevated="false" icon="add_circle_outline" :label="$t('pages.relocation.add_relocation')" color="secondary" @click="openCreateRelocationInUrn()" />
       </div>
       <relocation-table-component :urn-id="urnId" />
     </content-container-component>
@@ -58,6 +58,7 @@ import ItemDetailsComponent from 'src/components/item-details/item-details-compo
 import ReservationTableComponent from 'src/components/tables/reservation/reservation-table-component'
 import RelocationTableComponent from 'src/components/tables/relocation/relocation-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useUrnStore } from 'stores/urn'
@@ -93,8 +94,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const urnStore = useUrnStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       urnId: computed(() => route.params.urnId || null),
       buildingData: null,

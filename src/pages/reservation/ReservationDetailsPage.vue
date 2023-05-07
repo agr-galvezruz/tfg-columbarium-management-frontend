@@ -4,8 +4,8 @@
 
     <item-details-component v-if="reservationData" :title="$t('pages.reservation.entity')" :item-data="reservationDetails">
       <div class="flex no-wrap gap-5">
-        <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditReservation()" />
-        <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteReservation()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditReservation()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteReservation()" />
       </div>
     </item-details-component>
 
@@ -26,7 +26,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="reservationData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.reservation.deposit') }}</div>
-        <custom-button v-if="!reservationData.deposit && reservationData.endDate < today" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInReservation()" />
+        <custom-button v-if="isAdminUser && !reservationData.deposit && reservationData.endDate < today" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInReservation()" />
       </div>
       <deposit-table-component :reservation-id="reservationData.id" />
     </content-container-component>
@@ -40,6 +40,7 @@ import UrnTableComponent from 'src/components/tables/urn/urn-table-component'
 import PersonTableComponent from 'src/components/tables/person/person-table-component'
 import DepositTableComponent from 'src/components/tables/deposit/deposit-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useReservationStore } from 'stores/reservation'
@@ -78,8 +79,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const reservationStore = useReservationStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       reservationId: computed(() => route.params.reservationId || null),
       reservationData: null,
