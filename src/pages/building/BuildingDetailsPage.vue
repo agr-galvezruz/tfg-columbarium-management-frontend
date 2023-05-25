@@ -4,15 +4,15 @@
 
     <item-details-component v-if="buildingData" :title="`${$t('pages.building.entity')}: ${buildingData.internalCode}`" :item-data="buildingDetails">
       <div class="flex no-wrap gap-5">
-        <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditBuilding()" />
-        <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteBuilding()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditBuilding()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteBuilding()" />
       </div>
     </item-details-component>
 
     <content-container-component class="flex column no-wrap gap-10" v-if="buildingData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.room.rooms_building') }}</div>
-        <custom-button :unelevated="false" icon="add_circle_outline" :label="$t('pages.room.add_room')" color="secondary" @click="openCreateRoomInBuilding()" />
+        <custom-button v-if="isAdminUser" :unelevated="false" icon="add_circle_outline" :label="$t('pages.room.add_room')" color="secondary" @click="openCreateRoomInBuilding()" />
       </div>
 
       <room-table-component :where-id="buildingId" />
@@ -25,6 +25,7 @@ import ContentContainerComponent from 'src/components/content-container/content-
 import ItemDetailsComponent from 'src/components/item-details/item-details-component'
 import RoomTableComponent from 'src/components/tables/room/room-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useBuildingStore } from 'stores/building'
@@ -59,8 +60,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const buildingStore = useBuildingStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       buildingId: computed(() => route.params.buildingId || null),
       buildingData: null,

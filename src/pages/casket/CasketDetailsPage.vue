@@ -4,8 +4,8 @@
 
     <item-details-component v-if="casketData" :title="$t('pages.casket.entity')" :item-data="casketDetails">
       <div class="flex no-wrap gap-5">
-        <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditCasket()" />
-        <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteCasket()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditCasket()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteCasket()" />
       </div>
     </item-details-component>
 
@@ -19,7 +19,7 @@
     <content-container-component class="flex column no-wrap gap-10" v-if="casketData">
       <div class="flex no-wrap justify-between items-center">
         <div class="content-title">{{ $t('pages.casket.deposit') }}</div>
-        <custom-button v-if="!checkIfItsDeposited" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInCasket()" />
+        <custom-button v-if="isAdminUser && !checkIfItsDeposited" :unelevated="false" icon="add_circle_outline" :label="$t('pages.deposit.add_deposit')" color="secondary" @click="openCreateEditDepositInCasket()" />
       </div>
       <deposit-table-component :casket-id="casketId" />
     </content-container-component>
@@ -40,6 +40,7 @@ import PersonCasketTableComponent from 'src/components/tables/person-casket/pers
 import DepositTableComponent from 'src/components/tables/deposit/deposit-table-component'
 import RelocationTableComponent from 'src/components/tables/relocation/relocation-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useCasketStore } from 'stores/casket'
@@ -76,8 +77,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const casketStore = useCasketStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       casketId: computed(() => route.params.casketId || null),
       casketData: null,

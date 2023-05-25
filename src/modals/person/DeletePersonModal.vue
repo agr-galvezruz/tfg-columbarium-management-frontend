@@ -4,7 +4,7 @@
       <div>{{ $t('pages.person.modal_delete_text2') }}</div>
       <div>
         <span>{{ $t('pages.person.modal_delete_text1') }}</span>
-        <span class="important">&nbsp;{{ `${personData.dni} - ${personData.firstName} ${personData.lastName1} ${personData.lastName2}` }}</span>
+        <span class="important">&nbsp;{{ `${personData.firstName} ${personData.lastName1} ${personData.lastName2}` }}</span>
         <span>?</span>
       </div>
     </div>

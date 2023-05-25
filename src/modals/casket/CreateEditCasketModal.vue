@@ -31,7 +31,7 @@
                 <div>
                   <q-icon name="person" size="24px" class="icon-grey-color" />
                   <span v-if="person.tabSelected === 'select'">{{ person.personSelected.label }}</span>
-                  <span v-if="person.tabSelected === 'add'">{{ `${person.newPersonData.dni} - ${person.newPersonData.lastName1} ${person.newPersonData.lastName2} ${person.newPersonData.firstName}` }}</span>
+                  <span v-if="person.tabSelected === 'add'">{{ `${person.newPersonData.firstName} ${person.newPersonData.lastName1} ${person.newPersonData.lastName2}` }}</span>
                 </div>
                 <div class="flex gap-5">
                   <custom-button v-if="person.clickable" padding="none" round color="secondary" flat no-caps icon="visibility" />
@@ -212,7 +212,7 @@ export default defineComponent({
           tabSelected: 'select',
           personSelected: {
             id: person.id,
-            label: `${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}`,
+            label: `${person.firstName} ${person.lastName1} ${person.lastName2}`,
             deathdate: person.deathdate
           },
           newPersonData: {

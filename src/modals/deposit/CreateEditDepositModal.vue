@@ -135,7 +135,7 @@
         <q-form @submit="goToResume">
           <div class="form-container">
             <div class="header-title-component">{{ $t('pages.deposit.deposit_person') }}</div>
-            <person-select-create-component v-model="personForm" :person-text="$t('pages.deposit.deposit_person')" />
+            <person-select-create-component v-model="personForm" :person-text="$t('pages.deposit.deposit_person')" required-dni />
             <div class="input-form" v-if="personForm.tabSelected">
               <custom-input v-model="depositData.deceasedRelationship" :label="$t('pages.deposit.deceased_relationship')" class="full-width" :placeholder="$t('pages.deposit.deceased_relationship_placeholder')" required />
             </div>
@@ -267,7 +267,7 @@ export default defineComponent({
         state.disableReservationSelect = true
         // formData.depositData.startDate = moment().format('DD/MM/YYYY')
         formData.depositData.reservationId = data.id?.toString()
-        formData.resourceData.reservationOptions = [{ label: `${data.urn.internalCode} / ${data.person.lastName1} ${data.person.lastName2} ${data.person.firstName} (${formatDbToEsDate(data.startDate)} - ${formatDbToEsDate(data.endDate)})`, value: data.id?.toString() }]
+        formData.resourceData.reservationOptions = [{ label: `${data.urn.internalCode} / ${data.person.firstName} ${data.person.lastName1} ${data.person.lastName2} (${formatDbToEsDate(data.startDate)} - ${formatDbToEsDate(data.endDate)})`, value: data.id?.toString() }]
         getAllCasketsWithNoDeposit()
         state.isDialogOpen = true
       })
@@ -279,7 +279,7 @@ export default defineComponent({
         formData.depositData.personId = data.id.toString()
         formData.personForm.tabSelected = 'select'
         formData.personForm.personSelected.id = data.id?.toString()
-        formData.personForm.personSelected.label = `${data.dni} - ${data.lastName1} ${data.lastName2} ${data.firstName}`
+        formData.personForm.personSelected.label = `${data.dni} - ${data.firstName} ${data.lastName1} ${data.lastName2}`
         fetchData()
         state.isDialogOpen = true
       })
@@ -292,7 +292,7 @@ export default defineComponent({
 
         let names = ''
         data.people.forEach(person => {
-          names += `<div>${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}</div>`
+          names += `<div>${person.firstName} ${person.lastName1} ${person.lastName2} </div>`
         })
         formData.resourceData.casketOptions = [{ label: `<div><div>${names}</div></div>`, value: data.id?.toString() }]
         getAllReservationsWithNoDeposit()
@@ -404,11 +404,11 @@ export default defineComponent({
 
       formData.personForm.tabSelected = 'select'
       formData.personForm.personSelected.id = dataParsed.personId?.toString()
-      formData.personForm.personSelected.label = `${dataParsed.person.dni} - ${dataParsed.person.lastName1} ${dataParsed.person.lastName2} ${dataParsed.person.firstName}`
+      formData.personForm.personSelected.label = `${dataParsed.person.dni} - ${dataParsed.person.firstName} ${dataParsed.person.lastName1} ${dataParsed.person.lastName2}`
 
       let names = ''
       dataParsed.casket.people.forEach(person => {
-        names += `<div>${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}</div>`
+        names += `<div>${person.firstName} ${person.lastName1} ${person.lastName2}</div>`
       })
       formData.resourceData.casketOptions = [{ label: `<div><div>${names}</div></div>`, value: dataParsed.casketId?.toString() }]
       formData.resourceData.reservationOptions = [{ label: `${dataParsed.reservation.urn.internalCode} / ${dataParsed.reservation.person.lastName1} ${dataParsed.reservation.person.lastName2} ${dataParsed.reservation.person.firstName} (${formatDbToEsDate(dataParsed.reservation.startDate)} - ${formatDbToEsDate(dataParsed.reservation.endDate)})`, value: dataParsed.reservationId?.toString() }]
@@ -452,7 +452,7 @@ export default defineComponent({
     const fillReservationOptions = (data) => {
       formData.resourceData.reservationOptions = []
       data.forEach(reservation => {
-        formData.resourceData.reservationOptions.push({ label: `${reservation.urn.internalCode} / ${reservation.person.lastName1} ${reservation.person.lastName2} ${reservation.person.firstName} (${formatDbToEsDate(reservation.startDate)} - ${formatDbToEsDate(reservation.endDate)})`, value: reservation.id.toString() })
+        formData.resourceData.reservationOptions.push({ label: `${reservation.urn.internalCode} / ${reservation.person.firstName} ${reservation.person.lastName1} ${reservation.person.lastName2} (${formatDbToEsDate(reservation.startDate)} - ${formatDbToEsDate(reservation.endDate)})`, value: reservation.id.toString() })
       })
       formData.resourceData.filterOptions1 = formData.resourceData.reservationOptions
     }
@@ -463,7 +463,7 @@ export default defineComponent({
       data.forEach(casket => {
         let names = ''
         casket.people.forEach(person => {
-          names += `<div>${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}</div>`
+          names += `<div>${person.firstName} ${person.lastName1} ${person.lastName2}</div>`
         })
         formData.resourceData.casketOptions.push({ label: `<div><div>${names}</div></div>`, value: casket.id.toString() })
       })

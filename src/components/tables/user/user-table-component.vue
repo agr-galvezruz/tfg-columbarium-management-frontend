@@ -106,10 +106,13 @@ export default defineComponent({
 
     const columns = [
       { name: 'id', label: t('pages.user.id'), field: 'id', align: 'left' },
-      { name: 'name', label: t('pages.user.name'), field: row => `${row.person.lastName1} ${row.person.lastName2} ${row.person.firstName}`, align: 'left',},
+      { name: 'name', label: t('pages.user.name'), field: row => `${row.person.firstName} ${row.person.lastName1} ${row.person.lastName2}`, align: 'left',},
       { name: 'rol', label: t('pages.user.rol'), field: 'rol', align: 'left',},
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     const filters = [
       { key: 'id', label: t('pages.user.id'), icon: 'tag', type: 'input', operator: 'like'},

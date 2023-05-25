@@ -41,7 +41,7 @@
 
     <template v-slot:add>
       <div class="input-form">
-        <custom-input v-model="data.newPersonData.dni" :label="$t('pages.person.dni')" class="full-width" :placeholder="$t('pages.person.dni_placeholder')" required />
+        <custom-input v-model="data.newPersonData.dni" :label="$t('pages.person.dni')" class="full-width" :placeholder="$t('pages.person.dni_placeholder')" :required="requiredDni" />
         <custom-date-picker v-model="data.newPersonData.birthdate" :label="$t('pages.person.birthdate')" class="full-width" :placeholder="$t('pages.person.birthdate_placeholder')" />
         <custom-date-picker v-model="data.newPersonData.deathdate" :label="$t('pages.person.deathdate')" class="full-width" :placeholder="$t('pages.person.deathdate_placeholder')" :required="requiredDeathdate" />
       </div>
@@ -60,7 +60,7 @@
         <custom-select v-model="data.newPersonData.maritalStatus" :label="$t('pages.person.marital_status')" class="full-width" :options="maritalStatusOptions" />
       </div>
       <div class="input-form">
-        <custom-input v-model="data.newPersonData.phone" :label="$t('pages.person.phone')" class="full-width" :placeholder="$t('pages.person.phone_placeholder')" required />
+        <custom-input v-model="data.newPersonData.phone" :label="$t('pages.person.phone')" class="full-width" :placeholder="$t('pages.person.phone_placeholder')" :required="requiredDni" />
         <custom-input v-model="data.newPersonData.email" :label="$t('pages.person.email')" class="full-width" :placeholder="$t('pages.person.email_placeholder')" type="email" />
       </div>
     </template>
@@ -84,6 +84,10 @@ export default defineComponent({
       required: true
     },
     requiredDeathdate: {
+      type: Boolean,
+      default: false
+    },
+    requiredDni: {
       type: Boolean,
       default: false
     },
@@ -157,7 +161,7 @@ export default defineComponent({
     const fillPeopleOptions = (data) => {
       formData.peopleOptions = []
       data.forEach(person => {
-        formData.peopleOptions.push({ label: `${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}`, value: person.id.toString(), deathdate: person.deathdate })
+        formData.peopleOptions.push({ label: `${person.dni} - ${person.firstName} ${person.lastName1} ${person.lastName2}`, value: person.id.toString(), deathdate: person.deathdate })
       })
       formData.filterOptions = formData.peopleOptions
     }

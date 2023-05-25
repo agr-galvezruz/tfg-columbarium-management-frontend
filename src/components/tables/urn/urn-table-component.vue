@@ -27,6 +27,12 @@
       </q-td>
     </template>
 
+    <template v-slot:body-cell-description="props">
+      <q-td :props="props">
+        <div v-html="props.row.description"></div>
+      </q-td>
+    </template>
+
     <template v-slot:body-cell-actions="props">
       <q-td :props="props" @click.stop="null">
         <custom-button padding="none" round color="secondary" flat no-caps icon="more_vert">
@@ -56,6 +62,7 @@
 import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import StatusChipComponent from 'src/components/status-chip/status-chip-component'
 import FilterComponent from 'src/components/filter/filter-component'
+import { useAuthenticationStore } from 'stores/authentication'
 import { concatFilters } from 'src/helpers/concatFilters'
 import { useRouter } from 'vue-router'
 import { useUrnStore } from 'stores/urn'
@@ -100,6 +107,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const urnStore = useUrnStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -116,8 +124,11 @@ export default defineComponent({
       { name: 'internalCode', label: t('pages.urn.internal_code'), field: 'internalCode', align: 'left' },
       { name: 'status', label: t('pages.urn.status'), field: 'status', align: 'left' },
       { name: 'description', label: t('pages.urn.description'), field: 'description', align: 'left',},
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     const filters = [
       { key: 'internalCode', label: t('pages.urn.internal_code'), icon: 'tag', type: 'input', operator: 'like'},

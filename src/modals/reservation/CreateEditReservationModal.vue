@@ -114,7 +114,7 @@
         <q-form @submit="goToResume">
           <div class="form-container">
             <div class="header-title-component">{{ $t('pages.reservation.reservation_person') }}</div>
-            <person-select-create-component v-model="personForm" :person-text="$t('pages.reservation.reservation_person')" />
+            <person-select-create-component v-model="personForm" :person-text="$t('pages.reservation.reservation_person')" required-dni />
           </div>
 
           <div class="flex justify-between" :style="!personForm.tabSelected ? 'margin-top:15px' : null">
@@ -233,7 +233,7 @@ export default defineComponent({
         state.type = 'Create'
         formData.personForm.tabSelected = 'select'
         formData.personForm.personSelected.id = data.id
-        formData.personForm.personSelected.label = `${data.dni} - ${data.lastName1} ${data.lastName2} ${data.firstName}`
+        formData.personForm.personSelected.label = `${data.dni} - ${data.firstName} ${data.lastName1} ${data.lastName2}`
         state.skip = 'person-selection'
         state.isDialogOpen = true
       })
@@ -280,7 +280,7 @@ export default defineComponent({
       }),
       person_selected: computed(() => {
         if (formData.personForm.tabSelected === 'add') {
-          return `${formData.personForm.newPersonData.dni} - ${formData.personForm.newPersonData.lastName1} ${formData.personForm.newPersonData.lastName2} ${formData.personForm.newPersonData.firstName}`
+          return `${formData.personForm.newPersonData.dni} - ${formData.personForm.newPersonData.firstName} ${formData.personForm.newPersonData.lastName1} ${formData.personForm.newPersonData.lastName2}`
         }
         return formData.personForm.personSelected.label
       })
@@ -351,7 +351,7 @@ export default defineComponent({
       formData.reservationData.personId = dataParsed.personId?.toString()
       formData.personForm.tabSelected = 'select'
       formData.personForm.personSelected.id = dataParsed.personId?.toString()
-      formData.personForm.personSelected.label = `${dataParsed.person.dni} - ${dataParsed.person.lastName1} ${dataParsed.person.lastName2} ${dataParsed.person.firstName}`
+      formData.personForm.personSelected.label = `${dataParsed.person.dni} - ${dataParsed.person.firstName} ${dataParsed.person.lastName1} ${dataParsed.person.lastName2}`
 
       const firstDate = moment(formData.reservationData.startDate, 'DD/MM/YYYY')
       const secondDate = moment(formData.reservationData.endDate, 'DD/MM/YYYY')

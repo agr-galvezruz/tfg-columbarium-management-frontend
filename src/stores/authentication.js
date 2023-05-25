@@ -11,6 +11,7 @@ export const useAuthenticationStore = defineStore('authentication', {
   getters: {
     getToken: (state) => state.token,
     getUser: (state) => state.user,
+    isAdmin: (state) => state.user.rol === 'ADMIN',
     getUsername: (state) => `${state.user.person.first_name} ${state.user.person.last_name_1} ${state.user.person.last_name_2}`
   },
 

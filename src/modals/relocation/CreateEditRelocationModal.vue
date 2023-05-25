@@ -441,7 +441,7 @@ export default defineComponent({
 
       let names = ''
       dataParsed.casket.people.forEach(person => {
-        names += `<div>${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}</div>`
+        names += `<div>${person.firstName} ${person.lastName1} ${person.lastName2}</div>`
       })
       formData.resourceData.casketOptions = [{ label: `<div><div>${names}</div></div>`, value: dataParsed.casketId?.toString() }]
     }
@@ -591,7 +591,7 @@ export default defineComponent({
       data.forEach(casket => {
         let names = ''
         casket.people.forEach(person => {
-          names += `<div>${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}</div>`
+          names += `<div>${person.firstName} ${person.lastName1} ${person.lastName2}</div>`
         })
         formData.resourceData.casketOptions.push({ label: `<div><div>${names}</div></div>`, value: casket.id.toString() })
       })
@@ -616,7 +616,7 @@ export default defineComponent({
     const fillReservationOptions = (data) => {
       formData.resourceData.reservationOptions = []
       data.forEach(reservation => {
-        formData.resourceData.reservationOptions.push({ label: `${reservation.urn.internalCode} / ${reservation.person.lastName1} ${reservation.person.lastName2} ${reservation.person.firstName} (${formatDbToEsDate(reservation.startDate)} - ${formatDbToEsDate(reservation.endDate)})`, value: reservation.id.toString() })
+        formData.resourceData.reservationOptions.push({ label: `${reservation.urn.internalCode} / ${reservation.person.firstName} ${reservation.person.lastName1} ${reservation.person.lastName2} (${formatDbToEsDate(reservation.startDate)} - ${formatDbToEsDate(reservation.endDate)})`, value: reservation.id.toString() })
       })
       formData.resourceData.filterOptions1 = formData.resourceData.reservationOptions
     }

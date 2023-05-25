@@ -25,7 +25,7 @@
       <q-td :props="props">
         <div class="flex no-wrap column gap-5">
           <div v-for="person in props.row.casket.people" :key="person">
-            {{ `${person.dni} - ${person.lastName1} ${person.lastName2} ${person.firstName}` }}
+            {{ `${person.firstName} ${person.lastName1} ${person.lastName2}` }}
           </div>
         </div>
       </q-td>
@@ -63,9 +63,10 @@
 </template>
 
 <script>
+import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
 import FilterComponent from 'src/components/filter/filter-component'
 import { concatFilters } from 'src/helpers/concatFilters'
-import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { useRelocationStore } from 'stores/relocation'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -113,6 +114,7 @@ export default defineComponent({
     const { t } = useI18n({})
     const router = useRouter()
     const relocationStore = useRelocationStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
       loading: false,
@@ -131,12 +133,14 @@ export default defineComponent({
       { name: 'urn', label: t('pages.relocation.urn_id'), field: row => row.urn.internalCode, align: 'left' },
       { name: 'casket', label: t('pages.deposit.casket'), align: 'left',},
       { name: 'description', label: t('pages.relocation.description'), field: 'description', align: 'left' },
-      { name: 'actions', label: '', align: 'center', style: 'width:42px'},
     ]
+
+    if (authenticationStore.isAdmin && !props.fromMap) {
+      columns.push({ name: 'actions', label: '', align: 'center', style: 'width:42px'})
+    }
 
     if (props.fromMap) {
       delete columns[2]
-      delete columns[5]
     }
 
     const filters = [

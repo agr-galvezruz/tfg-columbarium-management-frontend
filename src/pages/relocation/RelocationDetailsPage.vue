@@ -4,8 +4,8 @@
 
     <item-details-component v-if="relocationData" :title="$t('pages.relocation.entity')" :item-data="relocationDetails">
       <div class="flex no-wrap gap-5">
-        <custom-button padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditRelocation()" />
-        <custom-button padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteRelocation()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="primary" flat no-caps icon="drive_file_rename_outline" @click="openCreateEditRelocation()" />
+        <custom-button v-if="isAdminUser" padding="none" round color="negative" flat no-caps icon="delete" @click="openDeleteRelocation()" />
       </div>
     </item-details-component>
 
@@ -31,6 +31,7 @@ import ItemDetailsComponent from 'src/components/item-details/item-details-compo
 import CasketTableComponent from 'src/components/tables/casket/casket-table-component'
 import UrnTableComponent from 'src/components/tables/urn/urn-table-component'
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, toRefs } from 'vue'
+import { useAuthenticationStore } from 'stores/authentication'
 import { hideLoading, showLoading } from 'src/utils/quasarComponents'
 import TitleComponent from 'src/components/title/title-component'
 import { useRelocationStore } from 'stores/relocation'
@@ -67,8 +68,10 @@ export default defineComponent({
     const router = useRouter()
     const { t } = useI18n({})
     const relocationStore = useRelocationStore()
+    const authenticationStore = useAuthenticationStore()
 
     const state = reactive({
+      isAdminUser: authenticationStore.isAdmin,
       loading: false,
       relocationId: computed(() => route.params.relocationId || null),
       relocationData: null,
