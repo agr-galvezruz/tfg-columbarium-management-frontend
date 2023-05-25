@@ -11,15 +11,36 @@
 // It's highly recommended to change the default colors
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
+:root {
+  // Colors
+  --main-color: 99, 105, 209;
+  --body-color: #efefef;
+  --background-color: #FCFCFC;
+  --background-scroll-bar: #c6cacc;
+  --negative: #c10015;
 
-$primary   : #1976D2;
-$secondary : #26A69A;
+  // Texts
+  --main-text-color: #2c2f32;
+  --secondary-text-color: #868b90;
+  --table-text-color: #343a40;
+
+  // Shadows
+  --main-shadow: 1px 1px 4px rgba(134, 139, 144, 0.3);
+
+  // Layout
+  --sidebar-width: 250px;
+  --header-height: 60px;
+  --toolbar-height: 30px;
+}
+
+$primary   : #0FA3B1;
+$secondary : #6369D1;
 $accent    : #9C27B0;
 
 $dark      : #1D1D1D;
 $dark-page : #121212;
 
-$positive  : #21BA45;
-$negative  : #C10015;
+$positive  : #57ab5a;
+$negative  : #c10015;
 $info      : #31CCEC;
 $warning   : #F2C037;

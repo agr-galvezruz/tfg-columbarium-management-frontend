@@ -1,0 +1,128 @@
+.q-field--outlined .q-field__control {
+  border-radius: 8px;
+  background: var(--body-color);
+}
+.q-field__bottom {
+  padding: 5px 12px 0;
+}
+.q-field--dense .q-field__bottom {
+  font-size: 12px;
+}
+
+.q-field--outlined.q-field--readonly .q-field__control > div {
+  opacity: 0.6 !important;
+}
+
+.q-field--outlined.q-field--readonly .q-field__control:before {
+  border-style: solid !important;
+}
+
+.q-editor {
+  border: 1px solid rgba(0, 0, 0, 0.24);
+  border-radius: 8px !important;
+  background-color: var(--body-color);
+}
+
+.q-table__card {
+  color: var(--main-text-color);
+  background-color: var(--background-color);
+  box-shadow: var(--main-shadow) !important;
+  border-radius: 12px;
+}
+
+.q-table-header-text {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--main-text-color);
+}
+
+.q-table tbody td {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--table-text-color);
+}
+
+.q-table__bottom {
+  font-size: 13px;
+}
+
+.q-table th, .q-table td {
+  padding: 7px 8px;
+}
+
+.q-table tbody td {
+  padding: 8px !important;
+  height: 37px;
+}
+
+.q-table__control > .q-btn--dense.q-btn--round {
+  color: $secondary !important;
+}
+
+.q-linear-progress {
+  color: $primary !important;
+}
+
+.q-card {
+  box-shadow: none !important;
+  background: var(--background-color);
+}
+
+.q-tab-panels {
+  background: var(--background-color);
+}
+
+.q-tab-panel {
+  padding: 15px 0 0 0;
+}
+
+.q-tabs--dense .q-tab {
+  border-radius: 12px;
+}
+
+.q-carousel__slide {
+  background-color: var(--background-color);
+}
+
+.sticky-header {
+  /* height or max-height is important */
+  max-height: calc(100vh - calc(var(--toolbar-height) + 220px));
+
+  .q-table__top, thead tr:first-child th {
+    /* bg color is important for th; just specify one */
+    background-color: var(--background-color);
+    transition: all 0.4s ease;
+  }
+
+  thead tr th {
+    position: sticky;
+    z-index: 1;
+  }
+  thead tr:first-child th {
+    top: 0;
+  }
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th {
+    /* height of all previous header rows */
+    top: 48px;
+  }
+}
+
+.q-menu {
+  background: var(--background-color);
+  border-radius: 12px;
+}
+
+.q-item {
+  min-height: 40px;
+  min-width: 100px;
+}
+
+.q-carousel__slide, .q-carousel .q-carousel--padding {
+  padding: 0;
+}
+
+.q-carousel {
+  height: max-content;
+}
