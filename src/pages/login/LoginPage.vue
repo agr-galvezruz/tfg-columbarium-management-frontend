@@ -47,8 +47,8 @@ export default defineComponent({
 
     const state = reactive({
       loading: false,
-      id: '0',
-      password: 'password'
+      id: '',
+      password: ''
     })
 
     const onSubmit = async () => {
