@@ -4,7 +4,6 @@
       <div>{{ $t('pages.casket.modal_delete_text2') }}</div>
       <div>
         <span>{{ $t('pages.casket.modal_delete_text1') }}</span>
-        <span class="important">&nbsp;{{ casketData.id }}</span>
         <span>?</span>
       </div>
     </div>

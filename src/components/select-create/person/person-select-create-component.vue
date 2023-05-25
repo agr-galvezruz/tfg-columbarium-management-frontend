@@ -161,7 +161,11 @@ export default defineComponent({
     const fillPeopleOptions = (data) => {
       formData.peopleOptions = []
       data.forEach(person => {
-        formData.peopleOptions.push({ label: `${person.dni} - ${person.firstName} ${person.lastName1} ${person.lastName2}`, value: person.id.toString(), deathdate: person.deathdate })
+        if (props.requiredDeathdate) {
+          formData.peopleOptions.push({ label: `${person.firstName} ${person.lastName1} ${person.lastName2}`, value: person.id.toString(), deathdate: person.deathdate })
+        } else {
+          formData.peopleOptions.push({ label: `${person.dni} - ${person.firstName} ${person.lastName1} ${person.lastName2}`, value: person.id.toString(), deathdate: person.deathdate })
+        }
       })
       formData.filterOptions = formData.peopleOptions
     }

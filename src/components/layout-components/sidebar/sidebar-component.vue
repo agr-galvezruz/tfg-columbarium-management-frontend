@@ -1,7 +1,8 @@
 <template>
   <section class="sidebar">
-    <div class="full-logo">
-      <span class="logo material-icons">stars</span>
+    <div class="full-logo" style="height:60px">
+      <!-- <span class="logo material-icons">stars</span> -->
+      <!-- <img src="~assets/logo/azul_no_background.png" width="40" /> -->
       <div class="logo-name">
         <span>Gest</span>
         <span>columba</span>

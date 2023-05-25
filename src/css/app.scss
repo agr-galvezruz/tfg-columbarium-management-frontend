@@ -42,7 +42,10 @@
         height: 60px;
       }
       .logo-name {
-        font-size: 20px;
+        display: flex;
+        align-items: center;
+        font-size: 26px;
+        height: 60px;
         span:nth-child(1) {
           font-weight: 600;
         }

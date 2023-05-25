@@ -700,7 +700,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .zoom-container {
-    zoom: 134%;
+    zoom: 132%;
     max-width: max-content;
     min-width: max-content;
       margin-bottom: 20px;

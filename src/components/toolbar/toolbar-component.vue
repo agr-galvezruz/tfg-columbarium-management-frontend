@@ -1,7 +1,8 @@
 <template>
   <div class="toolbar-container shadow-4 q-electron-drag">
     <div class="app-info">
-      <span class="logo material-icons">stars</span>
+      <!-- <span class="logo material-icons">stars</span> -->
+      <img src="~assets/logo/azul_no_background.png" width="18" />
       <span>Gestcolumba</span>
     </div>
 
@@ -66,6 +67,9 @@ export default defineComponent({
       }
       .logo {
         font-size: 20px;
+      }
+      img {
+        filter: brightness(0) invert(1);
       }
     }
 
